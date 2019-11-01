@@ -34,7 +34,12 @@
           </div>
           <div class="form-group">
             <label for="name">Icon*</label>
-            <input type="text" class="form-control <?= form_error('icon') ? 'is-invalid' : '' ?>" id="icon" name="icon" placeholder="icon" value="<?= set_value('icon'); ?>">
+            <select name="icon" id="icon" class="form-control <?= form_error('icon') ? 'is-invalid' : '' ?>">
+              <option value="">== icon ==</option>
+              <?php foreach ($icon as $m) : ?>
+                <option value="<?= $m['icon']; ?>"><?= $m['icon']; ?></option>
+              <?php endforeach; ?>
+            </select>
             <div class="invalid-feedback">
               <?= form_error('icon') ?>
             </div>
@@ -59,6 +64,7 @@
                 <th>#</th>
                 <th>Menu</th>
                 <th>Icon</th>
+                <th>Picture</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -69,6 +75,7 @@
                   <th><?= $i; ?></th>
                   <td><?= $m['menu']; ?></td>
                   <td><?= $m['icon']; ?></td>
+                  <td><i class='<?= $m['icon']; ?>'></i></td>
                   <td>
                     <a href="<?= base_url('menu/editMenu/' . $m['id']); ?>" class="btn btn-success btn-xs">Edit</a>
                     <a href="<?= base_url('menu/hapusMenu/' . $m['id']); ?>" class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin ? data tidak dapat dikembalikan lagi...');">Delete</a>

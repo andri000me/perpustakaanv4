@@ -23,7 +23,7 @@
       <div class="box-body">
 
         <?= $this->session->flashdata('message') ?>
-
+        <?php $icon_idv = $getmenu['icon']; ?>
         <form action="<?php base_url('menu/editMenu') ?>" method="post" enctype="multipart/form-data">
           <div class="form-group">
             <label for="name">Menu*</label>
@@ -35,9 +35,14 @@
           </div>
           <div class="form-group">
             <label for="name">Icon*</label>
-            <input type="text" class="form-control <?= form_error('icon') ? 'is-invalid' : '' ?>" id="icon" name="icon" placeholder="icon" value="<?= $getmenu['icon']; ?>">
+            <select name="icon" id="icon" class="form-control <?= form_error('icon') ? 'is-invalid' : '' ?>">
+              <option value="">== icon ==</option>
+            <?php foreach ($icon as $m) : ?>
+                <option value="<?= $m['icon']; ?>" <?= $m['icon'] == $icon_idv ? ' selected="selected"' : ''; ?>><?= $m['icon']; ?></option>
+              <?php endforeach; ?>
+            </select>
             <div class="invalid-feedback">
-              <?= form_error('icon') ?>
+              <?= form_error('menu_id') ?>
             </div>
           </div>
           <input class="btn btn-success" type="submit" name="btn" value="Update" />&nbsp; <a href="<?= base_url('menu'); ?> " class="btn btn-warning">Cancel</a>

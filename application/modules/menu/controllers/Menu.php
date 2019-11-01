@@ -14,6 +14,7 @@ class Menu extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
         $data['menu'] = $this->db->get('user_menu')->result_array();
+        $data['icon'] = $this->db->get('icon')->result_array();
         $this->form_validation->set_rules('menu', 'Menu', 'required|is_unique[user_menu.menu]', [
             'is_unique' => 'This Menu has already registered'
         ]);
@@ -52,6 +53,7 @@ class Menu extends CI_Controller
         $data['menu'] = $this->db->get('user_menu')->result_array();
         $this->load->model('Menu_model', 'menu_model');
         $data['getmenu'] = $this->menu_model->getMenuById($id);
+        $data['icon'] = $this->db->get('icon')->result_array();
         $this->form_validation->set_rules('menu', 'Menu', 'required');
         $this->form_validation->set_rules('icon', 'icon', 'required');
         if ($this->form_validation->run() == false) {

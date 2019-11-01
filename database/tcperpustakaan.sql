@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.7.1
+-- version 4.1.12
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 19, 2019 at 09:15 AM
--- Server version: 5.6.20
--- PHP Version: 5.5.15
+-- Generation Time: Nov 01, 2019 at 07:49 AM
+-- Server version: 5.6.16
+-- PHP Version: 5.5.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,8 +17,52 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `sisterv2fratz`
+-- Database: `tcperpustakaan`
 --
+CREATE DATABASE IF NOT EXISTS `tcperpustakaan` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `tcperpustakaan`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `icon`
+--
+
+DROP TABLE IF EXISTS `icon`;
+CREATE TABLE IF NOT EXISTS `icon` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `icon` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
+
+--
+-- Dumping data for table `icon`
+--
+
+INSERT INTO `icon` (`id`, `icon`) VALUES
+(1, 'fa fa-fw fa-wrench'),
+(2, 'fa fa-fw fa-users'),
+(3, 'fa fa-fw fa-navicon'),
+(4, 'fa fa-fw fa-folder'),
+(6, 'fa fa-fw fa-dollar'),
+(7, 'fa fa-fw fa-gift'),
+(10, 'fa fa-fw fa-book'),
+(11, 'fa fa-fw fa-user'),
+(12, 'fa fa-fw fa-tag'),
+(13, 'fa fa-fw fa-instagram'),
+(14, 'fa fa-fw fa-cube'),
+(15, 'fa fa-fw fa-copy'),
+(16, 'fa fa-fw fa-cut'),
+(17, 'fa fa-fw fa-plus'),
+(18, 'fa fa-fw fa-user-plus'),
+(19, 'fa fa-fw fa-leaf'),
+(20, 'fa fa-fw fa-cart-plus'),
+(21, 'fa fa-fw fa-address-book'),
+(22, 'fa fa-fw fa-exclamation-circle'),
+(23, 'fa fa-fw fa-envelope'),
+(24, 'fa fa-fw fa-building'),
+(25, 'fa fa-fw fa-money'),
+(26, 'fa fa-fw fa-graduation-cap');
 
 -- --------------------------------------------------------
 
@@ -28,22 +72,26 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
+  `username` varchar(100) NOT NULL,
   `email` varchar(128) NOT NULL,
   `image` varchar(128) NOT NULL,
   `password` varchar(256) NOT NULL,
   `role_id` int(11) NOT NULL,
   `is_active` int(1) NOT NULL,
-  `date_created` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+  `date_created` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `name`, `email`, `image`, `password`, `role_id`, `is_active`, `date_created`) VALUES
-(3, 'Administrator', 'admin@admin.com', 'default.jpg', '$2y$10$xP5rx.6d0AasybhMP23yVeMTGKehXum1f88FqO3oL8tP0m5H5369m', 1, 1, 1555463755);
+INSERT INTO `user` (`id`, `name`, `username`, `email`, `image`, `password`, `role_id`, `is_active`, `date_created`) VALUES
+(3, 'Super', 'superadmin', 'superadmin@admin.com', 'default.jpg', '$2y$10$fLnMbhwfjtzAs8uLA/Z.j.TH71uvtOOWBmn.kKJyS2eos11XO2Soq', 1, 1, 1555463755),
+(4, 'Administrator', 'admin', 'admin@admin.com', '1572586453142.jpg', '$2y$10$HOXbJryUUAhaC3guNduXIOC7UlAOI8BF8Xg.UKMmD/wohI6gXoUd.', 1, 1, 1572585977),
+(5, 'Anggota', 'anggota', 'anggota@anggota.com', 'default.jpg', '$2y$10$k/eGVwFKNRy4LGocNY0hfe4iigRP/.gDyZHpIi..Ed6IAXaveiCtS', 1, 1, 1572586003);
 
 -- --------------------------------------------------------
 
@@ -53,9 +101,10 @@ INSERT INTO `user` (`id`, `name`, `email`, `image`, `password`, `role_id`, `is_a
 
 DROP TABLE IF EXISTS `user_access_menu`;
 CREATE TABLE IF NOT EXISTS `user_access_menu` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `role_id` int(11) NOT NULL,
-  `menu_id` int(11) NOT NULL
+  `menu_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
@@ -79,9 +128,10 @@ INSERT INTO `user_access_menu` (`id`, `role_id`, `menu_id`) VALUES
 
 DROP TABLE IF EXISTS `user_access_submenu`;
 CREATE TABLE IF NOT EXISTS `user_access_submenu` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `role_id` int(11) NOT NULL,
-  `submenu_id` int(11) NOT NULL
+  `submenu_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=81 ;
 
 --
@@ -169,11 +219,12 @@ INSERT INTO `user_access_submenu` (`id`, `role_id`, `submenu_id`) VALUES
 
 DROP TABLE IF EXISTS `user_menu`;
 CREATE TABLE IF NOT EXISTS `user_menu` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `icon` varchar(255) DEFAULT NULL,
   `menu_id` varchar(50) NOT NULL,
-  `menu` varchar(128) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+  `menu` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 --
 -- Dumping data for table `user_menu`
@@ -183,10 +234,7 @@ INSERT INTO `user_menu` (`id`, `icon`, `menu_id`, `menu`) VALUES
 (1, 'fa fa-fw fa-wrench', 'admin', 'Admin'),
 (2, 'fa fa-fw fa-users', 'user', 'User'),
 (3, 'fa fa-fw fa-navicon', 'menu', 'Menu'),
-(4, 'fa fa-fw fa-folder', 'page', 'Page'),
-(5, 'fa fa-fw fa-folder', 'post', 'Post'),
-(14, 'fa fa-fw fa-users', 'guru', 'Guru'),
-(15, 'fa fa-fw fa-users', 'api', 'API');
+(16, 'fa fa-fw fa-graduation-cap', 'testing-icon', 'Testing Icon');
 
 -- --------------------------------------------------------
 
@@ -196,8 +244,9 @@ INSERT INTO `user_menu` (`id`, `icon`, `menu_id`, `menu`) VALUES
 
 DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE IF NOT EXISTS `user_role` (
-`id` int(11) NOT NULL,
-  `role` varchar(256) NOT NULL
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
@@ -206,7 +255,7 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 
 INSERT INTO `user_role` (`id`, `role`) VALUES
 (1, 'Administrator'),
-(2, 'Guru');
+(2, 'Anggota');
 
 -- --------------------------------------------------------
 
@@ -216,13 +265,14 @@ INSERT INTO `user_role` (`id`, `role`) VALUES
 
 DROP TABLE IF EXISTS `user_sub_menu`;
 CREATE TABLE IF NOT EXISTS `user_sub_menu` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `menu_id` int(11) NOT NULL,
   `title` varchar(128) NOT NULL,
   `url` varchar(128) NOT NULL,
   `icon` varchar(128) NOT NULL,
   `sort` int(11) NOT NULL DEFAULT '1',
-  `is_active` int(1) NOT NULL
+  `is_active` int(1) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=74 ;
 
 --
@@ -241,9 +291,7 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `sort`, `i
 (10, 1, 'Web Setting', 'admin/websetting', 'fa fa-fw fa-wrench', 1, 1),
 (11, 4, 'All Pages', 'page', 'fa fa-fw fa-folder', 1, 1),
 (12, 5, 'Categories', 'post/postcategories', 'fa fa-fw fa-folder', 2, 1),
-(13, 5, 'All Posts', 'post', 'fa fa-fw fa-folder', 1, 1),
-(72, 14, 'Guru', 'guru', '', 1, 1),
-(73, 15, 'API Public', 'api/apipublic', '', 1, 1);
+(13, 5, 'All Posts', 'post', 'fa fa-fw fa-folder', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -253,10 +301,11 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `sort`, `i
 
 DROP TABLE IF EXISTS `user_token`;
 CREATE TABLE IF NOT EXISTS `user_token` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(128) NOT NULL,
   `token` varchar(128) NOT NULL,
-  `date_created` int(11) NOT NULL
+  `date_created` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -267,9 +316,10 @@ CREATE TABLE IF NOT EXISTS `user_token` (
 
 DROP TABLE IF EXISTS `web_setting`;
 CREATE TABLE IF NOT EXISTS `web_setting` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(512) NOT NULL,
-  `is_active` int(11) NOT NULL
+  `is_active` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
@@ -280,102 +330,6 @@ INSERT INTO `web_setting` (`id`, `name`, `is_active`) VALUES
 (1, 'signup_member', 1),
 (2, 'forgot_password', 1);
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
- ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_access_menu`
---
-ALTER TABLE `user_access_menu`
- ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_access_submenu`
---
-ALTER TABLE `user_access_submenu`
- ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_menu`
---
-ALTER TABLE `user_menu`
- ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_role`
---
-ALTER TABLE `user_role`
- ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_sub_menu`
---
-ALTER TABLE `user_sub_menu`
- ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_token`
---
-ALTER TABLE `user_token`
- ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `web_setting`
---
-ALTER TABLE `web_setting`
- ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `user_access_menu`
---
-ALTER TABLE `user_access_menu`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
---
--- AUTO_INCREMENT for table `user_access_submenu`
---
-ALTER TABLE `user_access_submenu`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=81;
---
--- AUTO_INCREMENT for table `user_menu`
---
-ALTER TABLE `user_menu`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
---
--- AUTO_INCREMENT for table `user_role`
---
-ALTER TABLE `user_role`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `user_sub_menu`
---
-ALTER TABLE `user_sub_menu`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=74;
---
--- AUTO_INCREMENT for table `user_token`
---
-ALTER TABLE `user_token`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `web_setting`
---
-ALTER TABLE `web_setting`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

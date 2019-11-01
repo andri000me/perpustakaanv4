@@ -63,8 +63,10 @@
                   <td><?= $r['role']; ?></td>
                   <td>
                     <a href="<?= base_url('admin/roleaccess/') . $r['id']; ?>" class="btn btn-warning btn-sm">Access</a>
-                    <a href="<?= base_url('admin/roleedit/') . $r['id']; ?>" class="btn btn-success btn-sm">Edit</a>
-                    <a href="<?= base_url('admin/roledelete/') . $r['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Anda yakin ? data tidak dapat dikembalikan lagi...');">Delete</a>
+                    <?php if($r['id']>'1'){?>
+                    <a href="<?= base_url('admin/roleedit/') . $r['id']; ?>" class="btn btn-info btn-sm">Edit</a>
+                    <a href="<?= base_url('admin/roledelete/') . $r['id']; ?>" onclick="return confirm('Anda yakin ? data tidak dapat dikembalikan lagi...'); " class="btn btn-danger btn-sm">Hapus</a>
+                    <?php }?>
                   </td>
                 </tr>
                 <?php $i++; ?>
