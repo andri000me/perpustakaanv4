@@ -1,7 +1,9 @@
 <!-- Login Baru -->
 <div class="login-box">
   <div class="login-logo">
-    <a href="<?= base_url(); ?>"><b>Welcome</b> Back!</a>
+    <a href="<?= base_url(); ?>">
+    <b>Perpustakaan</b>
+    <br><b>Welcome</b> Back!</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
