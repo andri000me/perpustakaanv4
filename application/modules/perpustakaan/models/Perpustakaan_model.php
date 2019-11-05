@@ -147,5 +147,23 @@ class Perpustakaan_model extends CI_Model
           return $this->db->get_where('pp_bahasa', ['id' => $id])->row_array();
 
   }
+  public function get_statusitem()
+  {
+
+    $this->db->select('`pp_statusitem`.*');
+    $this->db->from('pp_statusitem');
+    $this->db->order_by('pp_statusitem.nama', 'asc');
+    return $this->db->get()->result_array();
+  }
+  public function hapus_statusitem($id)
+  {
+          $this->db->where('id', $id);
+          $this->db->delete('pp_statusitem');
+
+  }
+  public function get_statusitem_ById($id){
+          return $this->db->get_where('pp_statusitem', ['id' => $id])->row_array();
+
+  }
   //end
 }

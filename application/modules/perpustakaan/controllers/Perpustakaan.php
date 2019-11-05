@@ -518,5 +518,69 @@ class Perpustakaan extends CI_Controller
      $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data deleted !</div>');
      redirect('perpustakaan/bahasa');
    }  
+     // statusitem
+  public function statusitem()
+  {
+    $data['title'] = 'Status Eksemplar';
+    $data['user'] = $this->db->get_where('user', ['email' =>
+    $this->session->userdata('email')])->row_array();
+    $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+    $data['statusitem'] = $this->Perpustakaan_model->get_statusitem();
+ 
+    $this->form_validation->set_rules('kode', 'kode', 'required|is_unique[pp_lokasi.kode]');
+    $this->form_validation->set_rules('nama', 'nama', 'required|is_unique[pp_lokasi.nama]');
+    if ($this->form_validation->run() == false) {
+    $this->load->view('themes/backend/header', $data);
+    $this->load->view('themes/backend/sidebar', $data);
+    $this->load->view('themes/backend/topbar', $data);
+    $this->load->view('statusitem', $data);
+    $this->load->view('themes/backend/footer');
+    $this->load->view('themes/backend/footerajax');
+    }else{
+        $data = [
+          'kode' => $this->input->post('kode'),
+          'nama' => $this->input->post('nama')
+           ];
+           $this->db->insert('pp_statusitem', $data);
+           $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+           redirect('perpustakaan/statusitem');
+    }
+  }
+  public function edit_statusitem($id)
+   {
+     $data['title'] = 'Status Eksemplar';
+     $data['user'] = $this->db->get_where('user', ['email' =>
+     $this->session->userdata('email')])->row_array();
+     $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+     $data['get_statusitem'] = $this->Perpustakaan_model->get_statusitem_ById($id);
+     $data['statusitem'] = $this->Perpustakaan_model->get_statusitem();
+ 
+     $this->form_validation->set_rules('kode', 'kode', 'required');
+     $this->form_validation->set_rules('nama', 'nama', 'required');
+     if ($this->form_validation->run() == false) {
+     $this->load->view('themes/backend/header', $data);
+     $this->load->view('themes/backend/sidebar', $data);
+     $this->load->view('themes/backend/topbar', $data);
+     $this->load->view('edit_statusitem', $data);
+     $this->load->view('themes/backend/footer');
+     $this->load->view('themes/backend/footerajax');
+     }else{
+       $data = [
+         'kode' => $this->input->post('kode'),
+         'nama' => $this->input->post('nama')
+          ];
+           $this->db->where('id', $id);
+           $this->db->update('pp_statusitem', $data);
+           $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+           redirect('perpustakaan/statusitem');
+     }
+   }
+   public function hapus_statusitem($id)
+   {
+     $this->db->where('id', $id);
+     $this->db->delete('pp_statusitem');
+     $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data deleted !</div>');
+     redirect('perpustakaan/statusitem');
+   }  
   //end
 }

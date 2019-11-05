@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 05 Nov 2019 pada 06.59
+-- Generation Time: 05 Nov 2019 pada 08.33
 -- Versi Server: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -218,6 +218,29 @@ INSERT INTO `pp_penerbit` (`id`, `nama`, `last_update`) VALUES
 (9, 'Palgrave Macmillan', '2007-11-29 00:00:00'),
 (10, 'Crown publishers', '2007-11-29 00:00:00'),
 (11, 'Atlantic Monthly Press', '2007-11-29 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pp_statusitem`
+--
+
+DROP TABLE IF EXISTS `pp_statusitem`;
+CREATE TABLE IF NOT EXISTS `pp_statusitem` (
+`id` int(10) NOT NULL,
+  `kode` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `nama` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `last_update` date DEFAULT NULL
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data untuk tabel `pp_statusitem`
+--
+
+INSERT INTO `pp_statusitem` (`id`, `kode`, `nama`, `last_update`) VALUES
+(1, 'R', 'Repair', '2019-11-04'),
+(2, 'NL', 'No Loan', '2019-11-04'),
+(3, 'MIS', 'Missing', '2019-11-04');
 
 -- --------------------------------------------------------
 
@@ -564,7 +587,7 @@ CREATE TABLE IF NOT EXISTS `user_sub_menu` (
   `icon` varchar(128) NOT NULL,
   `sort` int(11) NOT NULL DEFAULT '1',
   `is_active` int(1) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
 --
 -- Dumping data untuk tabel `user_sub_menu`
@@ -590,7 +613,8 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `sort`, `i
 (18, 17, 'Topik', 'perpustakaan/topik', '', 6, 1),
 (19, 17, 'Tempat Terbit', 'perpustakaan/tempatterbit', '', 5, 1),
 (20, 17, 'Lokasi', 'perpustakaan/lokasi', '', 7, 1),
-(21, 17, 'Bahasa', 'perpustakaan/bahasa', '', 8, 1);
+(21, 17, 'Bahasa', 'perpustakaan/bahasa', '', 8, 1),
+(22, 17, 'Status Eksemplar', 'perpustakaan/statusitem', '', 9, 1);
 
 -- --------------------------------------------------------
 
@@ -666,6 +690,12 @@ ALTER TABLE `pp_lokasi`
 --
 ALTER TABLE `pp_penerbit`
  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `publisher_name` (`nama`);
+
+--
+-- Indexes for table `pp_statusitem`
+--
+ALTER TABLE `pp_statusitem`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `item_status_name` (`nama`);
 
 --
 -- Indexes for table `pp_tempatterbit`
@@ -774,6 +804,11 @@ MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 ALTER TABLE `pp_penerbit`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
+-- AUTO_INCREMENT for table `pp_statusitem`
+--
+ALTER TABLE `pp_statusitem`
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT for table `pp_tempatterbit`
 --
 ALTER TABLE `pp_tempatterbit`
@@ -822,7 +857,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT for table `user_sub_menu`
 --
 ALTER TABLE `user_sub_menu`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `user_token`
 --
