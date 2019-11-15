@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 05 Nov 2019 pada 08.33
--- Versi Server: 5.6.20
+-- Generation Time: Nov 15, 2019 at 05:05 AM
+-- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -25,7 +25,7 @@ USE `tcperpustakaan`;
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `icon`
+-- Table structure for table `icon`
 --
 
 DROP TABLE IF EXISTS `icon`;
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `icon` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
 
 --
--- Dumping data untuk tabel `icon`
+-- Dumping data for table `icon`
 --
 
 INSERT INTO `icon` (`id`, `icon`) VALUES
@@ -66,7 +66,7 @@ INSERT INTO `icon` (`id`, `icon`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pp_bahasa`
+-- Table structure for table `pp_bahasa`
 --
 
 DROP TABLE IF EXISTS `pp_bahasa`;
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `pp_bahasa` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
--- Dumping data untuk tabel `pp_bahasa`
+-- Dumping data for table `pp_bahasa`
 --
 
 INSERT INTO `pp_bahasa` (`id`, `kode`, `nama`, `last_update`) VALUES
@@ -88,7 +88,29 @@ INSERT INTO `pp_bahasa` (`id`, `kode`, `nama`, `last_update`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pp_gmd`
+-- Table structure for table `pp_codepattern`
+--
+
+DROP TABLE IF EXISTS `pp_codepattern`;
+CREATE TABLE IF NOT EXISTS `pp_codepattern` (
+`id` int(10) NOT NULL,
+  `prefix` varchar(10) NOT NULL,
+  `length` varchar(10) NOT NULL,
+  `itemcodepattern` varchar(50) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `pp_codepattern`
+--
+
+INSERT INTO `pp_codepattern` (`id`, `prefix`, `length`, `itemcodepattern`) VALUES
+(1, 'P', '5', 'P00000'),
+(2, 'P', '3', 'P000');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pp_gmd`
 --
 
 DROP TABLE IF EXISTS `pp_gmd`;
@@ -100,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `pp_gmd` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=34 ;
 
 --
--- Dumping data untuk tabel `pp_gmd`
+-- Dumping data for table `pp_gmd`
 --
 
 INSERT INTO `pp_gmd` (`id`, `kode`, `nama`, `last_update`) VALUES
@@ -140,7 +162,7 @@ INSERT INTO `pp_gmd` (`id`, `kode`, `nama`, `last_update`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pp_kalaterbit`
+-- Table structure for table `pp_kalaterbit`
 --
 
 DROP TABLE IF EXISTS `pp_kalaterbit`;
@@ -155,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `pp_kalaterbit` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 --
--- Dumping data untuk tabel `pp_kalaterbit`
+-- Dumping data for table `pp_kalaterbit`
 --
 
 INSERT INTO `pp_kalaterbit` (`frequency_id`, `frequency`, `language_prefix`, `time_increment`, `time_unit`, `input_date`, `last_update`) VALUES
@@ -171,7 +193,7 @@ INSERT INTO `pp_kalaterbit` (`frequency_id`, `frequency`, `language_prefix`, `ti
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pp_lokasi`
+-- Table structure for table `pp_lokasi`
 --
 
 DROP TABLE IF EXISTS `pp_lokasi`;
@@ -183,7 +205,7 @@ CREATE TABLE IF NOT EXISTS `pp_lokasi` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
--- Dumping data untuk tabel `pp_lokasi`
+-- Dumping data for table `pp_lokasi`
 --
 
 INSERT INTO `pp_lokasi` (`id`, `kode`, `nama`, `last_update`) VALUES
@@ -192,7 +214,7 @@ INSERT INTO `pp_lokasi` (`id`, `kode`, `nama`, `last_update`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pp_penerbit`
+-- Table structure for table `pp_penerbit`
 --
 
 DROP TABLE IF EXISTS `pp_penerbit`;
@@ -203,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `pp_penerbit` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=15 ;
 
 --
--- Dumping data untuk tabel `pp_penerbit`
+-- Dumping data for table `pp_penerbit`
 --
 
 INSERT INTO `pp_penerbit` (`id`, `nama`, `last_update`) VALUES
@@ -222,7 +244,7 @@ INSERT INTO `pp_penerbit` (`id`, `nama`, `last_update`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pp_statusitem`
+-- Table structure for table `pp_statusitem`
 --
 
 DROP TABLE IF EXISTS `pp_statusitem`;
@@ -234,7 +256,7 @@ CREATE TABLE IF NOT EXISTS `pp_statusitem` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
--- Dumping data untuk tabel `pp_statusitem`
+-- Dumping data for table `pp_statusitem`
 --
 
 INSERT INTO `pp_statusitem` (`id`, `kode`, `nama`, `last_update`) VALUES
@@ -245,7 +267,7 @@ INSERT INTO `pp_statusitem` (`id`, `kode`, `nama`, `last_update`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pp_tempatterbit`
+-- Table structure for table `pp_tempatterbit`
 --
 
 DROP TABLE IF EXISTS `pp_tempatterbit`;
@@ -256,7 +278,7 @@ CREATE TABLE IF NOT EXISTS `pp_tempatterbit` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
 --
--- Dumping data untuk tabel `pp_tempatterbit`
+-- Dumping data for table `pp_tempatterbit`
 --
 
 INSERT INTO `pp_tempatterbit` (`id`, `nama`, `last_update`) VALUES
@@ -272,7 +294,7 @@ INSERT INTO `pp_tempatterbit` (`id`, `nama`, `last_update`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pp_tipeisi`
+-- Table structure for table `pp_tipeisi`
 --
 
 DROP TABLE IF EXISTS `pp_tipeisi`;
@@ -285,7 +307,7 @@ CREATE TABLE IF NOT EXISTS `pp_tipeisi` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=27 ;
 
 --
--- Dumping data untuk tabel `pp_tipeisi`
+-- Dumping data for table `pp_tipeisi`
 --
 
 INSERT INTO `pp_tipeisi` (`id`, `nama`, `kode`, `kode2`, `last_update`) VALUES
@@ -318,7 +340,29 @@ INSERT INTO `pp_tipeisi` (`id`, `nama`, `kode`, `kode2`, `last_update`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pp_tipemedia`
+-- Table structure for table `pp_tipekoleksi`
+--
+
+DROP TABLE IF EXISTS `pp_tipekoleksi`;
+CREATE TABLE IF NOT EXISTS `pp_tipekoleksi` (
+`id` int(10) NOT NULL,
+  `nama` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `last_update` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `pp_tipekoleksi`
+--
+
+INSERT INTO `pp_tipekoleksi` (`id`, `nama`, `last_update`) VALUES
+(1, 'Reference', '2007-11-29 00:00:00'),
+(2, 'Textbook', '2007-11-29 00:00:00'),
+(3, 'Fiction', '2007-11-29 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pp_tipemedia`
 --
 
 DROP TABLE IF EXISTS `pp_tipemedia`;
@@ -331,7 +375,7 @@ CREATE TABLE IF NOT EXISTS `pp_tipemedia` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 --
--- Dumping data untuk tabel `pp_tipemedia`
+-- Dumping data for table `pp_tipemedia`
 --
 
 INSERT INTO `pp_tipemedia` (`id`, `nama`, `kode`, `kode2`, `last_update`) VALUES
@@ -349,7 +393,7 @@ INSERT INTO `pp_tipemedia` (`id`, `nama`, `kode`, `kode2`, `last_update`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pp_topik`
+-- Table structure for table `pp_topik`
 --
 
 DROP TABLE IF EXISTS `pp_topik`;
@@ -360,7 +404,7 @@ CREATE TABLE IF NOT EXISTS `pp_topik` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=19 ;
 
 --
--- Dumping data untuk tabel `pp_topik`
+-- Dumping data for table `pp_topik`
 --
 
 INSERT INTO `pp_topik` (`id`, `nama`, `last_update`) VALUES
@@ -385,7 +429,7 @@ INSERT INTO `pp_topik` (`id`, `nama`, `last_update`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user`
+-- Table structure for table `user`
 --
 
 DROP TABLE IF EXISTS `user`;
@@ -402,7 +446,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
--- Dumping data untuk tabel `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `name`, `username`, `email`, `image`, `password`, `role_id`, `is_active`, `date_created`) VALUES
@@ -413,7 +457,7 @@ INSERT INTO `user` (`id`, `name`, `username`, `email`, `image`, `password`, `rol
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user_access_menu`
+-- Table structure for table `user_access_menu`
 --
 
 DROP TABLE IF EXISTS `user_access_menu`;
@@ -424,7 +468,7 @@ CREATE TABLE IF NOT EXISTS `user_access_menu` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
--- Dumping data untuk tabel `user_access_menu`
+-- Dumping data for table `user_access_menu`
 --
 
 INSERT INTO `user_access_menu` (`id`, `role_id`, `menu_id`) VALUES
@@ -440,7 +484,7 @@ INSERT INTO `user_access_menu` (`id`, `role_id`, `menu_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user_access_submenu`
+-- Table structure for table `user_access_submenu`
 --
 
 DROP TABLE IF EXISTS `user_access_submenu`;
@@ -451,7 +495,7 @@ CREATE TABLE IF NOT EXISTS `user_access_submenu` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=81 ;
 
 --
--- Dumping data untuk tabel `user_access_submenu`
+-- Dumping data for table `user_access_submenu`
 --
 
 INSERT INTO `user_access_submenu` (`id`, `role_id`, `submenu_id`) VALUES
@@ -530,7 +574,7 @@ INSERT INTO `user_access_submenu` (`id`, `role_id`, `submenu_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user_menu`
+-- Table structure for table `user_menu`
 --
 
 DROP TABLE IF EXISTS `user_menu`;
@@ -542,7 +586,7 @@ CREATE TABLE IF NOT EXISTS `user_menu` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
 
 --
--- Dumping data untuk tabel `user_menu`
+-- Dumping data for table `user_menu`
 --
 
 INSERT INTO `user_menu` (`id`, `icon`, `menu_id`, `menu`) VALUES
@@ -555,7 +599,7 @@ INSERT INTO `user_menu` (`id`, `icon`, `menu_id`, `menu`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user_role`
+-- Table structure for table `user_role`
 --
 
 DROP TABLE IF EXISTS `user_role`;
@@ -565,7 +609,7 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Dumping data untuk tabel `user_role`
+-- Dumping data for table `user_role`
 --
 
 INSERT INTO `user_role` (`id`, `role`) VALUES
@@ -575,7 +619,7 @@ INSERT INTO `user_role` (`id`, `role`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user_sub_menu`
+-- Table structure for table `user_sub_menu`
 --
 
 DROP TABLE IF EXISTS `user_sub_menu`;
@@ -587,10 +631,10 @@ CREATE TABLE IF NOT EXISTS `user_sub_menu` (
   `icon` varchar(128) NOT NULL,
   `sort` int(11) NOT NULL DEFAULT '1',
   `is_active` int(1) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
 
 --
--- Dumping data untuk tabel `user_sub_menu`
+-- Dumping data for table `user_sub_menu`
 --
 
 INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `sort`, `is_active`) VALUES
@@ -614,12 +658,14 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `sort`, `i
 (19, 17, 'Tempat Terbit', 'perpustakaan/tempatterbit', '', 5, 1),
 (20, 17, 'Lokasi', 'perpustakaan/lokasi', '', 7, 1),
 (21, 17, 'Bahasa', 'perpustakaan/bahasa', '', 8, 1),
-(22, 17, 'Status Eksemplar', 'perpustakaan/statusitem', '', 9, 1);
+(22, 17, 'Status Eksemplar', 'perpustakaan/statusitem', '', 9, 1),
+(23, 17, 'TipeKoleksi', 'perpustakaan/tipekoleksi', '', 10, 1),
+(24, 17, 'CodePattern', 'perpustakaan/codepattern', '', 11, 1);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user_token`
+-- Table structure for table `user_token`
 --
 
 DROP TABLE IF EXISTS `user_token`;
@@ -633,7 +679,7 @@ CREATE TABLE IF NOT EXISTS `user_token` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `web_setting`
+-- Table structure for table `web_setting`
 --
 
 DROP TABLE IF EXISTS `web_setting`;
@@ -644,7 +690,7 @@ CREATE TABLE IF NOT EXISTS `web_setting` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Dumping data untuk tabel `web_setting`
+-- Dumping data for table `web_setting`
 --
 
 INSERT INTO `web_setting` (`id`, `name`, `is_active`) VALUES
@@ -666,6 +712,12 @@ ALTER TABLE `icon`
 --
 ALTER TABLE `pp_bahasa`
  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `language_name` (`nama`);
+
+--
+-- Indexes for table `pp_codepattern`
+--
+ALTER TABLE `pp_codepattern`
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `pp_gmd`
@@ -708,6 +760,12 @@ ALTER TABLE `pp_tempatterbit`
 --
 ALTER TABLE `pp_tipeisi`
  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `content_type` (`nama`), ADD KEY `code` (`kode`);
+
+--
+-- Indexes for table `pp_tipekoleksi`
+--
+ALTER TABLE `pp_tipekoleksi`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `coll_type_name` (`nama`);
 
 --
 -- Indexes for table `pp_tipemedia`
@@ -784,6 +842,11 @@ MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
 ALTER TABLE `pp_bahasa`
 MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
+-- AUTO_INCREMENT for table `pp_codepattern`
+--
+ALTER TABLE `pp_codepattern`
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `pp_gmd`
 --
 ALTER TABLE `pp_gmd`
@@ -818,6 +881,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 ALTER TABLE `pp_tipeisi`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
+--
+-- AUTO_INCREMENT for table `pp_tipekoleksi`
+--
+ALTER TABLE `pp_tipekoleksi`
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `pp_tipemedia`
 --
@@ -857,7 +925,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT for table `user_sub_menu`
 --
 ALTER TABLE `user_sub_menu`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `user_token`
 --

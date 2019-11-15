@@ -582,5 +582,143 @@ class Perpustakaan extends CI_Controller
      $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data deleted !</div>');
      redirect('perpustakaan/statusitem');
    }  
+    // tipekoleksi
+ public function tipekoleksi()
+ {
+   $data['title'] = 'TipeKoleksi';
+   $data['user'] = $this->db->get_where('user', ['email' =>
+   $this->session->userdata('email')])->row_array();
+   $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+   $data['tipekoleksi'] = $this->Perpustakaan_model->get_tipekoleksi();
+
+   $this->form_validation->set_rules('nama', 'nama', 'required|is_unique[pp_tipekoleksi.nama]');
+   if ($this->form_validation->run() == false) {
+   $this->load->view('themes/backend/header', $data);
+   $this->load->view('themes/backend/sidebar', $data);
+   $this->load->view('themes/backend/topbar', $data);
+   $this->load->view('tipekoleksi', $data);
+   $this->load->view('themes/backend/footer');
+   $this->load->view('themes/backend/footerajax');
+   }else{
+       $data = [
+         'nama' => $this->input->post('nama')
+          ];
+          $this->db->insert('pp_tipekoleksi', $data);
+          $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+          redirect('perpustakaan/tipekoleksi');
+   }
+ }
+ public function edit_tipekoleksi($id)
+  {
+    $data['title'] = 'TipeKoleksi';
+    $data['user'] = $this->db->get_where('user', ['email' =>
+    $this->session->userdata('email')])->row_array();
+    $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+    $data['get_tipekoleksi'] = $this->Perpustakaan_model->get_tipekoleksi_ById($id);
+    $data['tipekoleksi'] = $this->Perpustakaan_model->get_tipekoleksi();
+
+    $this->form_validation->set_rules('nama', 'nama', 'required');
+    if ($this->form_validation->run() == false) {
+    $this->load->view('themes/backend/header', $data);
+    $this->load->view('themes/backend/sidebar', $data);
+    $this->load->view('themes/backend/topbar', $data);
+    $this->load->view('edit_tipekoleksi', $data);
+    $this->load->view('themes/backend/footer');
+    $this->load->view('themes/backend/footerajax');
+    }else{
+      $data = [
+        'nama' => $this->input->post('nama')
+         ];
+          $this->db->where('id', $id);
+          $this->db->update('pp_tipekoleksi', $data);
+          $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+          redirect('perpustakaan/tipekoleksi');
+    }
+  }
+  public function hapus_tipekoleksi($id)
+  {
+    $this->db->where('id', $id);
+    $this->db->delete('pp_tipekoleksi');
+    $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data deleted !</div>');
+    redirect('perpustakaan/tipekoleksi');
+  }
+  // codepattern
+ public function codepattern()
+ {
+   $data['title'] = 'CodePattern';
+   $data['user'] = $this->db->get_where('user', ['email' =>
+   $this->session->userdata('email')])->row_array();
+   $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+   $data['codepattern'] = $this->Perpustakaan_model->get_codepattern();
+
+   $this->form_validation->set_rules('prefix', 'prefix', 'required');
+   $this->form_validation->set_rules('length', 'length', 'required');
+   if ($this->form_validation->run() == false) {
+   $this->load->view('themes/backend/header', $data);
+   $this->load->view('themes/backend/sidebar', $data);
+   $this->load->view('themes/backend/topbar', $data);
+   $this->load->view('codepattern', $data);
+   $this->load->view('themes/backend/footer');
+   $this->load->view('themes/backend/footerajax');
+   }else{
+     $prefix = $this->input->post('prefix');
+     $length = $this->input->post('length');
+     for ($i = 0; $i < $length; $i++) :
+      $lengthnol .='0';
+    endfor;
+     $itemcodepattern = $prefix.$lengthnol;
+       $data = [
+         'prefix' => $this->input->post('prefix'),
+         'length' => $this->input->post('length'),
+         'itemcodepattern' => $itemcodepattern
+          ];
+          $this->db->insert('pp_codepattern', $data);
+          $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+          redirect('perpustakaan/codepattern');
+   }
+ }
+ public function edit_codepattern($id)
+  {
+    $data['title'] = 'CodePattern';
+    $data['user'] = $this->db->get_where('user', ['email' =>
+    $this->session->userdata('email')])->row_array();
+    $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+    $data['get_codepattern'] = $this->Perpustakaan_model->get_codepattern_ById($id);
+    $data['codepattern'] = $this->Perpustakaan_model->get_codepattern();
+
+    $this->form_validation->set_rules('prefix', 'prefix', 'required');
+    $this->form_validation->set_rules('length', 'length', 'required');
+    if ($this->form_validation->run() == false) {
+    $this->load->view('themes/backend/header', $data);
+    $this->load->view('themes/backend/sidebar', $data);
+    $this->load->view('themes/backend/topbar', $data);
+    $this->load->view('edit_codepattern', $data);
+    $this->load->view('themes/backend/footer');
+    $this->load->view('themes/backend/footerajax');
+    }else{
+      $prefix = $this->input->post('prefix');
+      $length = $this->input->post('length');
+      for ($i = 0; $i < $length; $i++) :
+        $lengthnol .='0';
+      endfor;
+      $itemcodepattern = $prefix.$lengthnol;
+        $data = [
+          'prefix' => $this->input->post('prefix'),
+          'length' => $this->input->post('length'),
+          'itemcodepattern' => $itemcodepattern
+           ];
+          $this->db->where('id', $id);
+          $this->db->update('pp_codepattern', $data);
+          $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+          redirect('perpustakaan/codepattern');
+    }
+  }
+  public function hapus_codepattern($id)
+  {
+    $this->db->where('id', $id);
+    $this->db->delete('pp_codepattern');
+    $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data deleted !</div>');
+    redirect('perpustakaan/codepattern');
+  }
   //end
 }
