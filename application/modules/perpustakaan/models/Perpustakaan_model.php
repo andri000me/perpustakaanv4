@@ -201,5 +201,39 @@ class Perpustakaan_model extends CI_Model
           return $this->db->get_where('pp_codepattern', ['id' => $id])->row_array();
 
   }
+  public function get_pengarang()
+  {
+
+    $this->db->select('`pp_pengarang`.*');
+    $this->db->from('pp_pengarang');
+    $this->db->order_by('pp_pengarang.nama', 'asc');
+    return $this->db->get()->result_array();
+  }
+  public function hapus_pengarang($id)
+  {
+          $this->db->where('id', $id);
+          $this->db->delete('pp_pengarang');
+
+  }
+  public function get_pengarang_ById($id){
+          return $this->db->get_where('pp_pengarang', ['id' => $id])->row_array();
+
+  }
+  public function get_kalaterbit()
+  {
+
+    $this->db->select('`pp_kalaterbit`.*');
+    $this->db->from('pp_kalaterbit');
+    $this->db->order_by('pp_kalaterbit.id', 'asc');
+    return $this->db->get()->result_array();
+  }
+  public function get_buku()
+  {
+
+    $this->db->select('`pp_buku`.*');
+    $this->db->from('pp_buku');
+    $this->db->order_by('pp_buku.last_update', 'desc');
+    return $this->db->get()->result_array();
+  }
   //end
 }
