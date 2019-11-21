@@ -235,5 +235,9 @@ class Perpustakaan_model extends CI_Model
     $this->db->order_by('pp_buku.last_update', 'desc');
     return $this->db->get()->result_array();
   }
+  public function get_buku_ById($id){
+        return $this->db->get_where('pp_buku', ['id' => $id])->row_array();
+
+}
   //end
 }

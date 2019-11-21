@@ -891,6 +891,112 @@ class Perpustakaan extends CI_Controller
           redirect('perpustakaan/buku');
    }
  }
+
+ public function edit_buku($id)
+ {
+   $data['title'] = 'Buku';
+   $data['user'] = $this->db->get_where('user', ['email' =>
+   $this->session->userdata('email')])->row_array();
+   $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+   $data['listpengarang'] = $this->Perpustakaan_model->get_pengarang();
+   $data['listgmd'] = $this->Perpustakaan_model->get_gmd();
+   $data['listtipeisi'] = $this->Perpustakaan_model->get_tipeisi();
+   $data['listtipemedia'] = $this->Perpustakaan_model->get_tipemedia();
+   $data['listpenerbit'] = $this->Perpustakaan_model->get_penerbit();
+   $data['listtempatterbit'] = $this->Perpustakaan_model->get_tempatterbit();
+   $data['listtopik'] = $this->Perpustakaan_model->get_topik();
+   $data['listkalaterbit'] = $this->Perpustakaan_model->get_kalaterbit();
+   $data['get_buku'] = $this->Perpustakaan_model->get_buku_ById($id);
+
+   $this->form_validation->set_rules('judul', 'judul', 'required');
+   $this->form_validation->set_rules('pengarang_id', 'pengarang_id');
+   $this->form_validation->set_rules('penanggungjawab', 'penanggungjawab');
+   $this->form_validation->set_rules('edisi', 'edisi');
+   $this->form_validation->set_rules('gmd_id', 'gmd_id');
+   $this->form_validation->set_rules('tipeisi_id', 'tipeisi_id');
+   $this->form_validation->set_rules('tipemedia_id', 'tipemedia_id');
+   $this->form_validation->set_rules('kalaterbit_id', 'kalaterbit_id');
+   $this->form_validation->set_rules('isbn', 'isbn');
+   $this->form_validation->set_rules('penerbit_id', 'penerbit_id');
+   $this->form_validation->set_rules('tahunterbit', 'tahunterbit');
+   $this->form_validation->set_rules('tempatterbit_id', 'tempatterbit_id');
+   $this->form_validation->set_rules('deskripsifisik', 'deskripsifisik');
+   $this->form_validation->set_rules('judulseri', 'judulseri');
+   $this->form_validation->set_rules('klasifikasi', 'klasifikasi');
+   $this->form_validation->set_rules('nopanggil', 'nopanggil');
+   $this->form_validation->set_rules('topik_id', 'topik_id');
+   $this->form_validation->set_rules('abstrak', 'abstrak');
+   $this->form_validation->set_rules('lampiran', 'lampiran');
+   $this->form_validation->set_rules('disableopac', 'disableopac');
+   $this->form_validation->set_rules('promoberanda', 'promoberanda');
+   $this->form_validation->set_rules('url', 'url');
+   $this->form_validation->set_rules('urlmultimedia', 'urlmultimedia');
+   if ($this->form_validation->run() == false) {
+   $this->load->view('themes/backend/header', $data);
+   $this->load->view('themes/backend/sidebar', $data);
+   $this->load->view('themes/backend/topbar', $data);
+   $this->load->view('edit_buku', $data);
+   $this->load->view('themes/backend/footer');
+   $this->load->view('themes/backend/footerajax');
+   }else{
+
+
+       $data = [
+         'judul' => $this->input->post('judul'),
+         'pengarang_id' => $this->input->post('pengarang_id'),
+         'penanggungjawab' => $this->input->post('penanggungjawab'),
+         'edisi' => $this->input->post('edisi'),
+         'gmd_id' => $this->input->post('gmd_id'),
+         'tipeisi_id' => $this->input->post('tipeisi_id'),
+         'tipemedia_id' => $this->input->post('tipemedia_id'),
+         'kalaterbit_id' => $this->input->post('kalaterbit_id'),
+         'isbn' => $this->input->post('isbn'),
+         'penerbit_id' => $this->input->post('penerbit_id'),
+         'tahunterbit' => $this->input->post('tahunterbit'),
+         'tempatterbit_id' => $this->input->post('tempatterbit_id'),
+         'deskripsifisik' => $this->input->post('deskripsifisik'),
+         'judulseri' => $this->input->post('judulseri'),
+         'klasifikasi' => $this->input->post('klasifikasi'),
+         'nopanggil' => $this->input->post('nopanggil'),
+         'topik_id' => $this->input->post('topik_id'),
+         'abstrak' => $this->input->post('abstrak'),
+         'lampiran' => $this->input->post('lampiran'),
+         'disableopac' => $this->input->post('disableopac'),
+         'promoberanda' => $this->input->post('promoberanda'),
+         'url' => $this->input->post('url'),
+         'urlmultimedia' => $this->input->post('urlmultimedia'),
+      ];
+      $this->db->where('id', $id);
+      $this->db->update('pp_buku', $data);
+      // Jika Ada Gambar
+      $upload_image = $_FILES['image']['name'];
+
+      if ($upload_image) {
+       $databuku = $this->db->get_where('pp_buku', ['id' =>
+       $id ])->row_array();
+       $gambarsampul = $databuku['gambarsampul'];
+       unlink(FCPATH . 'assets/images/buku/' . $gambarsampul);
+
+          $config['allowed_types'] = 'gif|jpg|png';
+          $config['max_size']     = '200';
+          $config['upload_path'] = './assets/images/buku/';
+          $config['file_name'] = round(microtime(true) * 1000);
+          $this->load->library('upload', $config);
+          if ($this->upload->do_upload('image')) {
+              $new_image = $this->upload->data('file_name');
+              $this->db->set('gambarsampul', $new_image);
+              $this->db->where('id', $id);
+              $this->db->update('pp_buku');
+          } else {
+              echo  $this->upload->display_errors();
+          }
+      }
+
+          $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+          redirect('perpustakaan/edit_buku/'.$id);
+   }
+ }
+
  public function hapus_buku()
  {
   $pcheck = $this->input->post('check');

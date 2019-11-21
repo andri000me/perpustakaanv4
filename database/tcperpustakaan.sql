@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2019 at 09:00 AM
+-- Generation Time: Nov 21, 2019 at 09:37 AM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -123,7 +123,14 @@ CREATE TABLE IF NOT EXISTS `pp_buku` (
   `urlmultimedia` varchar(100) DEFAULT NULL,
   `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+--
+-- Dumping data for table `pp_buku`
+--
+
+INSERT INTO `pp_buku` (`id`, `judul`, `pengarang_id`, `penanggungjawab`, `edisi`, `gmd_id`, `tipeisi_id`, `tipemedia_id`, `kalaterbit_id`, `isbn`, `penerbit_id`, `tahunterbit`, `tempatterbit_id`, `deskripsifisik`, `judulseri`, `klasifikasi`, `nopanggil`, `topik_id`, `abstrak`, `gambarsampul`, `lampiran`, `disableopac`, `promoberanda`, `url`, `urlmultimedia`, `last_update`) VALUES
+(10, 'Ajax ssa', '11', 'asd', 'asd', '33', '2', '1', '1', '111', '3', '55', '6', '55', '88', '66', '77', '10', '99', '1574325417931.jpg', NULL, '1', '1', 'perpustakaan/buku', '55', '2019-11-21 15:36:57');
 
 -- --------------------------------------------------------
 

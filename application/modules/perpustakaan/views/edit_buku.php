@@ -30,7 +30,31 @@
         <div class="row">
         <div class="col-md-12">
             <form action="" method="post"enctype="multipart/form-data">
-
+<?php
+$judul = $get_buku['judul'];
+$pengarang_id = $get_buku['pengarang_id'];
+$penanggungjawab = $get_buku['penanggungjawab'];
+$edisi = $get_buku['edisi'];
+$gmd_id = $get_buku['gmd_id'];
+$tipeisi_id = $get_buku['tipeisi_id'];
+$tipemedia_id = $get_buku['tipemedia_id'];
+$kalaterbit_id = $get_buku['kalaterbit_id'];
+$isbn = $get_buku['isbn'];
+$penerbit_id = $get_buku['penerbit_id'];
+$tahunterbit = $get_buku['tahunterbit'];
+$tempatterbit_id = $get_buku['tempatterbit_id'];
+$deskripsifisik = $get_buku['deskripsifisik'];
+$judulseri = $get_buku['judulseri'];
+$klasifikasi = $get_buku['klasifikasi'];
+$nopanggil = $get_buku['nopanggil'];
+$topik_id = $get_buku['topik_id'];
+$abstrak = $get_buku['abstrak'];
+$gambarsampul = $get_buku['gambarsampul'];
+$disableopac = $get_buku['disableopac'];
+$promoberanda = $get_buku['promoberanda'];
+$url = $get_buku['url'];
+$urlmultimedia = $get_buku['urlmultimedia'];
+?>
 <div class="form-group row">
 <label for="judul" class="col-sm-2 control-label">Judul*</label>
 <div class="col-sm-8">
@@ -218,6 +242,9 @@
 <div class="form-group row">
 <label for="abstrak" class="col-sm-2 control-label">Gambar Sampul</label>
 <div class="col-sm-8">
+<?php if($gambarsampul){?>
+<a href="<?= base_url('assets/images/buku/').$gambarsampul?>"target="new"><?= $gambarsampul?></a>
+<?php } ?>
 <input type="file" class="custom-file-input" id="image" name="image">
 </div>
 </div>
