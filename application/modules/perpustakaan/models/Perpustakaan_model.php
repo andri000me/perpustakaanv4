@@ -165,5 +165,41 @@ class Perpustakaan_model extends CI_Model
           return $this->db->get_where('pp_statusitem', ['id' => $id])->row_array();
 
   }
+  public function get_tipekoleksi()
+  {
+
+    $this->db->select('`pp_tipekoleksi`.*');
+    $this->db->from('pp_tipekoleksi');
+    $this->db->order_by('pp_tipekoleksi.nama', 'asc');
+    return $this->db->get()->result_array();
+  }
+  public function hapus_tipekoleksi($id)
+  {
+          $this->db->where('id', $id);
+          $this->db->delete('pp_tipekoleksi');
+
+  }
+  public function get_tipekoleksi_ById($id){
+          return $this->db->get_where('pp_tipekoleksi', ['id' => $id])->row_array();
+
+  }
+  public function get_codepattern()
+  {
+
+    $this->db->select('`pp_codepattern`.*');
+    $this->db->from('pp_codepattern');
+    $this->db->order_by('pp_codepattern.prefix', 'asc');
+    return $this->db->get()->result_array();
+  }
+  public function hapus_codepattern($id)
+  {
+          $this->db->where('id', $id);
+          $this->db->delete('pp_codepattern');
+
+  }
+  public function get_codepattern_ById($id){
+          return $this->db->get_where('pp_codepattern', ['id' => $id])->row_array();
+
+  }
   //end
 }
