@@ -33,7 +33,7 @@
               </div>
               <div class="form-group <?php echo form_error('length') ? 'has-error' : '' ?>">
                 <label for="name">Length*</label>
-                <input class="form-control" type="text" name="length" value="<?= $get_codepattern['length']; ?>" />
+                <input class="form-control" type="text" name="length" value="5"readonly />
                 <?= form_error('length', '<span class="help-block">', '</small>'); ?>
               </div>     
               <button type="submit" class="btn btn-primary">Simpan</button>

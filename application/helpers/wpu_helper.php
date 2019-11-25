@@ -336,3 +336,9 @@ function get_umur($tanggal_lahir)
     $umur = $diff->y;
     return $umur;
 }
+function get_eksemplarbuku($buku_id)
+{
+    $ci = get_instance();
+$jumbuku = $ci->db->get_where('pp_item',['buku_id' => $buku_id]);
+return $jumbuku->num_rows();
+}

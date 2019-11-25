@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.12
+-- version 4.2.7.1
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2019 at 09:37 AM
--- Server version: 5.6.16
--- PHP Version: 5.5.11
+-- Generation Time: Nov 25, 2019 at 09:46 AM
+-- Server version: 5.6.20
+-- PHP Version: 5.5.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -30,9 +30,8 @@ USE `tcperpustakaan`;
 
 DROP TABLE IF EXISTS `icon`;
 CREATE TABLE IF NOT EXISTS `icon` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `icon` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
+`id` int(10) NOT NULL,
+  `icon` varchar(100) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
 
 --
@@ -72,12 +71,10 @@ INSERT INTO `icon` (`id`, `icon`) VALUES
 
 DROP TABLE IF EXISTS `pp_bahasa`;
 CREATE TABLE IF NOT EXISTS `pp_bahasa` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
+`id` int(10) NOT NULL,
   `kode` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `nama` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `last_update` date DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `language_name` (`nama`)
+  `last_update` date DEFAULT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
@@ -96,7 +93,7 @@ INSERT INTO `pp_bahasa` (`id`, `kode`, `nama`, `last_update`) VALUES
 
 DROP TABLE IF EXISTS `pp_buku`;
 CREATE TABLE IF NOT EXISTS `pp_buku` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
+`id` int(10) NOT NULL,
   `judul` varchar(100) NOT NULL,
   `pengarang_id` varchar(100) NOT NULL,
   `penanggungjawab` varchar(100) NOT NULL,
@@ -121,8 +118,7 @@ CREATE TABLE IF NOT EXISTS `pp_buku` (
   `promoberanda` varchar(100) DEFAULT NULL,
   `url` varchar(100) DEFAULT NULL,
   `urlmultimedia` varchar(100) DEFAULT NULL,
-  `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
@@ -130,7 +126,30 @@ CREATE TABLE IF NOT EXISTS `pp_buku` (
 --
 
 INSERT INTO `pp_buku` (`id`, `judul`, `pengarang_id`, `penanggungjawab`, `edisi`, `gmd_id`, `tipeisi_id`, `tipemedia_id`, `kalaterbit_id`, `isbn`, `penerbit_id`, `tahunterbit`, `tempatterbit_id`, `deskripsifisik`, `judulseri`, `klasifikasi`, `nopanggil`, `topik_id`, `abstrak`, `gambarsampul`, `lampiran`, `disableopac`, `promoberanda`, `url`, `urlmultimedia`, `last_update`) VALUES
-(10, 'Ajax ssa', '11', 'asd', 'asd', '33', '2', '1', '1', '111', '3', '55', '6', '55', '88', '66', '77', '10', '99', '1574325417931.jpg', NULL, '1', '1', 'perpustakaan/buku', '55', '2019-11-21 15:36:57');
+(10, 'Ajax', '11', 'asd', 'asd', '33', '2', '1', '1', '111', '3', '55', '6', '55', '88', '66', '77', '10', '99', '1574325417931.jpg', NULL, '1', '1', 'perpustakaan/buku', '55', '2019-11-25 09:38:20');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pp_codepattern`
+--
+
+DROP TABLE IF EXISTS `pp_codepattern`;
+CREATE TABLE IF NOT EXISTS `pp_codepattern` (
+`id` int(5) NOT NULL,
+  `prefix` varchar(100) NOT NULL,
+  `length` varchar(100) NOT NULL,
+  `itemcodepattern` varchar(100) NOT NULL,
+  `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `pp_codepattern`
+--
+
+INSERT INTO `pp_codepattern` (`id`, `prefix`, `length`, `itemcodepattern`, `last_update`) VALUES
+(1, 'B', '5', 'B00000', '2019-11-25 08:05:15'),
+(2, 'C', '5', 'C00000', '2019-11-25 15:45:57');
 
 -- --------------------------------------------------------
 
@@ -140,13 +159,10 @@ INSERT INTO `pp_buku` (`id`, `judul`, `pengarang_id`, `penanggungjawab`, `edisi`
 
 DROP TABLE IF EXISTS `pp_gmd`;
 CREATE TABLE IF NOT EXISTS `pp_gmd` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `kode` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `nama` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `last_update` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `gmd_name` (`nama`),
-  UNIQUE KEY `gmd_code` (`kode`)
+  `last_update` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=34 ;
 
 --
@@ -190,19 +206,43 @@ INSERT INTO `pp_gmd` (`id`, `kode`, `nama`, `last_update`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pp_item`
+--
+
+DROP TABLE IF EXISTS `pp_item`;
+CREATE TABLE IF NOT EXISTS `pp_item` (
+`id` int(10) NOT NULL,
+  `buku_id` varchar(100) NOT NULL,
+  `nopanggil` varchar(100) NOT NULL,
+  `tipekoleksi_id` varchar(100) NOT NULL,
+  `item_kode` varchar(100) NOT NULL,
+  `lokasi_id` varchar(100) NOT NULL,
+  `lokasi_rak` varchar(100) NOT NULL,
+  `item_status_id` varchar(100) NOT NULL,
+  `supplier_id` varchar(100) NOT NULL,
+  `source_id` varchar(100) NOT NULL,
+  `invoice` varchar(100) NOT NULL,
+  `invoice_tanggal` varchar(100) NOT NULL,
+  `harga` varchar(100) NOT NULL,
+  `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `user` varchar(100) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pp_kalaterbit`
 --
 
 DROP TABLE IF EXISTS `pp_kalaterbit`;
 CREATE TABLE IF NOT EXISTS `pp_kalaterbit` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `nama` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   `language_prefix` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
   `time_increment` smallint(6) DEFAULT NULL,
   `time_unit` enum('day','week','month','year') COLLATE utf8_unicode_ci DEFAULT 'day',
   `input_date` date NOT NULL,
-  `last_update` date NOT NULL,
-  PRIMARY KEY (`id`)
+  `last_update` date NOT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 --
@@ -227,12 +267,10 @@ INSERT INTO `pp_kalaterbit` (`id`, `nama`, `language_prefix`, `time_increment`, 
 
 DROP TABLE IF EXISTS `pp_lokasi`;
 CREATE TABLE IF NOT EXISTS `pp_lokasi` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
+`id` int(10) NOT NULL,
   `kode` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `nama` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `location_name` (`nama`)
+  `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
@@ -250,11 +288,9 @@ INSERT INTO `pp_lokasi` (`id`, `kode`, `nama`, `last_update`) VALUES
 
 DROP TABLE IF EXISTS `pp_penerbit`;
 CREATE TABLE IF NOT EXISTS `pp_penerbit` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `nama` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `last_update` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `publisher_name` (`nama`)
+  `last_update` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=15 ;
 
 --
@@ -282,11 +318,9 @@ INSERT INTO `pp_penerbit` (`id`, `nama`, `last_update`) VALUES
 
 DROP TABLE IF EXISTS `pp_pengarang`;
 CREATE TABLE IF NOT EXISTS `pp_pengarang` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `nama` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `last_update` date DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `author_name` (`nama`)
+  `last_update` date DEFAULT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=26 ;
 
 --
@@ -327,12 +361,10 @@ INSERT INTO `pp_pengarang` (`id`, `nama`, `last_update`) VALUES
 
 DROP TABLE IF EXISTS `pp_statusitem`;
 CREATE TABLE IF NOT EXISTS `pp_statusitem` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
+`id` int(10) NOT NULL,
   `kode` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `nama` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `last_update` date DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `item_status_name` (`nama`)
+  `last_update` date DEFAULT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
@@ -347,16 +379,56 @@ INSERT INTO `pp_statusitem` (`id`, `kode`, `nama`, `last_update`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pp_sumberperolehan`
+--
+
+DROP TABLE IF EXISTS `pp_sumberperolehan`;
+CREATE TABLE IF NOT EXISTS `pp_sumberperolehan` (
+`id` int(10) NOT NULL,
+  `nama` varchar(100) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `pp_sumberperolehan`
+--
+
+INSERT INTO `pp_sumberperolehan` (`id`, `nama`) VALUES
+(1, 'Beli'),
+(2, 'Hadiah/Hibah');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pp_supplier`
+--
+
+DROP TABLE IF EXISTS `pp_supplier`;
+CREATE TABLE IF NOT EXISTS `pp_supplier` (
+`id` int(10) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `alamat` varchar(500) NOT NULL,
+  `kontak` varchar(100) NOT NULL,
+  `hp` varchar(100) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `pp_supplier`
+--
+
+INSERT INTO `pp_supplier` (`id`, `nama`, `alamat`, `kontak`, `hp`) VALUES
+(1, 'Erlangga', '', '', '0813334456');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pp_tempatterbit`
 --
 
 DROP TABLE IF EXISTS `pp_tempatterbit`;
 CREATE TABLE IF NOT EXISTS `pp_tempatterbit` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `nama` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `last_update` date DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `place_name` (`nama`)
+  `last_update` date DEFAULT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
 --
@@ -381,14 +453,11 @@ INSERT INTO `pp_tempatterbit` (`id`, `nama`, `last_update`) VALUES
 
 DROP TABLE IF EXISTS `pp_tipeisi`;
 CREATE TABLE IF NOT EXISTS `pp_tipeisi` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `nama` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `kode` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `kode2` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `content_type` (`nama`),
-  KEY `code` (`kode`)
+  `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=27 ;
 
 --
@@ -425,19 +494,38 @@ INSERT INTO `pp_tipeisi` (`id`, `nama`, `kode`, `kode2`, `last_update`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pp_tipekoleksi`
+--
+
+DROP TABLE IF EXISTS `pp_tipekoleksi`;
+CREATE TABLE IF NOT EXISTS `pp_tipekoleksi` (
+`id` int(5) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `pp_tipekoleksi`
+--
+
+INSERT INTO `pp_tipekoleksi` (`id`, `nama`, `last_update`) VALUES
+(1, 'Reference', '2019-11-25 08:17:14'),
+(2, 'Textbox', '2019-11-25 08:17:19'),
+(3, 'Fiction', '2019-11-25 08:17:24');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pp_tipemedia`
 --
 
 DROP TABLE IF EXISTS `pp_tipemedia`;
 CREATE TABLE IF NOT EXISTS `pp_tipemedia` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `nama` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `kode` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `kode2` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `media_type` (`nama`),
-  KEY `code` (`kode`)
+  `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 --
@@ -464,11 +552,9 @@ INSERT INTO `pp_tipemedia` (`id`, `nama`, `kode`, `kode2`, `last_update`) VALUES
 
 DROP TABLE IF EXISTS `pp_topik`;
 CREATE TABLE IF NOT EXISTS `pp_topik` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `nama` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `last_update` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `topic` (`nama`)
+  `last_update` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=19 ;
 
 --
@@ -502,7 +588,7 @@ INSERT INTO `pp_topik` (`id`, `nama`, `last_update`) VALUES
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `name` varchar(128) NOT NULL,
   `username` varchar(100) NOT NULL,
   `email` varchar(128) NOT NULL,
@@ -510,8 +596,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(256) NOT NULL,
   `role_id` int(11) NOT NULL,
   `is_active` int(1) NOT NULL,
-  `date_created` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  `date_created` int(11) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
@@ -531,10 +616,9 @@ INSERT INTO `user` (`id`, `name`, `username`, `email`, `image`, `password`, `rol
 
 DROP TABLE IF EXISTS `user_access_menu`;
 CREATE TABLE IF NOT EXISTS `user_access_menu` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
-  `menu_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  `menu_id` int(11) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
@@ -559,10 +643,9 @@ INSERT INTO `user_access_menu` (`id`, `role_id`, `menu_id`) VALUES
 
 DROP TABLE IF EXISTS `user_access_submenu`;
 CREATE TABLE IF NOT EXISTS `user_access_submenu` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
-  `submenu_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  `submenu_id` int(11) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=81 ;
 
 --
@@ -650,11 +733,10 @@ INSERT INTO `user_access_submenu` (`id`, `role_id`, `submenu_id`) VALUES
 
 DROP TABLE IF EXISTS `user_menu`;
 CREATE TABLE IF NOT EXISTS `user_menu` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `icon` varchar(255) DEFAULT NULL,
   `menu_id` varchar(50) NOT NULL,
-  `menu` varchar(128) NOT NULL,
-  PRIMARY KEY (`id`)
+  `menu` varchar(128) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
 
 --
@@ -676,9 +758,8 @@ INSERT INTO `user_menu` (`id`, `icon`, `menu_id`, `menu`) VALUES
 
 DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE IF NOT EXISTS `user_role` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `role` varchar(256) NOT NULL,
-  PRIMARY KEY (`id`)
+`id` int(11) NOT NULL,
+  `role` varchar(256) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
@@ -697,15 +778,14 @@ INSERT INTO `user_role` (`id`, `role`) VALUES
 
 DROP TABLE IF EXISTS `user_sub_menu`;
 CREATE TABLE IF NOT EXISTS `user_sub_menu` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `menu_id` int(11) NOT NULL,
   `title` varchar(128) NOT NULL,
   `url` varchar(128) NOT NULL,
   `icon` varchar(128) NOT NULL,
   `sort` int(11) NOT NULL DEFAULT '1',
-  `is_active` int(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
+  `is_active` int(1) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
 
 --
 -- Dumping data for table `user_sub_menu`
@@ -727,14 +807,18 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `sort`, `i
 (14, 17, 'GMD', 'perpustakaan/gmd', '', 1, 1),
 (15, 17, 'Tipe Isi', 'perpustakaan/tipeisi', '', 2, 1),
 (16, 17, 'Tipe Media', 'perpustakaan/tipemedia', '', 3, 1),
-(17, 17, 'Penerbit', 'perpustakaan/penerbit', '', 4, 1),
+(17, 17, 'Penerbit', 'perpustakaan/penerbit', '', 5, 1),
 (18, 17, 'Topik', 'perpustakaan/topik', '', 6, 1),
-(19, 17, 'Tempat Terbit', 'perpustakaan/tempatterbit', '', 5, 1),
-(20, 17, 'Lokasi', 'perpustakaan/lokasi', '', 7, 1),
-(21, 17, 'Bahasa', 'perpustakaan/bahasa', '', 8, 1),
-(22, 17, 'Status Eksemplar', 'perpustakaan/statusitem', '', 9, 1),
-(23, 17, 'Buku', 'perpustakaan/buku', '', 11, 1),
-(24, 17, 'Pengarang', 'perpustakaan/pengarang', '', 10, 1);
+(19, 17, 'Tempat Terbit', 'perpustakaan/tempatterbit', '', 7, 1),
+(20, 17, 'Lokasi', 'perpustakaan/lokasi', '', 8, 1),
+(21, 17, 'Bahasa', 'perpustakaan/bahasa', '', 9, 1),
+(22, 17, 'Status Eksemplar', 'perpustakaan/statusitem', '', 10, 1),
+(23, 17, 'Buku', 'perpustakaan/buku', '', 14, 1),
+(24, 17, 'Pengarang', 'perpustakaan/pengarang', '', 11, 1),
+(25, 17, 'CodePattern', 'perpustakaan/codepattern', '', 12, 1),
+(26, 17, 'Tipe Koleksi', 'perpustakaan/tipekoleksi', '', 4, 1),
+(27, 17, 'Supplier', 'perpustakaan/supplier', '', 13, 1),
+(28, 17, 'Eksemplar', 'perpustakaan/eksemplar', '', 15, 1);
 
 -- --------------------------------------------------------
 
@@ -744,11 +828,10 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `sort`, `i
 
 DROP TABLE IF EXISTS `user_token`;
 CREATE TABLE IF NOT EXISTS `user_token` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `email` varchar(128) NOT NULL,
   `token` varchar(128) NOT NULL,
-  `date_created` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  `date_created` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -759,10 +842,9 @@ CREATE TABLE IF NOT EXISTS `user_token` (
 
 DROP TABLE IF EXISTS `web_setting`;
 CREATE TABLE IF NOT EXISTS `web_setting` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `name` varchar(512) NOT NULL,
-  `is_active` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  `is_active` int(11) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
@@ -773,6 +855,300 @@ INSERT INTO `web_setting` (`id`, `name`, `is_active`) VALUES
 (1, 'signup_member', 1),
 (2, 'forgot_password', 1);
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `icon`
+--
+ALTER TABLE `icon`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pp_bahasa`
+--
+ALTER TABLE `pp_bahasa`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `language_name` (`nama`);
+
+--
+-- Indexes for table `pp_buku`
+--
+ALTER TABLE `pp_buku`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pp_codepattern`
+--
+ALTER TABLE `pp_codepattern`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pp_gmd`
+--
+ALTER TABLE `pp_gmd`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `gmd_name` (`nama`), ADD UNIQUE KEY `gmd_code` (`kode`);
+
+--
+-- Indexes for table `pp_item`
+--
+ALTER TABLE `pp_item`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pp_kalaterbit`
+--
+ALTER TABLE `pp_kalaterbit`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pp_lokasi`
+--
+ALTER TABLE `pp_lokasi`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `location_name` (`nama`);
+
+--
+-- Indexes for table `pp_penerbit`
+--
+ALTER TABLE `pp_penerbit`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `publisher_name` (`nama`);
+
+--
+-- Indexes for table `pp_pengarang`
+--
+ALTER TABLE `pp_pengarang`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `author_name` (`nama`);
+
+--
+-- Indexes for table `pp_statusitem`
+--
+ALTER TABLE `pp_statusitem`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `item_status_name` (`nama`);
+
+--
+-- Indexes for table `pp_sumberperolehan`
+--
+ALTER TABLE `pp_sumberperolehan`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pp_supplier`
+--
+ALTER TABLE `pp_supplier`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pp_tempatterbit`
+--
+ALTER TABLE `pp_tempatterbit`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `place_name` (`nama`);
+
+--
+-- Indexes for table `pp_tipeisi`
+--
+ALTER TABLE `pp_tipeisi`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `content_type` (`nama`), ADD KEY `code` (`kode`);
+
+--
+-- Indexes for table `pp_tipekoleksi`
+--
+ALTER TABLE `pp_tipekoleksi`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pp_tipemedia`
+--
+ALTER TABLE `pp_tipemedia`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `media_type` (`nama`), ADD KEY `code` (`kode`);
+
+--
+-- Indexes for table `pp_topik`
+--
+ALTER TABLE `pp_topik`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `topic` (`nama`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_access_menu`
+--
+ALTER TABLE `user_access_menu`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_access_submenu`
+--
+ALTER TABLE `user_access_submenu`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_menu`
+--
+ALTER TABLE `user_menu`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_role`
+--
+ALTER TABLE `user_role`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_sub_menu`
+--
+ALTER TABLE `user_sub_menu`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_token`
+--
+ALTER TABLE `user_token`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `web_setting`
+--
+ALTER TABLE `web_setting`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `icon`
+--
+ALTER TABLE `icon`
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
+--
+-- AUTO_INCREMENT for table `pp_bahasa`
+--
+ALTER TABLE `pp_bahasa`
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `pp_buku`
+--
+ALTER TABLE `pp_buku`
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `pp_codepattern`
+--
+ALTER TABLE `pp_codepattern`
+MODIFY `id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `pp_gmd`
+--
+ALTER TABLE `pp_gmd`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
+--
+-- AUTO_INCREMENT for table `pp_item`
+--
+ALTER TABLE `pp_item`
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
+--
+-- AUTO_INCREMENT for table `pp_kalaterbit`
+--
+ALTER TABLE `pp_kalaterbit`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `pp_lokasi`
+--
+ALTER TABLE `pp_lokasi`
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `pp_penerbit`
+--
+ALTER TABLE `pp_penerbit`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT for table `pp_pengarang`
+--
+ALTER TABLE `pp_pengarang`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
+--
+-- AUTO_INCREMENT for table `pp_statusitem`
+--
+ALTER TABLE `pp_statusitem`
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `pp_sumberperolehan`
+--
+ALTER TABLE `pp_sumberperolehan`
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `pp_supplier`
+--
+ALTER TABLE `pp_supplier`
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `pp_tempatterbit`
+--
+ALTER TABLE `pp_tempatterbit`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `pp_tipeisi`
+--
+ALTER TABLE `pp_tipeisi`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
+--
+-- AUTO_INCREMENT for table `pp_tipekoleksi`
+--
+ALTER TABLE `pp_tipekoleksi`
+MODIFY `id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `pp_tipemedia`
+--
+ALTER TABLE `pp_tipemedia`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `pp_topik`
+--
+ALTER TABLE `pp_topik`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `user_access_menu`
+--
+ALTER TABLE `user_access_menu`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `user_access_submenu`
+--
+ALTER TABLE `user_access_submenu`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=81;
+--
+-- AUTO_INCREMENT for table `user_menu`
+--
+ALTER TABLE `user_menu`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+--
+-- AUTO_INCREMENT for table `user_role`
+--
+ALTER TABLE `user_role`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `user_sub_menu`
+--
+ALTER TABLE `user_sub_menu`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=29;
+--
+-- AUTO_INCREMENT for table `user_token`
+--
+ALTER TABLE `user_token`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `web_setting`
+--
+ALTER TABLE `web_setting`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

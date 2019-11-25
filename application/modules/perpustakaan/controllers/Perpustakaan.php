@@ -1016,7 +1016,7 @@ foreach($pcheck as $id) {
  //supplier
  public function supplier()
  {
-   $data['title'] = 'Buku';
+   $data['title'] = 'Supplier';
    $data['user'] = $this->db->get_where('user', ['email' =>
    $this->session->userdata('email')])->row_array();
    $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
@@ -1096,7 +1096,9 @@ foreach($pcheck as $id) {
    $data['get_pattern'] = $this->Perpustakaan_model->get_codepattern();
    $data['get_tipekoleksi'] = $this->Perpustakaan_model->get_tipekoleksi();
    $data['get_lokasi'] = $this->Perpustakaan_model->get_lokasi();
-
+   $data['get_statusitem'] = $this->Perpustakaan_model->get_statusitem();
+   $data['get_supplier'] = $this->Perpustakaan_model->get_supplier();
+   $this->form_validation->set_rules('total', 'total', 'required|greater_than[0]');
    if ($this->form_validation->run() == false) {
    $this->load->view('themes/backend/header', $data);
    $this->load->view('themes/backend/sidebar', $data);
@@ -1105,13 +1107,132 @@ foreach($pcheck as $id) {
    $this->load->view('themes/backend/footer');
    $this->load->view('themes/backend/footerajax');
    }else{
-     $data = [
-       'kode' => $this->input->post('kode'),
-       'nama' => $this->input->post('nama')
-        ];
+     $buku_id=$id;
+     $nopanggil = $this->input->post('nopanggil');
+     $pattern_id = $this->input->post('pattern_id');
+     $total = $this->input->post('total');
+     $tipekoleksi_id = $this->input->post('tipekoleksi_id');
+    $lokasi_id = $this->input->post('lokasi_id');
+    $lokasi_rak = $this->input->post('lokasi_rak');
+    $item_status_id = $this->input->post('item_status_id');
+    $supplier_id = $this->input->post('supplier_id');
+    $source_id = $this->input->post('source_id');
+    $invoice = $this->input->post('invoice');
+    $invoice_tanggal = $this->input->post('invoice_tanggal');
+    $harga = $this->input->post('harga');
+    $user = $this->session->userdata('email');
 
+    $harga = preg_replace('/\D/', '', $harga);
+    $prefix = $pattern_id;
+    for ($i = 0; $i < $total; $i++) :
+      $item_kode = $this->Perpustakaan_model->generateitemkode($prefix);
+      $dataitem = [
+      'buku_id' => $buku_id,
+      'nopanggil' => $nopanggil,
+      'tipekoleksi_id' => $tipekoleksi_id,
+      'item_kode' => $item_kode,
+      'lokasi_id' => $lokasi_id,
+      'lokasi_rak' => $lokasi_rak,
+      'item_status_id' => $item_status_id,
+      'supplier_id' => $supplier_id,
+      'source_id' => $source_id,
+      'invoice' => $invoice,
+      'invoice_tanggal' => $invoice_tanggal,
+      'harga' => $harga,
+      'user' => $user,
+        ];
+        $this->db->insert('pp_item', $dataitem);    
+      endfor;
          $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
          redirect('perpustakaan/tambaheksemplar/'.$id);
+   }
+ }
+
+ public function eksemplar()
+ {
+   $data['title'] = 'Eksemplar';
+   $data['user'] = $this->db->get_where('user', ['email' =>
+   $this->session->userdata('email')])->row_array();
+   $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+   $data['listeksemplar'] = $this->Perpustakaan_model->get_eksemplar();
+   $this->load->view('themes/backend/header', $data);
+   $this->load->view('themes/backend/sidebar', $data);
+   $this->load->view('themes/backend/topbar', $data);
+   $this->load->view('themes/backend/javascript', $data);
+   $this->load->view('eksemplar', $data);
+   $this->load->view('themes/backend/footer');
+   $this->load->view('themes/backend/footerajax');
+ }
+ public function hapus_eksemplar()
+ {
+  $pcheck = $this->input->post('check');
+  
+foreach($pcheck as $id) {
+  $dataitem = $this->db->get_where('pp_item', ['id' =>
+		$id ])->row_array();
+    $this->db->where('id', $id);
+  $this->db->delete('pp_item');
+}
+   $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data deleted !</div>');
+   redirect('perpustakaan/eksemplar');
+ }
+
+ //edit_eksemplar
+ public function edit_eksemplar($id)
+ {
+   $data['title'] = 'Eksemplar';
+   $data['user'] = $this->db->get_where('user', ['email' =>
+   $this->session->userdata('email')])->row_array();
+   $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+   $data['get_eksemplar'] = $this->Perpustakaan_model->get_eksemplar_ById($id);
+   $data['get_pattern'] = $this->Perpustakaan_model->get_codepattern();
+   $data['get_tipekoleksi'] = $this->Perpustakaan_model->get_tipekoleksi();
+   $data['get_lokasi'] = $this->Perpustakaan_model->get_lokasi();
+   $data['get_statusitem'] = $this->Perpustakaan_model->get_statusitem();
+   $data['get_supplier'] = $this->Perpustakaan_model->get_supplier();
+   $this->form_validation->set_rules('judul', 'judul', 'required');
+   if ($this->form_validation->run() == false) {
+   $this->load->view('themes/backend/header', $data);
+   $this->load->view('themes/backend/sidebar', $data);
+   $this->load->view('themes/backend/topbar', $data);
+   $this->load->view('edit_eksemplar', $data);
+   $this->load->view('themes/backend/footer');
+   $this->load->view('themes/backend/footerajax');
+   }else{
+    $buku_id = $this->input->post('buku_id');
+     $nopanggil = $this->input->post('nopanggil');
+     $pattern_id = $this->input->post('pattern_id');
+     $total = $this->input->post('total');
+     $tipekoleksi_id = $this->input->post('tipekoleksi_id');
+     $item_kode = $this->input->post('item_kode');
+    $lokasi_id = $this->input->post('lokasi_id');
+    $lokasi_rak = $this->input->post('lokasi_rak');
+    $item_status_id = $this->input->post('item_status_id');
+    $supplier_id = $this->input->post('supplier_id');
+    $source_id = $this->input->post('source_id');
+    $invoice = $this->input->post('invoice');
+    $invoice_tanggal = $this->input->post('invoice_tanggal');
+    $harga = $this->input->post('harga');
+    $user = $this->session->userdata('email');
+    $harga = preg_replace('/\D/', '', $harga);
+      $dataitem = [
+      'buku_id' => $buku_id,
+      'nopanggil' => $nopanggil,
+      'tipekoleksi_id' => $tipekoleksi_id,
+      'item_kode' => $item_kode,
+      'lokasi_id' => $lokasi_id,
+      'lokasi_rak' => $lokasi_rak,
+      'item_status_id' => $item_status_id,
+      'supplier_id' => $supplier_id,
+      'source_id' => $source_id,
+      'invoice' => $invoice,
+      'invoice_tanggal' => $invoice_tanggal,
+      'harga' => $harga,
+        ];  
+        $this->db->where('id', $id);
+          $this->db->update('pp_item', $dataitem);
+         $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+         redirect('perpustakaan/eksemplar');
    }
  }
   //end

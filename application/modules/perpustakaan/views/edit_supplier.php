@@ -57,25 +57,29 @@ $hp=$get_supplier['hp'];
           </div>
           <div class="col-md-8">
             <div class="table-responsive">
-              <table  class="table table-bordered table-striped" id="example1">
+            <table  class="table table-bordered table-striped" id="example1">
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Kode</th>
                     <th>Nama</th>
+                    <th>Alamat</th>
+                    <th>Kontak</th>
+                    <th>HP</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php $i = 1; ?>
-                  <?php foreach ($gmd as $dt) : ?>
+                  <?php foreach ($supplier as $dt) : ?>
                     <tr>
                       <td><?= $i; ?></td>
-                      <td><?= $dt['kode']; ?></td>
                       <td><?= $dt['nama']; ?></td>
+                      <td><?= $dt['alamat']; ?></td>
+                      <td><?= $dt['kontak']; ?></td>
+                      <td><?= $dt['hp']; ?></td>
                       <td>
-                        <a href="<?= base_url('perpustakaan/edit_gmd/' . $dt['id']); ?>" class="btn btn-info btn-xs">Edit</a>
-                        <a href="<?= base_url('perpustakaan/hapus_gmd/' . $dt['id']); ?>" class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin ? data tidak dapat dikembalikan lagi...');">Delete</a>
+                        <a href="<?= base_url('perpustakaan/edit_supplier/' . $dt['id']); ?>" class="btn btn-info btn-xs">Edit</a>
+                        <a href="<?= base_url('perpustakaan/hapus_supplier/' . $dt['id']); ?>" class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin ? data tidak dapat dikembalikan lagi...');">Delete</a>
                       </td>
                     </tr>
                     <?php $i++; ?>

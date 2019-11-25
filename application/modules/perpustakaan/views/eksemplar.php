@@ -22,34 +22,34 @@
       <div class="box-header with-border">
         <h3 class="box-title"><?= $title; ?></h3>
         <div class="box-tools">
-<a href="<?= base_url('perpustakaan/buku') ?>" class="btn btn-warning">Daftar Buku</a>&nbsp;&nbsp;
-<a href="<?= base_url('perpustakaan/tambahbuku') ?>" class="btn btn-primary">Tambah Buku</a>
                 </div>
       </div>
       <div class="box-body">
         <div class="row">
           <div class="col-md-12">
-            <form action="<?= base_url('perpustakaan/hapus_buku') ?>" method="post">
+            <form action="<?= base_url('perpustakaan/hapus_eksemplar') ?>" method="post">
               <table  class="table table-bordered table-striped" id="example1">
                 <thead>
                   <tr>
+                    <th>Kode</th>
                     <th>Judul</th>
-                    <th>ISBN/ISSN</th>
-                    <th>JumlahEksemplar</th>
-                    <th>Last Update</th>
+                    <th>Tipe Koleksi</th>
+                    <th>Lokasi</th>
+                    <th>Klasifikasi</th>
                     <th>Edit</th>
                     <th>Hapus</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php $i = 1; ?>
-                  <?php foreach ($buku as $dt) : ?>
+                  <?php foreach ($listeksemplar as $dt) : ?>
                     <tr>
+                      <td><?= $dt['item_kode']; ?></td>
                       <td><?= $dt['judul']; ?></td>
-                      <td><?= $dt['isbn']; ?></td>
-                      <td align="center"><b><?= get_eksemplarbuku($dt['id']) ?></b> <a href="<?= base_url('perpustakaan/tambaheksemplar/' . $dt['id']); ?>" class="btn btn-success btn-xs"><i class="fa fa-fw fa-plus"></i></a></td>
-                      <td><?= $dt['last_update']; ?></td>
-                      <td><a href="<?= base_url('perpustakaan/edit_buku/' . $dt['id']); ?>" class="btn btn-info btn-xs">Edit</a></td>
+                      <td><?= $dt['tipe_koleksi']; ?></td>
+                      <td><?= $dt['lokasi']; ?></td>
+                      <td><?= $dt['nopanggil']; ?></td>
+                      <td><a href="<?= base_url('perpustakaan/edit_eksemplar/' . $dt['id']); ?>" class="btn btn-info btn-xs">Edit</a></td>
                       <td><input name="check[]" type="checkbox" value="<?= $dt['id'] ?>"></td>
                     </tr>
                     <?php $i++; ?>
