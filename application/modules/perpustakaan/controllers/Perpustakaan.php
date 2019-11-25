@@ -1013,5 +1013,106 @@ foreach($pcheck as $id) {
    $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data deleted !</div>');
    redirect('perpustakaan/buku');
  }
+ //supplier
+ public function supplier()
+ {
+   $data['title'] = 'Buku';
+   $data['user'] = $this->db->get_where('user', ['email' =>
+   $this->session->userdata('email')])->row_array();
+   $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+   $data['supplier'] = $this->Perpustakaan_model->get_supplier();
+
+   $this->form_validation->set_rules('nama', 'nama', 'required|is_unique[pp_supplier.nama]');
+   $this->form_validation->set_rules('alamat', 'alamat');
+   $this->form_validation->set_rules('kontak', 'kontak');
+   $this->form_validation->set_rules('hp', 'hp', 'required');
+   if ($this->form_validation->run() == false) {
+   $this->load->view('themes/backend/header', $data);
+   $this->load->view('themes/backend/sidebar', $data);
+   $this->load->view('themes/backend/topbar', $data);
+   $this->load->view('supplier', $data);
+   $this->load->view('themes/backend/footer');
+   $this->load->view('themes/backend/footerajax');
+   }else{
+       $data = [
+         'nama' => $this->input->post('nama'),
+         'alamat' => $this->input->post('alamat'),
+         'kontak' => $this->input->post('kontak'),
+         'hp' => $this->input->post('hp'),
+          ];
+          $this->db->insert('pp_supplier', $data);
+          $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+          redirect('perpustakaan/supplier');
+   }
+ }
+ public function edit_supplier($id)
+  {
+    $data['title'] = 'Supplier';
+    $data['user'] = $this->db->get_where('user', ['email' =>
+    $this->session->userdata('email')])->row_array();
+    $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+    $data['get_supplier'] = $this->Perpustakaan_model->get_supplier_ById($id);
+    $data['supplier'] = $this->Perpustakaan_model->get_supplier();
+
+    $this->form_validation->set_rules('nama', 'nama', 'required');
+    $this->form_validation->set_rules('alamat', 'alamat');
+    $this->form_validation->set_rules('kontak', 'kontak');
+    $this->form_validation->set_rules('hp', 'hp', 'required');
+    if ($this->form_validation->run() == false) {
+    $this->load->view('themes/backend/header', $data);
+    $this->load->view('themes/backend/sidebar', $data);
+    $this->load->view('themes/backend/topbar', $data);
+    $this->load->view('edit_supplier', $data);
+    $this->load->view('themes/backend/footer');
+    $this->load->view('themes/backend/footerajax');
+    }else{
+      $data = [
+        'nama' => $this->input->post('nama'),
+        'alamat' => $this->input->post('alamat'),
+        'kontak' => $this->input->post('kontak'),
+        'hp' => $this->input->post('hp'),
+         ];
+          $this->db->where('id', $id);
+          $this->db->update('pp_supplier', $data);
+          $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+          redirect('perpustakaan/supplier');
+    }
+  }
+  public function hapus_supplier($id)
+  {
+    $this->db->where('id', $id);
+    $this->db->delete('pp_supplier');
+    $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data deleted !</div>');
+    redirect('perpustakaan/supplier');
+  }
+ //tambaheksemplar
+ public function tambaheksemplar($id)
+ {
+   $data['title'] = 'Buku';
+   $data['user'] = $this->db->get_where('user', ['email' =>
+   $this->session->userdata('email')])->row_array();
+   $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+   $data['get_buku'] = $this->Perpustakaan_model->get_buku_ById($id);
+   $data['get_pattern'] = $this->Perpustakaan_model->get_codepattern();
+   $data['get_tipekoleksi'] = $this->Perpustakaan_model->get_tipekoleksi();
+   $data['get_lokasi'] = $this->Perpustakaan_model->get_lokasi();
+
+   if ($this->form_validation->run() == false) {
+   $this->load->view('themes/backend/header', $data);
+   $this->load->view('themes/backend/sidebar', $data);
+   $this->load->view('themes/backend/topbar', $data);
+   $this->load->view('tambaheksemplar', $data);
+   $this->load->view('themes/backend/footer');
+   $this->load->view('themes/backend/footerajax');
+   }else{
+     $data = [
+       'kode' => $this->input->post('kode'),
+       'nama' => $this->input->post('nama')
+        ];
+
+         $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+         redirect('perpustakaan/tambaheksemplar/'.$id);
+   }
+ }
   //end
 }

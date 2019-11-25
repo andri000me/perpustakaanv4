@@ -162,6 +162,7 @@ function goBack() {
     $(function($) {
       $('#bayar').autoNumeric('init', {  lZero: 'deny', aSep: ',', mDec: 0 });    
        $('#UangKembali').autoNumeric('init', {  lZero: 'deny', aSep: ',', mDec: 0 });    
+       $('#harga').autoNumeric('init', {  lZero: 'deny', aSep: ',', mDec: 0 });    
     });  
   </script>
 
@@ -469,5 +470,10 @@ $('#tglselesai').datetimepicker({
 	lang:'en',
 	timepicker:true,
 	format:'Y-m-d H:i:s'
+});
+$('#tanggalfaktur').datetimepicker({
+	lang:'en',
+	timepicker:false,
+	format:'Y-m-d'
 });
 </script>

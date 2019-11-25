@@ -47,7 +47,7 @@
                     <tr>
                       <td><?= $dt['judul']; ?></td>
                       <td><?= $dt['isbn']; ?></td>
-                      <td></td>
+                      <td> <a href="<?= base_url('perpustakaan/tambaheksemplar/' . $dt['id']); ?>" class="btn btn-success btn-xs"><i class="fa fa-fw fa-plus"></i></a></td>
                       <td><?= $dt['last_update']; ?></td>
                       <td><a href="<?= base_url('perpustakaan/edit_buku/' . $dt['id']); ?>" class="btn btn-info btn-xs">Edit</a></td>
                       <td><input name="check[]" type="checkbox" value="<?= $dt['id'] ?>"></td>

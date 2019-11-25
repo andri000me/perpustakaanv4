@@ -239,5 +239,23 @@ class Perpustakaan_model extends CI_Model
         return $this->db->get_where('pp_buku', ['id' => $id])->row_array();
 
 }
+public function get_supplier()
+{
+
+  $this->db->select('`pp_supplier`.*');
+  $this->db->from('pp_supplier');
+  $this->db->order_by('pp_supplier.nama', 'asc');
+  return $this->db->get()->result_array();
+}
+public function hapus_supplier($id)
+{
+        $this->db->where('id', $id);
+        $this->db->delete('pp_supplier');
+
+}
+public function get_supplier_ById($id){
+        return $this->db->get_where('pp_supplier', ['id' => $id])->row_array();
+
+}
   //end
 }
