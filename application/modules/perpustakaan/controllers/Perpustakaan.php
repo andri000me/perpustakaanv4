@@ -1235,5 +1235,95 @@ foreach($pcheck as $id) {
          redirect('perpustakaan/eksemplar');
    }
  }
+  // tipeanggota
+  public function tipeanggota()
+  {
+    $data['title'] = 'Tipe Anggota';
+    $data['user'] = $this->db->get_where('user', ['email' =>
+    $this->session->userdata('email')])->row_array();
+    $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+    $data['tipeanggota'] = $this->Perpustakaan_model->get_tipeanggota();
+    $this->load->view('themes/backend/header', $data);
+    $this->load->view('themes/backend/sidebar', $data);
+    $this->load->view('themes/backend/topbar', $data);
+    $this->load->view('themes/backend/javascript', $data);
+    $this->load->view('tipeanggota', $data);
+    $this->load->view('themes/backend/footer');
+    $this->load->view('themes/backend/footerajax');
+ 
+  }
+  public function tambahtipeanggota()
+  {
+    $data['title'] = 'Tipe Anggota';
+    $data['user'] = $this->db->get_where('user', ['email' =>
+    $this->session->userdata('email')])->row_array();
+    $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+ 
+    $this->form_validation->set_rules('nama', 'nama', 'required|is_unique[pp_member_type.nama]');
+    if ($this->form_validation->run() == false) {
+    $this->load->view('themes/backend/header', $data);
+    $this->load->view('themes/backend/sidebar', $data);
+    $this->load->view('themes/backend/topbar', $data);
+    $this->load->view('tambahtipeanggota', $data);
+    $this->load->view('themes/backend/footer');
+    $this->load->view('themes/backend/footerajax');
+    }else{
+        $data = [
+          'nama' => $this->input->post('nama'),
+          'loan_limit' => $this->input->post('loan_limit'),
+          'loan_periode' => $this->input->post('loan_periode'),
+          'reborrow_limit' => $this->input->post('reborrow_limit'),
+          'fine_each_day' => $this->input->post('fine_each_day'),
+           ];
+           $this->db->insert('pp_member_type', $data);
+           $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+           redirect('perpustakaan/tipeanggota');
+    }
+  }
+
+  //edit_tipeanggota
+ public function edit_tipeanggota($id)
+ {
+   $data['title'] = 'Tipe Anggota';
+   $data['user'] = $this->db->get_where('user', ['email' =>
+   $this->session->userdata('email')])->row_array();
+   $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+   $data['get_tipeanggota'] = $this->Perpustakaan_model->get_tipeanggota_ById($id);
+   $this->form_validation->set_rules('nama', 'nama', 'required');
+   if ($this->form_validation->run() == false) {
+   $this->load->view('themes/backend/header', $data);
+   $this->load->view('themes/backend/sidebar', $data);
+   $this->load->view('themes/backend/topbar', $data);
+   $this->load->view('edit_tipeanggota', $data);
+   $this->load->view('themes/backend/footer');
+   $this->load->view('themes/backend/footerajax');
+   }else{
+  
+      $dataitem = [
+        'nama' => $this->input->post('nama'),
+        'loan_limit' => $this->input->post('loan_limit'),
+        'loan_periode' => $this->input->post('loan_periode'),
+        'reborrow_limit' => $this->input->post('reborrow_limit'),
+        'fine_each_day' => $this->input->post('fine_each_day'),
+        ];  
+        $this->db->where('id', $id);
+          $this->db->update('pp_member_type', $dataitem);
+         $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+         redirect('perpustakaan/tipeanggota');
+   }
+ }
+  public function hapus_tipeanggota()
+  {
+   $pcheck = $this->input->post('check');
+   
+ foreach($pcheck as $id) {
+   $dataitem = $this->db->get_where('pp_member_type', ['id' =>
+     $id ])->row_array();
+     $this->db->where('id', $id);
+   $this->db->delete('pp_member_type');
+ }
+    $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data deleted !</div>');
+    redirect('perpustakaan/tipeanggota');
+  }
   //end
 }

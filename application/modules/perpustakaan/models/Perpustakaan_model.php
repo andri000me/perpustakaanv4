@@ -295,5 +295,17 @@ public function get_eksemplar_ById($id){
         return $this->db->get()->row_array();
 
 }
+public function get_tipeanggota()
+{
+
+  $this->db->select('`pp_member_type`.*');
+  $this->db->from('pp_member_type');
+  $this->db->order_by('pp_member_type.id', 'asc');
+  return $this->db->get()->result_array();
+}
+public function get_tipeanggota_ById($id){
+        return $this->db->get_where('pp_member_type', ['id' => $id])->row_array();
+
+}
   //end
 }
