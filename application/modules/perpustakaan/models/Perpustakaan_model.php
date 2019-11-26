@@ -307,5 +307,19 @@ public function get_tipeanggota_ById($id){
         return $this->db->get_where('pp_member_type', ['id' => $id])->row_array();
 
 }
+public function get_anggota()
+{
+
+  $this->db->select('member.*,pp_member_type.nama as tipeanggota');
+  $this->db->from('member');
+  $this->db->order_by('member.kode', 'asc');
+  $this->db->join('pp_member_type', 'pp_member_type.id = member.member_type_id');
+  return $this->db->get()->result_array();
+}
+
+public function get_anggota_ById($id){
+        return $this->db->get_where('member', ['id' => $id])->row_array();
+
+}
   //end
 }

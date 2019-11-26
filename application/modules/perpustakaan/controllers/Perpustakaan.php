@@ -1325,5 +1325,121 @@ foreach($pcheck as $id) {
     $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data deleted !</div>');
     redirect('perpustakaan/tipeanggota');
   }
+
+//anggota
+  public function anggota()
+  {
+    $data['title'] = 'Anggota';
+    $data['user'] = $this->db->get_where('user', ['email' =>
+    $this->session->userdata('email')])->row_array();
+    $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+    $data['anggota'] = $this->Perpustakaan_model->get_anggota();
+    $this->load->view('themes/backend/header', $data);
+    $this->load->view('themes/backend/sidebar', $data);
+    $this->load->view('themes/backend/topbar', $data);
+    $this->load->view('themes/backend/javascript', $data);
+    $this->load->view('anggota', $data);
+    $this->load->view('themes/backend/footer');
+    $this->load->view('themes/backend/footerajax');
+ 
+  }
+  public function tambahanggota()
+  {
+    $data['title'] = 'Anggota';
+    $data['user'] = $this->db->get_where('user', ['email' =>
+    $this->session->userdata('email')])->row_array();
+    $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+    $data['list_member_type'] = $this->Perpustakaan_model->get_tipeanggota();
+
+    $this->form_validation->set_rules('kode', 'kode', 'required|is_unique[member.kode]');
+    $this->form_validation->set_rules('nama', 'nama', 'required');
+    $this->form_validation->set_rules('gender', 'gender','required');
+    $this->form_validation->set_rules('member_type_id', 'member_type_id');
+    $this->form_validation->set_rules('member_address', 'member_address');
+    $this->form_validation->set_rules('member_hp', 'member_hp');
+    $this->form_validation->set_rules('inst_name', 'inst_name');
+    $this->form_validation->set_rules('mpassword', 'mpassword');
+    if ($this->form_validation->run() == false) {
+    $this->load->view('themes/backend/header', $data);
+    $this->load->view('themes/backend/sidebar', $data);
+    $this->load->view('themes/backend/topbar', $data);
+    $this->load->view('tambahanggota', $data);
+    $this->load->view('themes/backend/footer');
+    $this->load->view('themes/backend/footerajax');
+    }else{
+        $data = [
+          'kode' => $this->input->post('kode'),
+          'nama' => $this->input->post('nama'),
+          'gender' => $this->input->post('gender'),
+          'member_type_id' => $this->input->post('member_type_id'),
+          'member_address' => $this->input->post('member_address'),
+          'member_hp' => $this->input->post('member_hp'),
+          'inst_name' => $this->input->post('inst_name'),
+          'mpassword' => md5($this->input->post('mpassword')),
+           ];
+           $this->db->insert('member', $data);
+           $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+           redirect('perpustakaan/anggota');
+    }
+  }
+  public function edit_anggota($id)
+  {
+    $data['title'] = 'Anggota';
+    $data['user'] = $this->db->get_where('user', ['email' =>
+    $this->session->userdata('email')])->row_array();
+    $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+    $data['list_member_type'] = $this->Perpustakaan_model->get_tipeanggota();
+    $data['get_anggota'] = $this->Perpustakaan_model->get_anggota_ById($id);
+
+    $this->form_validation->set_rules('kode', 'kode', 'required|is_unique[member.kode]');
+    $this->form_validation->set_rules('nama', 'nama', 'required');
+    $this->form_validation->set_rules('gender', 'gender','required');
+    $this->form_validation->set_rules('member_type_id', 'member_type_id');
+    $this->form_validation->set_rules('member_address', 'member_address');
+    $this->form_validation->set_rules('member_hp', 'member_hp');
+    $this->form_validation->set_rules('inst_name', 'inst_name');
+    $this->form_validation->set_rules('mpassword', 'mpassword');
+    if ($this->form_validation->run() == false) {
+    $this->load->view('themes/backend/header', $data);
+    $this->load->view('themes/backend/sidebar', $data);
+    $this->load->view('themes/backend/topbar', $data);
+    $this->load->view('edit_anggota', $data);
+    $this->load->view('themes/backend/footer');
+    $this->load->view('themes/backend/footerajax');
+    }else{
+        $dataitem = [
+          'kode' => $this->input->post('kode'),
+          'nama' => $this->input->post('nama'),
+          'gender' => $this->input->post('gender'),
+          'member_type_id' => $this->input->post('member_type_id'),
+          'member_address' => $this->input->post('member_address'),
+          'member_hp' => $this->input->post('member_hp'),
+          'inst_name' => $this->input->post('inst_name'),
+           ];
+           $this->db->where('id', $id);
+           $this->db->update('member', $dataitem);
+           $mpassword = $this->input->post('mpassword');
+           if ($mpassword) {
+            $this->db->set('mpassword', md5($mpassword));
+            $this->db->where('id', $id);
+            $this->db->update('member');
+          }
+           $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+           redirect('perpustakaan/anggota');
+    }
+  }
+  public function hapus_anggota()
+  {
+   $pcheck = $this->input->post('check');
+   
+ foreach($pcheck as $id) {
+   $dataitem = $this->db->get_where('member', ['id' =>
+     $id ])->row_array();
+     $this->db->where('id', $id);
+   $this->db->delete('member');
+ }
+    $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data deleted !</div>');
+    redirect('perpustakaan/anggota');
+  }
   //end
 }

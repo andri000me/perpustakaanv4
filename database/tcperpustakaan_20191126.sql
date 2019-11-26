@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2019 at 03:55 AM
+-- Generation Time: Nov 26, 2019 at 05:05 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -62,6 +62,35 @@ INSERT INTO `icon` (`id`, `icon`) VALUES
 (24, 'fa fa-fw fa-building'),
 (25, 'fa fa-fw fa-money'),
 (26, 'fa fa-fw fa-graduation-cap');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `member`
+--
+
+DROP TABLE IF EXISTS `member`;
+CREATE TABLE IF NOT EXISTS `member` (
+`id` int(10) NOT NULL,
+  `kode` varchar(10) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `gender` varchar(100) NOT NULL,
+  `member_type_id` varchar(100) NOT NULL,
+  `member_address` varchar(500) NOT NULL,
+  `member_hp` varchar(100) NOT NULL,
+  `inst_name` varchar(100) NOT NULL,
+  `mpassword` varchar(100) NOT NULL,
+  `member_image` varchar(100) NOT NULL,
+  `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `member`
+--
+
+INSERT INTO `member` (`id`, `kode`, `nama`, `gender`, `member_type_id`, `member_address`, `member_hp`, `inst_name`, `mpassword`, `member_image`, `last_update`) VALUES
+(1, '001', '001', '1', '1', '001', '001', '001', 'dc5c7986daef50c1e02ab09b442ee34f', '', '2019-11-26 10:52:16'),
+(2, '003', '003', '1', '1', '003', '003', '003', '93dd4de5cddba2c733c65f233097f05a', '', '2019-11-26 11:04:37');
 
 -- --------------------------------------------------------
 
@@ -818,7 +847,7 @@ CREATE TABLE IF NOT EXISTS `user_sub_menu` (
   `icon` varchar(128) NOT NULL,
   `sort` int(11) NOT NULL DEFAULT '1',
   `is_active` int(1) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
 
 --
 -- Dumping data for table `user_sub_menu`
@@ -852,7 +881,8 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `sort`, `i
 (26, 17, 'Tipe Koleksi', 'perpustakaan/tipekoleksi', '', 4, 1),
 (27, 17, 'Supplier', 'perpustakaan/supplier', '', 13, 1),
 (28, 17, 'Eksemplar', 'perpustakaan/eksemplar', '', 15, 1),
-(29, 17, 'Tipe Anggota', 'perpustakaan/tipeanggota', '', 16, 1);
+(29, 17, 'Tipe Anggota', 'perpustakaan/tipeanggota', '', 16, 1),
+(30, 17, 'Anggota', 'perpustakaan/anggota', '', 17, 1);
 
 -- --------------------------------------------------------
 
@@ -897,6 +927,12 @@ INSERT INTO `web_setting` (`id`, `name`, `is_active`) VALUES
 -- Indexes for table `icon`
 --
 ALTER TABLE `icon`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `member`
+--
+ALTER TABLE `member`
  ADD PRIMARY KEY (`id`);
 
 --
@@ -1065,6 +1101,11 @@ ALTER TABLE `web_setting`
 ALTER TABLE `icon`
 MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
 --
+-- AUTO_INCREMENT for table `member`
+--
+ALTER TABLE `member`
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `pp_bahasa`
 --
 ALTER TABLE `pp_bahasa`
@@ -1183,7 +1224,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT for table `user_sub_menu`
 --
 ALTER TABLE `user_sub_menu`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `user_token`
 --
