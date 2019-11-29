@@ -1351,7 +1351,7 @@ foreach($pcheck as $id) {
     $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
     $data['list_member_type'] = $this->Perpustakaan_model->get_tipeanggota();
 
-    $this->form_validation->set_rules('kode', 'kode', 'required|is_unique[member.kode]');
+    $this->form_validation->set_rules('kode', 'kode', 'required|is_unique[pp_member.kode]');
     $this->form_validation->set_rules('nama', 'nama', 'required');
     $this->form_validation->set_rules('gender', 'gender','required');
     $this->form_validation->set_rules('member_type_id', 'member_type_id');
@@ -1377,7 +1377,7 @@ foreach($pcheck as $id) {
           'inst_name' => $this->input->post('inst_name'),
           'mpassword' => md5($this->input->post('mpassword')),
            ];
-           $this->db->insert('member', $data);
+           $this->db->insert('pp_member', $data);
            $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
            redirect('perpustakaan/anggota');
     }
@@ -1391,7 +1391,7 @@ foreach($pcheck as $id) {
     $data['list_member_type'] = $this->Perpustakaan_model->get_tipeanggota();
     $data['get_anggota'] = $this->Perpustakaan_model->get_anggota_ById($id);
 
-    $this->form_validation->set_rules('kode', 'kode', 'required|is_unique[member.kode]');
+    $this->form_validation->set_rules('kode', 'kode', 'required');
     $this->form_validation->set_rules('nama', 'nama', 'required');
     $this->form_validation->set_rules('gender', 'gender','required');
     $this->form_validation->set_rules('member_type_id', 'member_type_id');
@@ -1417,12 +1417,12 @@ foreach($pcheck as $id) {
           'inst_name' => $this->input->post('inst_name'),
            ];
            $this->db->where('id', $id);
-           $this->db->update('member', $dataitem);
+           $this->db->update('pp_member', $dataitem);
            $mpassword = $this->input->post('mpassword');
            if ($mpassword) {
             $this->db->set('mpassword', md5($mpassword));
             $this->db->where('id', $id);
-            $this->db->update('member');
+            $this->db->update('pp_member');
           }
            $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
            redirect('perpustakaan/anggota');
@@ -1433,10 +1433,10 @@ foreach($pcheck as $id) {
    $pcheck = $this->input->post('check');
    
  foreach($pcheck as $id) {
-   $dataitem = $this->db->get_where('member', ['id' =>
+   $dataitem = $this->db->get_where('pp_member', ['id' =>
      $id ])->row_array();
      $this->db->where('id', $id);
-   $this->db->delete('member');
+   $this->db->delete('pp_member');
  }
     $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data deleted !</div>');
     redirect('perpustakaan/anggota');
