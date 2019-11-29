@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2019 at 02:58 AM
+-- Generation Time: Nov 29, 2019 at 09:23 AM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -281,6 +281,39 @@ INSERT INTO `pp_kalaterbit` (`id`, `nama`, `language_prefix`, `time_increment`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pp_loan`
+--
+
+DROP TABLE IF EXISTS `pp_loan`;
+CREATE TABLE IF NOT EXISTS `pp_loan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `item_kode` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `member_id` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `loan_date` date NOT NULL,
+  `due_date` date NOT NULL,
+  `renewed` int(11) NOT NULL DEFAULT '0',
+  `is_lent` int(11) NOT NULL DEFAULT '1',
+  `is_return` int(11) NOT NULL DEFAULT '0',
+  `return_date` date DEFAULT NULL,
+  `last_update` datetime DEFAULT NULL,
+  `user_id` varchar(11) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `item_code` (`item_kode`),
+  KEY `member_id` (`member_id`),
+  KEY `input_date` (`last_update`,`user_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `pp_loan`
+--
+
+INSERT INTO `pp_loan` (`id`, `item_kode`, `member_id`, `loan_date`, `due_date`, `renewed`, `is_lent`, `is_return`, `return_date`, `last_update`, `user_id`) VALUES
+(1, 'B00001', '001', '2019-11-29', '2019-12-06', 0, 1, 0, NULL, NULL, '4'),
+(2, 'B00002', '001', '2019-11-29', '2019-12-06', 0, 1, 0, NULL, NULL, '4');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pp_lokasi`
 --
 
@@ -310,7 +343,7 @@ INSERT INTO `pp_lokasi` (`id`, `kode`, `nama`, `last_update`) VALUES
 DROP TABLE IF EXISTS `pp_member`;
 CREATE TABLE IF NOT EXISTS `pp_member` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `kode` varchar(10) NOT NULL,
+  `member_id` varchar(10) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `gender` varchar(100) NOT NULL,
   `member_type_id` varchar(100) NOT NULL,
@@ -327,9 +360,9 @@ CREATE TABLE IF NOT EXISTS `pp_member` (
 -- Dumping data for table `pp_member`
 --
 
-INSERT INTO `pp_member` (`id`, `kode`, `nama`, `gender`, `member_type_id`, `member_address`, `member_hp`, `inst_name`, `mpassword`, `member_image`, `last_update`) VALUES
-(1, '001', '001', '1', '1', '001', '001', '001', 'dc5c7986daef50c1e02ab09b442ee34f', '', '2019-11-26 10:52:16'),
-(2, '003', '003', '1', '1', '003', '003', '003', '93dd4de5cddba2c733c65f233097f05a', '', '2019-11-26 11:04:37');
+INSERT INTO `pp_member` (`id`, `member_id`, `nama`, `gender`, `member_type_id`, `member_address`, `member_hp`, `inst_name`, `mpassword`, `member_image`, `last_update`) VALUES
+(1, '001', 'Bohemian Rhapsody', '1', '1', '001', '001', '001', 'dc5c7986daef50c1e02ab09b442ee34f', '', '2019-11-29 10:17:08'),
+(2, '003', 'Yesterday', '1', '1', '003', '003', '003', '93dd4de5cddba2c733c65f233097f05a', '', '2019-11-29 10:17:15');
 
 -- --------------------------------------------------------
 
@@ -887,7 +920,7 @@ CREATE TABLE IF NOT EXISTS `user_sub_menu` (
   `sort` int(11) NOT NULL DEFAULT '1',
   `is_active` int(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=32 ;
 
 --
 -- Dumping data for table `user_sub_menu`
@@ -922,7 +955,8 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `sort`, `i
 (27, 17, 'Supplier', 'perpustakaan/supplier', '', 13, 1),
 (28, 17, 'Eksemplar', 'perpustakaan/eksemplar', '', 15, 1),
 (29, 17, 'Tipe Anggota', 'perpustakaan/tipeanggota', '', 16, 1),
-(30, 17, 'Anggota', 'perpustakaan/anggota', '', 17, 1);
+(30, 17, 'Anggota', 'perpustakaan/anggota', '', 17, 1),
+(31, 17, 'Transaksi', 'perpustakaan/transaksi', '', 18, 1);
 
 -- --------------------------------------------------------
 

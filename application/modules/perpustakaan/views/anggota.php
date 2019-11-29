@@ -46,7 +46,7 @@
                   <?php $i = 1; ?>
                   <?php foreach ($anggota as $dt) : ?>
                     <tr>
-                      <td><?= $dt['kode']; ?></td>
+                      <td><?= $dt['member_id']; ?></td>
                       <td><?= $dt['nama']; ?></td>
                       <td><?= $dt['tipeanggota']; ?></td>
                       <td><?= $dt['member_hp']; ?></td>

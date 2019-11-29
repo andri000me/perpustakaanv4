@@ -1351,7 +1351,7 @@ foreach($pcheck as $id) {
     $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
     $data['list_member_type'] = $this->Perpustakaan_model->get_tipeanggota();
 
-    $this->form_validation->set_rules('kode', 'kode', 'required|is_unique[pp_member.kode]');
+    $this->form_validation->set_rules('member_id', 'member_id', 'required|is_unique[pp_member.member_id]');
     $this->form_validation->set_rules('nama', 'nama', 'required');
     $this->form_validation->set_rules('gender', 'gender','required');
     $this->form_validation->set_rules('member_type_id', 'member_type_id');
@@ -1368,7 +1368,7 @@ foreach($pcheck as $id) {
     $this->load->view('themes/backend/footerajax');
     }else{
         $data = [
-          'kode' => $this->input->post('kode'),
+          'member_id' => $this->input->post('member_id'),
           'nama' => $this->input->post('nama'),
           'gender' => $this->input->post('gender'),
           'member_type_id' => $this->input->post('member_type_id'),
@@ -1391,7 +1391,7 @@ foreach($pcheck as $id) {
     $data['list_member_type'] = $this->Perpustakaan_model->get_tipeanggota();
     $data['get_anggota'] = $this->Perpustakaan_model->get_anggota_ById($id);
 
-    $this->form_validation->set_rules('kode', 'kode', 'required');
+    $this->form_validation->set_rules('member_id', 'member_id', 'required');
     $this->form_validation->set_rules('nama', 'nama', 'required');
     $this->form_validation->set_rules('gender', 'gender','required');
     $this->form_validation->set_rules('member_type_id', 'member_type_id');
@@ -1408,7 +1408,7 @@ foreach($pcheck as $id) {
     $this->load->view('themes/backend/footerajax');
     }else{
         $dataitem = [
-          'kode' => $this->input->post('kode'),
+          'member_id' => $this->input->post('member_id'),
           'nama' => $this->input->post('nama'),
           'gender' => $this->input->post('gender'),
           'member_type_id' => $this->input->post('member_type_id'),
@@ -1441,5 +1441,156 @@ foreach($pcheck as $id) {
     $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data deleted !</div>');
     redirect('perpustakaan/anggota');
   }
+
+  //transaksi
+  public function transaksi()
+  {
+    $data['title'] = 'Transaksi';
+    $data['user'] = $this->db->get_where('user', ['email' =>
+    $this->session->userdata('email')])->row_array();
+    $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+    $data['selectanggota'] = $this->Perpustakaan_model->get_anggota();
+    if ($this->session->userdata('member_id')) {
+			redirect('perpustakaan/transaksi2');
+    }
+    
+    $this->form_validation->set_rules('member_id', 'member_id','required');
+    if ($this->form_validation->run() == false) {
+    $this->load->view('themes/backend/header', $data);
+    $this->load->view('themes/backend/sidebar', $data);
+    $this->load->view('themes/backend/topbar', $data);
+    $this->load->view('themes/backend/javascript', $data);
+    $this->load->view('transaksi', $data);
+    $this->load->view('themes/backend/footer');
+    $this->load->view('themes/backend/footerajax');
+  }else{
+    $member_id=$this->input->post('member_id');
+    $dataanggota = $this->db->get_where('pp_member', ['member_id' =>
+    $member_id ])->row_array();
+    if(!$dataanggota){
+      $this->session->set_flashdata('message', '<div class="alert alert-danger" role"alert">ID Anggota '.$member_id.' tidak terdaftar (tidak terdaftar dalam pangkalan data) !</div>');
+      redirect('perpustakaan/transaksi');
+    }else{
+    $datamembertype = $this->db->get_where('pp_member_type', ['id' =>
+    $dataanggota['member_type_id'] ])->row_array();
+      $data = [
+        'member_id' => $member_id,
+        'loan_limit'=>$datamembertype['loan_limit'],
+        'loan_periode'=>$datamembertype['loan_periode'],
+      ];
+      $this->session->set_userdata($data);
+      redirect('perpustakaan/transaksi2');
+    }
+
+
+  } 
+ 
+  }
+    //transaksi
+    public function transaksi2()
+    {
+      $data['title'] = 'Transaksi';
+      $data['user'] = $this->db->get_where('user', ['email' =>
+      $this->session->userdata('email')])->row_array();
+      $member_id= $this->session->userdata('member_id');
+      $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+      $data['getanggota'] = $this->Perpustakaan_model->get_anggotapeminjaman_Bykode($member_id);
+      $data['loan_limit']=$this->session->userdata('loan_limit');
+      $data['loan_periode']=$this->session->userdata('loan_periode');
+
+      $data['getloan'] = $this->Perpustakaan_model->get_loan_Bymember_id($member_id);
+
+      $data['jumlahitemcart']=  $this->cart->total_items();
+      $this->load->view('themes/backend/header', $data);
+      $this->load->view('themes/backend/sidebar', $data);
+      $this->load->view('themes/backend/topbar', $data);
+      $this->load->view('themes/backend/javascript', $data);
+      $this->load->view('transaksi2', $data);
+      $this->load->view('themes/backend/footer');
+      $this->load->view('themes/backend/footerajax');
+
+    } 
+      //selesaitransaksi
+  public function selesaitransaksi()
+  {
+    $user = $this->db->get_where('user', ['email' =>
+      $this->session->userdata('email')])->row_array();
+    $member_id=$this->session->userdata('member_id');
+    $loan_date = date('Y-m-d');
+    $pinjamperiode=$this->session->userdata('loan_periode');
+    $due_date = date('Y-m-d', strtotime('+'.$pinjamperiode.' days', strtotime($loan_date)));
+if ($cart = $this->cart->contents())
+{
+foreach ($cart as $item)
+{
+$data = array(
+'item_kode' => $item['id'],
+'member_id' => $member_id,
+'loan_date' => $loan_date,
+'due_date' => $due_date,
+'user_id' => $user['id']
+);
+$this->db->insert('pp_loan', $data);
+            }
+    }
+    // end insert
+    $this->session->set_flashdata('message', '<div class="alert alert-info" role"alert">ID Member '.$this->session->userdata('member_id').' telah melakukan transaksi !</div>');
+    $this->session->unset_userdata('member_id');
+    $this->session->unset_userdata('loan_limit');
+    $this->session->unset_userdata('loan_periode');
+    $this->cart->destroy();
+    redirect('perpustakaan/transaksi');
+  }
+
+    //tambahitem
+    public function tambahitem()
+    {
+      $member_id=$this->session->userdata('member_id');
+      $item_kode=$this->input->post('item_kode');
+      $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+      $itemdipinjam = $this->Perpustakaan_model->cekpeminjamanbuku($item_kode);
+      if($itemdipinjam['item_kode']){
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role"alert">
+        Kode Eksemplar #'.$item_kode.' tidak tersedia    
+        </div>');
+      }else{
+        $query = $this->db->query("SELECT * FROM pp_loan where member_id='$member_id' and is_return='0'");
+        $is_lent=$query->num_rows();
+      $itemcart=  $this->cart->total_items();
+      $jumlahpinjamsekarang=$itemcart+$is_lent;
+      if($this->session->userdata('loan_limit')==$jumlahpinjamsekarang){
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role"alert">
+        Peminjaman melebihi Batas!  
+        </div>');
+      }else{
+    $item = $this->Perpustakaan_model->get_eksemplar_ByKode($item_kode);
+    $loan_date = date('Y-m-d');
+    $pinjamperiode=$this->session->userdata('loan_periode');
+    $due_date = date('Y-m-d', strtotime('+'.$pinjamperiode.' days', strtotime($loan_date)));
+    $data = array(
+        'id' => $item['item_kode'], 
+        'name' => $item['judul'], 
+        'price' => '0', 
+        'qty' => '1', 
+        'options' => array('loan_date' => $loan_date, 'due_date' => $due_date)
+    );
+    $this->cart->insert($data);
+  }
+  }
+      redirect('perpustakaan/transaksi2');
+    }
+
+        //hapusitem
+        public function hapusitem($row_id)
+        {
+          $data = array(
+            'rowid' => $row_id,
+            'qty'   => 0
+        );
+        $this->cart->update($data);
+        redirect('perpustakaan/transaksi2');
+        }
+  
+
   //end
 }

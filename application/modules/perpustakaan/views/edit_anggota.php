@@ -17,7 +17,7 @@
 
     <?= $this->session->flashdata('message') ?>
 <?php
-$kode=$get_anggota['kode'];
+$member_id=$get_anggota['member_id'];
 $nama=$get_anggota['nama'];
 $gender=$get_anggota['gender'];
 $member_type_id=$get_anggota['member_type_id'];
@@ -40,10 +40,10 @@ $inst_name=$get_anggota['inst_name'];
             <form action="" method="post"enctype="multipart/form-data">
 
 <div class="form-group row">
-<label for="kode" class="col-sm-2 control-label">Kode*</label>
+<label for="member_id" class="col-sm-2 control-label">ID Anggota*</label>
 <div class="col-sm-8">
-<input type="text" class="form-control" id="kode" name="kode" value="<?= set_value('kode', isset($kode) ? $kode : ''); ?>">
-<?= form_error('kode', '<span class="help-block">', '</small>'); ?>
+<input type="text" class="form-control" id="member_id" name="member_id" value="<?= set_value('member_id', isset($member_id) ? $member_id : ''); ?>">
+<?= form_error('member_id', '<span class="help-block">', '</small>'); ?>
 </div>
 </div>
 

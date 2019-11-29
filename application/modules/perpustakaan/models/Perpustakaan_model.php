@@ -312,13 +312,46 @@ public function get_anggota()
 
   $this->db->select('pp_member.*,pp_member_type.nama as tipeanggota');
   $this->db->from('pp_member');
-  $this->db->order_by('pp_member.kode', 'asc');
+  $this->db->order_by('pp_member.member_id', 'asc');
   $this->db->join('pp_member_type', 'pp_member_type.id = pp_member.member_type_id');
   return $this->db->get()->result_array();
 }
 
 public function get_anggota_ById($id){
         return $this->db->get_where('pp_member', ['id' => $id])->row_array();
+
+}
+
+public function get_anggotapeminjaman_Bykode($member_id)
+{
+
+  $this->db->select('pp_member.*,pp_member_type.nama as tipeanggota');
+  $this->db->from('pp_member');
+  $this->db->order_by('pp_member.member_id', 'asc');
+  $this->db->join('pp_member_type', 'pp_member_type.id = pp_member.member_type_id');
+  $this->db->where('pp_member.member_id', $member_id);
+  return $this->db->get()->row_array();
+}
+public function get_eksemplar_ByKode($item_kode){
+        $this->db->select('`pp_item`.*,pp_buku.judul');
+        $this->db->from('pp_item');
+        $this->db->join('pp_buku', 'pp_buku.id = pp_item.buku_id');
+        $this->db->where('pp_item.item_kode',$item_kode);
+      return $this->db->get()->row_array();
+
+}
+
+public function cekpeminjamanbuku($item_kode){
+        $this->db->select('`pp_loan`.*');
+        $this->db->from('pp_loan');
+        $this->db->where('pp_loan.item_kode',$item_kode);
+        $this->db->where('pp_loan.is_return','0');
+      return $this->db->get()->row_array();
+
+}
+
+public function get_loan_Bymember_id($member_id){
+        return $this->db->get_where('pp_loan', ['member_id' => $member_id])->row_array();
 
 }
   //end
