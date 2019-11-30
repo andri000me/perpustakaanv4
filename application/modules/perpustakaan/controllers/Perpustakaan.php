@@ -1477,6 +1477,7 @@ foreach($pcheck as $id) {
         'member_id' => $member_id,
         'loan_limit'=>$datamembertype['loan_limit'],
         'loan_periode'=>$datamembertype['loan_periode'],
+        'fine_each_day'=>$datamembertype['fine_each_day'],
       ];
       $this->session->set_userdata($data);
       redirect('perpustakaan/transaksi2');
@@ -1497,6 +1498,7 @@ foreach($pcheck as $id) {
       $data['getanggota'] = $this->Perpustakaan_model->get_anggotapeminjaman_Bykode($member_id);
       $data['loan_limit']=$this->session->userdata('loan_limit');
       $data['loan_periode']=$this->session->userdata('loan_periode');
+      $data['fine_each_day']=$this->session->userdata('fine_each_day');
 
       $data['getloan'] = $this->Perpustakaan_model->get_loan_Bymember_id($member_id);
 
@@ -1538,6 +1540,7 @@ $this->db->insert('pp_loan', $data);
     $this->session->unset_userdata('member_id');
     $this->session->unset_userdata('loan_limit');
     $this->session->unset_userdata('loan_periode');
+    $this->session->unset_userdata('fine_each_day');
     $this->cart->destroy();
     redirect('perpustakaan/transaksi');
   }

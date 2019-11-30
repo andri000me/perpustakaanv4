@@ -54,6 +54,10 @@ Maksimal Peminjaman<br>
 Lama Peminjaman<br>
 <?= $loan_periode ?>
 </div>
+<div class="col-sm-3">
+Denda per Hari<br>
+<?= $fine_each_day ?>
+</div>
 </div>
           </div>
         </div>
@@ -65,9 +69,9 @@ Lama Peminjaman<br>
           <div>
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation"class="active">
-        <a href="#peminjaman" aria-controls="home" role="tab" data-toggle="tab">Peminjaman</a></li>
     <li role="presentation">
+        <a href="#peminjaman" aria-controls="home" role="tab" data-toggle="tab">Peminjaman</a></li>
+    <li role="presentation"class="active">
         <a href="#pinjamansaatini" aria-controls="profile" role="tab" data-toggle="tab">Pinjaman Saat Ini</a>
     </li>
   </ul>
@@ -75,7 +79,7 @@ Lama Peminjaman<br>
   <!-- Tab panes -->
 <div class="tab-content">
   <!-- Tab panes 1-->
-<div role="tabpanel" class="tab-pane active" id="peminjaman">
+<div role="tabpanel" class="tab-pane" id="peminjaman">
 <div class="box">
 <form action="<?= base_url('perpustakaan/tambahitem'); ?>" method="post"enctype="multipart/form-data">    
 <table class="table table-striped"><tr><td>
@@ -127,36 +131,68 @@ Masukkan Kode Eksemplar/Barkod :</td><td>
 </div>
 
   <!-- Tab panes 2-->
-    <div role="tabpanel" class="tab-pane" id="pinjamansaatini">
+    <div role="tabpanel" class="tab-pane active" id="pinjamansaatini">
     <div class="box">
     <?php if($getloan){?>
-          <table  class="table table-bordered table-striped" id="example1">
+          <table  class="table table-bordered table-striped">
                 <thead>
                   <tr>
-                    <th>Kembali</th>
-                    <th>Perpanjang</th>
-                    <th>Kode Eksemplar</th>
+                    <th width="10%">Kembali</th>
+                    <th width="10%">Perpanjang</th>
+                    <th width="10%">Kode Eksemplar</th>
                     <th>Judul</th>
-                    <th>Tanggal Pinjam</th>
-                    <th>Tanggal Kembali</th>
+                    <th width="10%">Tanggal Pinjam</th>
+                    <th width="10%">Tanggal Kembali</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php $i = 1; ?>
                   <?php foreach ($getloan as $dt) : ?>
+<?php 
+$due_date    =new DateTime($dt['due_date']);
+$today        =new DateTime();
+if($today>$due_date){
+$interval = $due_date->diff($today);
+$terlambathari=$interval->days;
+}else{
+  $terlambathari='';
+}
+?>                    
                     <tr>
+                      <td align="center">
+<a href="<?= base_url('perpustakaan/kembaliitem/'.$dt['id']); ?>"onclick="return confirm('Anda yakin, akan mengembalikan eksemplar ini <?= $dt['item_kode']; ?>');">
+<i class="fa fa-arrow-circle-right"></i>
+</a>
+</td>
+<td align="center">
+<a href="<?= base_url('perpustakaan/perpanjangitem/'.$dt['id']); ?>"onclick="return confirm('Anda yakin, akan memperpanjang peminjaman untuk <?= $dt['item_kode']; ?>');">
+<i class="fa fa-plus-circle"></i>
+</a>
+</td>
                       <td><?= $dt['item_kode']; ?></td>
-                      <td><?= $dt['item_kode']; ?></td>
-                      <td><?= $dt['item_kode']; ?></td>
-                      <td><?= $dt['judul']; ?></td>
+                      <td><?= $dt['judul']; ?><br>
+<?php if($terlambathari){ ?>
+<?php $dendaperitem= $terlambathari*$fine_each_day ?>
+<font color="red">TERLAMBAT selama <?= $terlambathari ?> hari dengan jumlah denda <?= $dendaperitem ?></font>
+<?php $totaldenda += $dendaperitem; ?>
+<?php }?>
+                    
+                    
+                    </td>
                       <td><?= $dt['loan_date']; ?></td>
                       <td><?= $dt['due_date']; ?></td>
                     </tr>
                     <?php $i++; ?>
                   <?php endforeach; ?>
+<?php if($totaldenda>'0'){ ?>                  
+<tr><td colspan="6">
+Kirim Pesan mengenai Informasi Keterlambatan dan Denda | 
+<font color="red"><b>Total denda <?= $totaldenda ?></b></font> </td></tr>                   
+<?php }?>  
                 </tbody>
               </table>
-                  <?php }?>          
+                  <?php }?>  
+                 
 
     </div>
     
