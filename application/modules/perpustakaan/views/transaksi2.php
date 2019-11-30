@@ -70,9 +70,12 @@ Denda per Hari<br>
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation">
-        <a href="#peminjaman" aria-controls="home" role="tab" data-toggle="tab">Peminjaman</a></li>
+        <a href="#peminjaman" aria-controls="home" role="tab" data-toggle="tab">PEMINJAMAN</a></li>
     <li role="presentation"class="active">
-        <a href="#pinjamansaatini" aria-controls="profile" role="tab" data-toggle="tab">Pinjaman Saat Ini</a>
+        <a href="#pinjamansaatini" aria-controls="profile" role="tab" data-toggle="tab">PINJAMAN SAAT INI</a>
+    </li>
+    <li role="presentation">
+        <a href="#sejarahpeminjaman" aria-controls="profile" role="tab" data-toggle="tab">SEJARAH PEMINJAMAN</a>
     </li>
   </ul>
 
@@ -154,25 +157,27 @@ $today        =new DateTime();
 if($today>$due_date){
 $interval = $due_date->diff($today);
 $terlambathari=$interval->days;
+$dendaperitem= $terlambathari*$fine_each_day;
 }else{
   $terlambathari='';
 }
 ?>                    
-                    <tr>
-                      <td align="center">
-<a href="<?= base_url('perpustakaan/kembaliitem/'.$dt['id']); ?>"onclick="return confirm('Anda yakin, akan mengembalikan eksemplar ini <?= $dt['item_kode']; ?>');">
+<tr>
+<td align="center">
+<a href="<?= base_url('perpustakaan/kembaliitem/'.$dt['id'].'/'.$dendaperitem); ?>"onclick="return confirm('Anda yakin, akan mengembalikan eksemplar ini <?= $dt['item_kode']; ?>');">
 <i class="fa fa-arrow-circle-right"></i>
 </a>
 </td>
 <td align="center">
-<a href="<?= base_url('perpustakaan/perpanjangitem/'.$dt['id']); ?>"onclick="return confirm('Anda yakin, akan memperpanjang peminjaman untuk <?= $dt['item_kode']; ?>');">
+<?php if($dt['renewed']){?>
+<a href="<?= base_url('perpustakaan/perpanjangitem/'.$dt['id'].'/'.$dendaperitem); ?>"onclick="return confirm('Anda yakin, akan memperpanjang peminjaman untuk <?= $dt['item_kode']; ?>');">
 <i class="fa fa-plus-circle"></i>
 </a>
+<?php }?>
 </td>
-                      <td><?= $dt['item_kode']; ?></td>
-                      <td><?= $dt['judul']; ?><br>
+<td><?= $dt['item_kode']; ?></td>
+<td><?= $dt['judul']; ?><br>
 <?php if($terlambathari){ ?>
-<?php $dendaperitem= $terlambathari*$fine_each_day ?>
 <font color="red">TERLAMBAT selama <?= $terlambathari ?> hari dengan jumlah denda <?= $dendaperitem ?></font>
 <?php $totaldenda += $dendaperitem; ?>
 <?php }?>
@@ -191,12 +196,44 @@ Kirim Pesan mengenai Informasi Keterlambatan dan Denda |
 <?php }?>  
                 </tbody>
               </table>
-                  <?php }?>  
-                 
-
+                  <?php }?>            
+    </div>    
     </div>
-    
-    </div>
+  <!-- Tab panes 3-->
+  <div role="tabpanel" class="tab-pane" id="sejarahpeminjaman">
+  <div class="box">
+    <?php if($getloanhistory){?>
+          <table  class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th width="10%">Kode Eksemplar</th>
+                    <th>Judul</th>
+                    <th width="15%">Tanggal Pinjam</th>
+                    <th width="15%">Tanggal diKembalikan</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php $i = 1; ?>
+                  <?php foreach ($getloanhistory as $dt) : ?>
+                    <tr>
+                      <td><?= $dt['item_kode']; ?></td>
+                      <td><?= $dt['judul']; ?></td>
+                      <td><?= $dt['loan_date']; ?></td>
+                      <td>
+<?php if($dt['return_date']){?>                        
+<?= $dt['return_date']; ?>
+<?php }else{?>
+<i>Belum ada yang dikembalikan</i>
+<?php }?> 
+</td>
+                    </tr>
+                    <?php $i++; ?>
+                  <?php endforeach; ?>
+                  </tbody>
+              </table>
+                  <?php }?>   
+  </div>
+  <!-- Tab panes 4-->
   </div>
 
           </div>

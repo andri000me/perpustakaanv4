@@ -1478,6 +1478,7 @@ foreach($pcheck as $id) {
         'loan_limit'=>$datamembertype['loan_limit'],
         'loan_periode'=>$datamembertype['loan_periode'],
         'fine_each_day'=>$datamembertype['fine_each_day'],
+        'reborrow_limit'=>$datamembertype['reborrow_limit'],
       ];
       $this->session->set_userdata($data);
       redirect('perpustakaan/transaksi2');
@@ -1499,9 +1500,9 @@ foreach($pcheck as $id) {
       $data['loan_limit']=$this->session->userdata('loan_limit');
       $data['loan_periode']=$this->session->userdata('loan_periode');
       $data['fine_each_day']=$this->session->userdata('fine_each_day');
-
+      $data['reborrow_limit']=$this->session->userdata('reborrow_limit');
       $data['getloan'] = $this->Perpustakaan_model->get_loan_Bymember_id($member_id);
-
+      $data['getloanhistory'] = $this->Perpustakaan_model->get_loanhistory_Bymember_id($member_id);
       $data['jumlahitemcart']=  $this->cart->total_items();
       $this->load->view('themes/backend/header', $data);
       $this->load->view('themes/backend/sidebar', $data);
@@ -1541,6 +1542,7 @@ $this->db->insert('pp_loan', $data);
     $this->session->unset_userdata('loan_limit');
     $this->session->unset_userdata('loan_periode');
     $this->session->unset_userdata('fine_each_day');
+    $this->session->unset_userdata('reborrow_limit');
     $this->cart->destroy();
     redirect('perpustakaan/transaksi');
   }
@@ -1593,7 +1595,57 @@ $this->db->insert('pp_loan', $data);
         $this->cart->update($data);
         redirect('perpustakaan/transaksi2');
         }
-  
+          //kembaliitem
+          public function kembaliitem($id,$fine)
+          {
+            $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+            $getloan = $this->Perpustakaan_model->get_loan_ById($id);
+            $item_kode=$getloan['item_kode'];
+            $member_id=$getloan['member_id'];
+            $return_date=date('Y-m-d');
+            $this->db->set('return_date',$return_date);
+            $this->db->set('is_return','1');
+            $this->db->where('id', $id);
+            $this->db->update('pp_loan');
+            if($fine){
+              $description="Denda keterlambatan item  $item_kode";
+              $data = [
+                'fines_date' => $return_date,
+                'member_id' => $member_id,
+                'debet' => $fine,
+                'description' => $description,
+                 ];
+                 $this->db->insert('pp_fines', $data);
+
+            }
+          redirect('perpustakaan/transaksi2');
+          }
+          //perpanjangitem
+          public function perpanjangitem($id,$fine)
+          {
+            $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+            $getloan = $this->Perpustakaan_model->get_loan_ById($id);
+            $item_kode=$getloan['item_kode'];
+            $member_id=$getloan['member_id'];
+            $return_date=date('Y-m-d');
+            $this->db->set('due_date',$return_date);
+            $this->db->set('renewed','1');
+            $this->db->where('id', $id);
+            $this->db->update('pp_loan');
+            if($fine){
+              $description="Denda keterlambatan item  $item_kode";
+              $data = [
+                'fines_date' => $return_date,
+                'member_id' => $member_id,
+                'debet' => $fine,
+                'description' => $description,
+                 ];
+                 $this->db->insert('pp_fines', $data);
+
+            }
+          redirect('perpustakaan/transaksi2');
+          }
+
 
   //end
 }

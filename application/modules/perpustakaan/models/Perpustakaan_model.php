@@ -359,5 +359,21 @@ public function get_loan_Bymember_id($member_id){
         $this->db->where('pp_loan.is_return','0');
       return $this->db->get()->result_array();
 }
+
+public function get_loan_ById($id){
+        return $this->db->get_where('pp_loan', ['id' => $id])->row_array();
+
+}
+
+public function get_loanhistory_Bymember_id($member_id){
+        $this->db->select('`pp_loan`.*,pp_buku.judul');
+        $this->db->from('pp_loan');
+        $this->db->join('pp_item', 'pp_item.item_kode = pp_loan.item_kode');
+        $this->db->join('pp_buku', 'pp_buku.id = pp_item.buku_id');
+        $this->db->where('pp_loan.member_id',$member_id);
+        $this->db->order_by('pp_loan.loan_date','desc');
+      return $this->db->get()->result_array();
+}
+
   //end
 }

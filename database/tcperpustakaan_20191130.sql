@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2019 at 04:43 AM
+-- Generation Time: Nov 30, 2019 at 05:49 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -155,6 +155,30 @@ INSERT INTO `pp_codepattern` (`id`, `prefix`, `length`, `itemcodepattern`, `last
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pp_fines`
+--
+
+DROP TABLE IF EXISTS `pp_fines`;
+CREATE TABLE IF NOT EXISTS `pp_fines` (
+`id` int(11) NOT NULL,
+  `fines_date` date NOT NULL,
+  `member_id` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `debet` int(11) DEFAULT '0',
+  `credit` int(11) DEFAULT '0',
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `pp_fines`
+--
+
+INSERT INTO `pp_fines` (`id`, `fines_date`, `member_id`, `debet`, `credit`, `description`) VALUES
+(2, '2019-11-30', '002', 1000, 0, 'Denda keterlambatan item  B00008'),
+(3, '2019-11-30', '002', 4000, 0, 'Denda keterlambatan item  B00007');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pp_gmd`
 --
 
@@ -291,7 +315,7 @@ CREATE TABLE IF NOT EXISTS `pp_loan` (
   `is_lent` int(11) NOT NULL DEFAULT '1',
   `is_return` int(11) NOT NULL DEFAULT '0',
   `return_date` date DEFAULT NULL,
-  `last_update` datetime DEFAULT NULL,
+  `last_update` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `user_id` varchar(11) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
@@ -304,8 +328,8 @@ INSERT INTO `pp_loan` (`id`, `item_kode`, `member_id`, `loan_date`, `due_date`, 
 (2, 'B00002', '001', '2019-11-29', '2019-12-06', 0, 1, 0, NULL, NULL, '4'),
 (3, 'B00003', '003', '2019-11-30', '2019-12-07', 0, 1, 0, NULL, NULL, '4'),
 (4, 'B00005', '003', '2019-11-30', '2019-12-07', 0, 1, 0, NULL, NULL, '4'),
-(5, 'B00007', '002', '2019-11-22', '2019-11-26', 0, 1, 0, NULL, NULL, '4'),
-(6, 'B00008', '002', '2019-11-22', '2019-11-29', 0, 1, 0, NULL, NULL, '4');
+(5, 'B00007', '002', '2019-11-21', '2019-11-30', 1, 1, 0, NULL, '2019-11-30 11:43:22', '4'),
+(6, 'B00008', '002', '2019-11-28', '2019-11-29', 0, 1, 1, '2019-11-30', '2019-11-30 11:32:54', '4');
 
 -- --------------------------------------------------------
 
@@ -989,6 +1013,12 @@ ALTER TABLE `pp_codepattern`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `pp_fines`
+--
+ALTER TABLE `pp_fines`
+ ADD PRIMARY KEY (`id`), ADD KEY `member_id` (`member_id`);
+
+--
 -- Indexes for table `pp_gmd`
 --
 ALTER TABLE `pp_gmd`
@@ -1162,6 +1192,11 @@ MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 ALTER TABLE `pp_codepattern`
 MODIFY `id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `pp_fines`
+--
+ALTER TABLE `pp_fines`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `pp_gmd`
 --
