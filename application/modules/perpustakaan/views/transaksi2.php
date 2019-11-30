@@ -77,6 +77,9 @@ Denda per Hari<br>
     <li role="presentation">
         <a href="#sejarahpeminjaman" aria-controls="profile" role="tab" data-toggle="tab">SEJARAH PEMINJAMAN</a>
     </li>
+    <li role="presentation">
+        <a href="#denda" aria-controls="profile" role="tab" data-toggle="tab">DENDA</a>
+    </li>
   </ul>
 
   <!-- Tab panes -->
@@ -169,7 +172,7 @@ $dendaperitem= $terlambathari*$fine_each_day;
 </a>
 </td>
 <td align="center">
-<?php if($dt['renewed']){?>
+<?php if($dt['renewed']==$reborrow_limit){?>
 <a href="<?= base_url('perpustakaan/perpanjangitem/'.$dt['id'].'/'.$dendaperitem); ?>"onclick="return confirm('Anda yakin, akan memperpanjang peminjaman untuk <?= $dt['item_kode']; ?>');">
 <i class="fa fa-plus-circle"></i>
 </a>
@@ -233,7 +236,45 @@ Kirim Pesan mengenai Informasi Keterlambatan dan Denda |
               </table>
                   <?php }?>   
   </div>
+  </div>
   <!-- Tab panes 4-->
+<div role="tabpanel" class="tab-pane active" id="denda">
+<div class="box">
+<?php if($getdenda){?>
+          <table  class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th width="10%">Hapus</th>
+                    <th width="10%">Edit</th>
+                    <th>Deskripsi/Nama</th>
+                    <th width="10%">Tanggal Denda</th>
+                    <th width="10%">Debet</th>
+                    <th width="10%">Kredit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php $i = 1; ?>
+                  <?php foreach ($getdenda as $dt) : ?>
+                    <?php if($dt['debet']>$dt['credit']){?>
+                    <tr>
+                      <td><?= $dt['id']; ?></td>
+                      <td><?= $dt['id']; ?></td>
+                      <td><?= $dt['description']; ?></td>
+                      <td><?= $dt['fines_date']; ?></td>
+                      <td><?= $dt['debet']; ?></td>
+                      <td><?= $dt['credit']; ?></td>
+                    </tr>
+                    <?php }?> 
+                    <?php $i++; ?>
+                  <?php endforeach; ?>
+                  </tbody>
+              </table>
+                  <?php }?> 
+</div>
+</div>
+
+  <!-- Tab panes 5-->
+
   </div>
 
           </div>

@@ -374,6 +374,12 @@ public function get_loanhistory_Bymember_id($member_id){
         $this->db->order_by('pp_loan.loan_date','desc');
       return $this->db->get()->result_array();
 }
-
+public function get_denda_Bymember_id($member_id){
+        $this->db->select('`pp_fines`.*');
+        $this->db->from('pp_fines');
+        $this->db->where('pp_fines.member_id',$member_id);
+        $this->db->order_by('pp_fines.fines_date','desc');
+      return $this->db->get()->result_array();
+}
   //end
 }

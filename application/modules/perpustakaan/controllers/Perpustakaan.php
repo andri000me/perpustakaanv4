@@ -1503,6 +1503,7 @@ foreach($pcheck as $id) {
       $data['reborrow_limit']=$this->session->userdata('reborrow_limit');
       $data['getloan'] = $this->Perpustakaan_model->get_loan_Bymember_id($member_id);
       $data['getloanhistory'] = $this->Perpustakaan_model->get_loanhistory_Bymember_id($member_id);
+      $data['getdenda'] = $this->Perpustakaan_model->get_denda_Bymember_id($member_id);
       $data['jumlahitemcart']=  $this->cart->total_items();
       $this->load->view('themes/backend/header', $data);
       $this->load->view('themes/backend/sidebar', $data);
