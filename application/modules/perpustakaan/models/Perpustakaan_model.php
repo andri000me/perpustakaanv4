@@ -337,8 +337,8 @@ public function get_eksemplar_ByKode($item_kode){
         $this->db->from('pp_item');
         $this->db->join('pp_buku', 'pp_buku.id = pp_item.buku_id');
         $this->db->where('pp_item.item_kode',$item_kode);
-      return $this->db->get()->row_array();
-
+        return $this->db->get()->row_array();
+        
 }
 
 public function cekpeminjamanbuku($item_kode){
@@ -346,13 +346,18 @@ public function cekpeminjamanbuku($item_kode){
         $this->db->from('pp_loan');
         $this->db->where('pp_loan.item_kode',$item_kode);
         $this->db->where('pp_loan.is_return','0');
-      return $this->db->get()->row_array();
-
+        return $this->db->get()->row_array();
+        
 }
 
 public function get_loan_Bymember_id($member_id){
-        return $this->db->get_where('pp_loan', ['member_id' => $member_id])->row_array();
-
+        $this->db->select('`pp_loan`.*,pp_buku.judul');
+        $this->db->from('pp_loan');
+        $this->db->join('pp_item', 'pp_item.item_kode = pp_loan.item_kode');
+        $this->db->join('pp_buku', 'pp_buku.id = pp_item.buku_id');
+        $this->db->where('pp_loan.member_id',$member_id);
+        $this->db->where('pp_loan.is_return','0');
+      return $this->db->get()->result_array();
 }
   //end
 }

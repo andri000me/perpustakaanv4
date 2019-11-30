@@ -65,7 +65,7 @@ Lama Peminjaman<br>
           <div>
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active">
+    <li role="presentation"class="active">
         <a href="#peminjaman" aria-controls="home" role="tab" data-toggle="tab">Peminjaman</a></li>
     <li role="presentation">
         <a href="#pinjamansaatini" aria-controls="profile" role="tab" data-toggle="tab">Pinjaman Saat Ini</a>
@@ -129,7 +129,34 @@ Masukkan Kode Eksemplar/Barkod :</td><td>
   <!-- Tab panes 2-->
     <div role="tabpanel" class="tab-pane" id="pinjamansaatini">
     <div class="box">
-
+    <?php if($getloan){?>
+          <table  class="table table-bordered table-striped" id="example1">
+                <thead>
+                  <tr>
+                    <th>Kembali</th>
+                    <th>Perpanjang</th>
+                    <th>Kode Eksemplar</th>
+                    <th>Judul</th>
+                    <th>Tanggal Pinjam</th>
+                    <th>Tanggal Kembali</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php $i = 1; ?>
+                  <?php foreach ($getloan as $dt) : ?>
+                    <tr>
+                      <td><?= $dt['item_kode']; ?></td>
+                      <td><?= $dt['item_kode']; ?></td>
+                      <td><?= $dt['item_kode']; ?></td>
+                      <td><?= $dt['judul']; ?></td>
+                      <td><?= $dt['loan_date']; ?></td>
+                      <td><?= $dt['due_date']; ?></td>
+                    </tr>
+                    <?php $i++; ?>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+                  <?php }?>          
 
     </div>
     

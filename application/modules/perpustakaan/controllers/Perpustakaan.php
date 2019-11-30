@@ -585,7 +585,7 @@ class Perpustakaan extends CI_Controller
     // tipekoleksi
  public function tipekoleksi()
  {
-   $data['title'] = 'TipeKoleksi';
+   $data['title'] = 'Tipe Koleksi';
    $data['user'] = $this->db->get_where('user', ['email' =>
    $this->session->userdata('email')])->row_array();
    $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
