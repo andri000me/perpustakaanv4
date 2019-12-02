@@ -61,7 +61,7 @@
                   <th scope="row"><?= $i; ?></th>
                   <td><?= $r['role']; ?></td>
                   <td>
-                    <a href="<?= base_url('admin/roleaccess/') . $r['id']; ?>" class="btn btn-warning btn-xs">Access</a>
+                    <a href="<?= base_url('admin/roleaccess/') . $r['id']; ?>" class="btn btn-warning btn-sm">Access</a>
                     <?php if($r['id']>'1'){?>
                     <a href="<?= base_url('admin/roleedit/') . $r['id']; ?>" class="btn btn-info btn-sm">Edit</a>
                     <a href="<?= base_url('admin/roledelete/') . $r['id']; ?>" onclick="return confirm('Anda yakin ? data tidak dapat dikembalikan lagi...'); " class="btn btn-danger btn-sm">Hapus</a>

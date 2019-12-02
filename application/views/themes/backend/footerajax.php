@@ -476,4 +476,9 @@ $('#tanggalfaktur').datetimepicker({
 	timepicker:false,
 	format:'Y-m-d'
 });
+$('#tanggalsaja').datetimepicker({
+	lang:'en',
+	timepicker:false,
+	format:'Y-m-d'
+});
 </script>

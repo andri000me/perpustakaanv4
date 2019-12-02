@@ -1505,6 +1505,8 @@ foreach($pcheck as $id) {
       $data['getloanhistory'] = $this->Perpustakaan_model->get_loanhistory_Bymember_id($member_id);
       $data['getdenda'] = $this->Perpustakaan_model->get_denda_Bymember_id($member_id);
       $data['jumlahitemcart']=  $this->cart->total_items();
+      $data['tanggalskrg']=date('Y-m-d');
+
       $this->load->view('themes/backend/header', $data);
       $this->load->view('themes/backend/sidebar', $data);
       $this->load->view('themes/backend/topbar', $data);
@@ -1647,6 +1649,130 @@ $this->db->insert('pp_loan', $data);
           redirect('perpustakaan/transaksi2');
           }
 
+           //hapusdenda         
+          public function hapusdenda()
+          {
+           $pcheck = $this->input->post('check');
+           
+         foreach($pcheck as $id) {
+           $dataitem = $this->db->get_where('pp_fines', ['id' =>
+             $id ])->row_array();
+             $this->db->where('id', $id);
+           $this->db->delete('pp_fines');
+         }
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data deleted !</div>');
+            redirect('perpustakaan/transaksi2');
+          }
+
+          //tambahdenda
+          public function tambahdenda()
+          {
+            $data = [
+              'member_id' => $this->session->userdata('member_id'),
+              'fines_date' => $this->input->post('fines_date'),
+              'description' => $this->input->post('description'),
+              'debet' => $this->input->post('debet'),
+              'credit' => $this->input->post('credit'),
+           ];
+     
+               $this->db->insert('pp_fines', $data);
+               $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+               redirect('perpustakaan/transaksi2');
+          }
+//edit_denda
+public function edit_denda($id)
+  {
+    $data['title'] = 'Transaksi';
+    $data['user'] = $this->db->get_where('user', ['email' =>
+    $this->session->userdata('email')])->row_array();
+    $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+    $data['get_denda'] = $this->Perpustakaan_model->get_denda_Byid($id);
+
+    $this->form_validation->set_rules('description', 'description', 'required');
+    $this->form_validation->set_rules('debet', 'debet', 'required');
+    if ($this->form_validation->run() == false) {
+    $this->load->view('themes/backend/header', $data);
+    $this->load->view('themes/backend/sidebar', $data);
+    $this->load->view('themes/backend/topbar', $data);
+    $this->load->view('edit_denda', $data);
+    $this->load->view('themes/backend/footer');
+    $this->load->view('themes/backend/footerajax');
+    }else{
+      $data = [
+        'member_id' => $this->session->userdata('member_id'),
+        'fines_date' => $this->input->post('fines_date'),
+        'description' => $this->input->post('description'),
+        'debet' => $this->input->post('debet'),
+        'credit' => $this->input->post('credit'),
+         ];
+          $this->db->where('id', $id);
+          $this->db->update('pp_fines', $data);
+          if($this->input->post('credit')==$this->input->post('debet')){
+          $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Denda telah dilunasi !</div>');
+          }else{
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+          }
+          redirect('perpustakaan/transaksi2');
+    }
+  }
+//pengembalian
+public function pengembalian()
+{
+  $data['title'] = 'Pengembalian';
+  $data['user'] = $this->db->get_where('user', ['email' =>
+  $this->session->userdata('email')])->row_array();
+  $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+  
+  
+  $this->form_validation->set_rules('item_kode', 'item_kode','required');
+  if ($this->form_validation->run() == false) {
+    $this->load->view('themes/backend/header', $data);
+    $this->load->view('themes/backend/sidebar', $data);
+    $this->load->view('themes/backend/topbar', $data);
+    $this->load->view('themes/backend/javascript', $data);
+    $this->load->view('pengembalian', $data);
+    $this->load->view('themes/backend/footer');
+    $this->load->view('themes/backend/footerajax');
+  }else{
+    $item_kode = $this->input->post('item_kode'); 
+    $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+    $datapengembalian = $this->Perpustakaan_model->get_loan_Byitem_kode($item_kode);
+    if(!$datapengembalian){
+      $this->session->set_flashdata('message', '<div class="alert alert-danger" role"alert">Kode Eksemplar '.$item_kode.' tidak terdaftar (tidak terdaftar dalam pangkalan data) !</div>');
+      redirect('perpustakaan/pengembalian');
+    }else{
+      $id = $datapengembalian['id'];
+    $judul = $datapengembalian['judul'];
+    $member_id = $datapengembalian['member_id'];
+    $nama = $datapengembalian['nama'];
+    $item_kode = $datapengembalian['item_kode'];
+    $loan_date = $datapengembalian['loan_date'];
+    $due_date = $datapengembalian['due_date'];
+    $return_date=date('Y-m-d');
+    
+    $data = [
+      'is_return' => '1',
+      'return_date' => $return_date,
+       ];
+        $this->db->where('id', $id);
+        $this->db->update('pp_loan', $data);
+
+
+$this->session->set_flashdata('message2', '<div class="alert alert-warning" role"alert">Kode Eksemplar '.$item_kode.' dikembalikan pada '.$return_date.' !</div>');
+$this->session->set_flashdata('message3','
+<table class="table">
+<tr><td>Judul</td><td>'.$judul.'</td><td>ID Peminjaman</td><td>'.$id.'</td></tr>
+<tr><td>Nama Anggota</td><td>'.$nama.'</td><td>ID Anggota</td><td>'.$member_id.'</td></tr>
+<tr><td>Tanggal Pinjam</td><td>'.$loan_date.'</td><td>Tanggal harus kembali</td><td>'.$due_date.'</td></tr>
+</table>
+');
+redirect('perpustakaan/pengembalian');
+  }
+
+
+} 
+
+}
 
   //end
 }

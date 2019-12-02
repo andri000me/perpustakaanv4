@@ -72,13 +72,19 @@ Denda per Hari<br>
     <li role="presentation">
         <a href="#peminjaman" aria-controls="home" role="tab" data-toggle="tab">PEMINJAMAN</a></li>
     <li role="presentation"class="active">
-        <a href="#pinjamansaatini" aria-controls="profile" role="tab" data-toggle="tab">PINJAMAN SAAT INI</a>
+        <a href="#pinjamansaatini" aria-controls="pinjamansaatini" role="tab" data-toggle="tab">PINJAMAN SAAT INI</a>
     </li>
     <li role="presentation">
-        <a href="#sejarahpeminjaman" aria-controls="profile" role="tab" data-toggle="tab">SEJARAH PEMINJAMAN</a>
+        <a href="#sejarahpeminjaman" aria-controls="sejarahpeminjaman" role="tab" data-toggle="tab">SEJARAH PEMINJAMAN</a>
     </li>
     <li role="presentation">
-        <a href="#denda" aria-controls="profile" role="tab" data-toggle="tab">DENDA</a>
+        <a href="#denda" aria-controls="denda" role="tab" data-toggle="tab">DENDA AKTIF</a>
+    </li>
+    <li role="presentation">
+        <a href="#dendalunas" aria-controls="dendalunas" role="tab" data-toggle="tab">DENDA LUNAS</a>
+    </li>
+    <li role="presentation">
+        <a href="#tambahdenda" aria-controls="tambahdenda" role="tab" data-toggle="tab">TAMBAH DENDA</a>
     </li>
   </ul>
 
@@ -238,43 +244,146 @@ Kirim Pesan mengenai Informasi Keterlambatan dan Denda |
   </div>
   </div>
   <!-- Tab panes 4-->
-<div role="tabpanel" class="tab-pane active" id="denda">
+<div role="tabpanel" class="tab-pane" id="denda">
 <div class="box">
 <?php if($getdenda){?>
+  <form action="<?= base_url('perpustakaan/hapusdenda') ?>" method="post">
           <table  class="table table-bordered table-striped">
                 <thead>
                   <tr>
-                    <th width="10%">Hapus</th>
                     <th width="10%">Edit</th>
+                    <th width="10%">Hapus</th>
                     <th>Deskripsi/Nama</th>
                     <th width="10%">Tanggal Denda</th>
                     <th width="10%">Debet</th>
                     <th width="10%">Kredit</th>
+                    <th width="10%">Kewajiban</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php $i = 1; ?>
                   <?php foreach ($getdenda as $dt) : ?>
-                    <?php if($dt['debet']>$dt['credit']){?>
+                    <?php if($dt['sisa']>'0'){?>
                     <tr>
-                      <td><?= $dt['id']; ?></td>
-                      <td><?= $dt['id']; ?></td>
+                    <td><a href="<?= base_url('perpustakaan/edit_denda/' . $dt['id']); ?>" class="btn btn-info btn-xs">Edit</a></td>
+                      <td><input name="check[]" type="checkbox" value="<?= $dt['id'] ?>"></td>
                       <td><?= $dt['description']; ?></td>
                       <td><?= $dt['fines_date']; ?></td>
                       <td><?= $dt['debet']; ?></td>
                       <td><?= $dt['credit']; ?></td>
+                      <td><?= $dt['sisa']; ?></td>
+                    </tr>
+                    <?php 
+                  $totalsisa += $dt['sisa'];
+                  }?> 
+                    <?php $i++; ?>
+                  <?php endforeach; ?>
+                  <tr>
+                    <td colspan="6"align="right">
+                    <font color="red"><b>TOTAL denda yang harus dibayar</b></font></td><td>
+                    <font color="red"><b><?= nominal($totalsisa) ?></b></font></td>
+                    </td>
+                  </tr>                 
+                  </tbody>
+              </table>
+              <input type="submit" value="Hapus Data Terpilih" name="submithapusfines"class="btn btn-success"onclick="return confirm('Anda yakin ? data tidak dapat dikembalikan lagi...');" >&nbsp;<a href="#" onclick="chunchall(this);return false"class="btn btn-warning">Check all</a>
+            </form>
+                  <?php }?> 
+</div>
+</div>
+  <!-- Tab panes 5-->
+  <div role="tabpanel" class="tab-pane" id="dendalunas">
+<div class="box">
+<?php if($getdenda){?>
+  <form action="<?= base_url('perpustakaan/hapusdenda') ?>" method="post">
+          <table  class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th width="10%">Edit</th>
+                    <th width="10%">Hapus</th>
+                    <th>Deskripsi/Nama</th>
+                    <th width="10%">Tanggal Denda</th>
+                    <th width="10%">Debet</th>
+                    <th width="10%">Kredit</th>
+                    <th width="10%">Kewajiban</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php $i = 1; ?>
+                  <?php foreach ($getdenda as $dt) : ?>
+                    <?php if($dt['sisa']=='0'){?>
+                    <tr>
+                    <td><a href="<?= base_url('perpustakaan/edit_denda/' . $dt['id']); ?>" class="btn btn-info btn-xs">Edit</a></td>
+                      <td><input name="check[]" type="checkbox" value="<?= $dt['id'] ?>"></td>
+                      <td><?= $dt['description']; ?></td>
+                      <td><?= $dt['fines_date']; ?></td>
+                      <td><?= $dt['debet']; ?></td>
+                      <td><?= $dt['credit']; ?></td>
+                      <td><?= $dt['sisa']; ?></td>
                     </tr>
                     <?php }?> 
                     <?php $i++; ?>
                   <?php endforeach; ?>
                   </tbody>
               </table>
+              <input type="submit" value="Hapus Data Terpilih" name="submithapusfines"class="btn btn-success"onclick="return confirm('Anda yakin ? data tidak dapat dikembalikan lagi...');" >&nbsp;<a href="#" onclick="chunchall(this);return false"class="btn btn-warning">Check all</a>
+            </form>
                   <?php }?> 
 </div>
 </div>
 
-  <!-- Tab panes 5-->
+  <!-- Tab panes 6-->
+  <div role="tabpanel" class="tab-pane" id="tambahdenda">
+<div class="box">
+<form action="<?= base_url('perpustakaan/tambahdenda') ?>" method="post"enctype="multipart/form-data">
+<table class="table"><tr><td>
 
+<div class="form-group row">
+<label for="fines_date" class="col-sm-2 control-label">Tanggal</label>
+<div class="col-sm-8">
+<input type="text" class="form-control" id="tanggalsaja" name="fines_date" value="<?= set_value('fines_date', isset($fines_date) ? $fines_date : $tanggalskrg); ?>">
+<?= form_error('fines_date', '<span class="help-block">', '</small>'); ?>
+</div>
+</div>
+
+<div class="form-group row">
+<label for="description" class="col-sm-2 control-label">Deskripsi*</label>
+<div class="col-sm-8">
+<input type="text" class="form-control" id="description" name="description" value="<?= set_value('description', isset($description) ? $description : ''); ?>"required>
+<?= form_error('description', '<span class="help-block">', '</small>'); ?>
+</div>
+</div>
+
+<div class="form-group row">
+<label for="debet" class="col-sm-2 control-label">Debet*</label>
+<div class="col-sm-8">
+<input type="text" class="form-control" id="debet" name="debet" value="<?= set_value('debet', isset($debet) ? $debet : '0'); ?>"required>
+<?= form_error('debet', '<span class="help-block">', '</small>'); ?>
+</div>
+</div>
+
+<div class="form-group row">
+<label for="credit" class="col-sm-2 control-label">Credit</label>
+<div class="col-sm-8">
+<input type="text" class="form-control" id="credit" name="credit" value="<?= set_value('credit', isset($credit) ? $credit : '0'); ?>">
+<?= form_error('credit', '<span class="help-block">', '</small>'); ?>
+</div>
+</div>
+
+<div class="form-group row">
+<label for="pengarang_id" class="col-sm-2 control-label"> </label>
+<div class="col-sm-10">
+<button type="submit" class="btn btn-primary">Simpan</button>
+<a href="<?= base_url('perpustakaan/transaksi2'); ?> " class="btn btn-default">Cancel</a>
+</div>
+</div>
+</table>
+</form>
+
+</div>
+</div>
+
+  <!-- Tab panes 6-->
   </div>
 
           </div>
