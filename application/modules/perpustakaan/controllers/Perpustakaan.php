@@ -1780,6 +1780,7 @@ public function sejarahpeminjaman()
   $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
   $data['tanggalawal']=date('2019-01-01');
   $data['tanggalakhir']=date('Y-m-d');
+  $data['get_peminjaman_all'] = $this->Perpustakaan_model->get_loan_all();
   $this->load->view('themes/backend/header', $data);
   $this->load->view('themes/backend/sidebar', $data);
   $this->load->view('themes/backend/topbar', $data);

@@ -60,9 +60,31 @@
             </form>
           </div>
           <!-- /Filter Laporan -->
-
-
-
+<?php if($get_peminjaman_all){?>
+<table  class="table">
+<tr>
+<td>ID Anggota</td>
+<td>Nama Anggota</td>
+<td>Kode Eksemplar</td>
+<td>Judul</td>
+<td>Tanggal Pinjam</td>
+<td>Tanggal Harus Kembali</td>
+<td>Status Peminjaman</td>
+</tr>
+  <?php foreach ($get_peminjaman_all as $dt) : ?>
+<tr>
+<td><?= $dt['member_id']; ?></td>
+<td><?= $dt['nama']; ?></td>
+<td><?= $dt['item_kode']; ?></td>
+<td><?= $dt['judul']; ?></td>
+<td><?= $dt['loan_date']; ?></td>
+<td><?= $dt['due_date']; ?></td>
+<td><?= $dt['is_return']; ?></td>
+</tr>
+<?php $i++; ?>
+<?php endforeach; ?>
+</table>
+<?php }?>
         </div>
       </div>
       <!-- /.box-body -->
