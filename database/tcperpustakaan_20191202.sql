@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2019 at 08:06 AM
+-- Generation Time: Dec 02, 2019 at 08:33 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -803,7 +803,7 @@ CREATE TABLE IF NOT EXISTS `user_access_submenu` (
 `id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
   `submenu_id` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=82 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=83 ;
 
 --
 -- Dumping data for table `user_access_submenu`
@@ -881,7 +881,8 @@ INSERT INTO `user_access_submenu` (`id`, `role_id`, `submenu_id`) VALUES
 (78, 1, 5),
 (79, 2, 72),
 (80, 1, 73),
-(81, 1, 32);
+(81, 1, 32),
+(82, 1, 33);
 
 -- --------------------------------------------------------
 
@@ -943,7 +944,7 @@ CREATE TABLE IF NOT EXISTS `user_sub_menu` (
   `icon` varchar(128) NOT NULL,
   `sort` int(11) NOT NULL DEFAULT '1',
   `is_active` int(1) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
 
 --
 -- Dumping data for table `user_sub_menu`
@@ -980,7 +981,8 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `sort`, `i
 (29, 17, 'Tipe Anggota', 'perpustakaan/tipeanggota', '', 16, 1),
 (30, 17, 'Anggota', 'perpustakaan/anggota', '', 17, 1),
 (31, 17, 'Transaksi', 'perpustakaan/transaksi', '', 18, 1),
-(32, 17, 'Pengembalian', 'perpustakaan/pengembalian', '', 19, 1);
+(32, 17, 'Pengembalian', 'perpustakaan/pengembalian', '', 19, 1),
+(33, 17, 'Sejarah Peminjaman', 'perpustakaan/sejarahpeminjaman', '', 20, 1);
 
 -- --------------------------------------------------------
 
@@ -1340,7 +1342,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 -- AUTO_INCREMENT for table `user_access_submenu`
 --
 ALTER TABLE `user_access_submenu`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=82;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=83;
 --
 -- AUTO_INCREMENT for table `user_menu`
 --
@@ -1355,7 +1357,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT for table `user_sub_menu`
 --
 ALTER TABLE `user_sub_menu`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT for table `user_token`
 --

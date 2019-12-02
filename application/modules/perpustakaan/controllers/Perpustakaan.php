@@ -1767,12 +1767,28 @@ $this->session->set_flashdata('message3','
 </table>
 ');
 redirect('perpustakaan/pengembalian');
-  }
-
-
-} 
-
 }
+} 
+}
+
+//sejarahpeminjaman
+public function sejarahpeminjaman()
+{
+  $data['title'] = 'Sejarah Peminjaman';
+  $data['user'] = $this->db->get_where('user', ['email' =>
+  $this->session->userdata('email')])->row_array();
+  $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+  $data['tanggalawal']=date('2019-01-01');
+  $data['tanggalakhir']=date('Y-m-d');
+  $this->load->view('themes/backend/header', $data);
+  $this->load->view('themes/backend/sidebar', $data);
+  $this->load->view('themes/backend/topbar', $data);
+  $this->load->view('themes/backend/javascript', $data);
+  $this->load->view('sejarahpeminjaman', $data);
+  $this->load->view('themes/backend/footer');
+  $this->load->view('themes/backend/footerajax');
+}
+
 
   //end
 }

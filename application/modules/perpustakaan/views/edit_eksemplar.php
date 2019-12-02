@@ -116,7 +116,8 @@
 <select class="js-example-basic-single" name="supplier_id" style="width:50%;">
 <option value="">Tidak digunakan</option>
 <?php foreach ($get_supplier as $dt) : ?>
-<option value="<?= $dt['id']; ?>" <?= set_select('supplier_id', $dt['id'], FALSE); ?> <?= $dt['id'] == $supplier_id ? ' selected="selected"' : ''; ?>><?= $dt['nama']; ?></option>
+<option value="<?= $dt['id']; ?>" <?= set_select('supplier_id', $dt['id'], FALSE); ?> 
+<?= $dt['id'] == $supplier_id ? ' selected="selected"' : ''; ?>><?= $dt['nama']; ?></option>
 <?php endforeach; ?>
 </select>
 </div>
