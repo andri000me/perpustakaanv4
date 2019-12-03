@@ -1770,7 +1770,7 @@ redirect('perpustakaan/pengembalian');
 }
 } 
 }
-
+ 
 //sejarahpeminjaman
 public function sejarahpeminjaman()
 {
@@ -1780,6 +1780,9 @@ public function sejarahpeminjaman()
   $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
   $data['tanggalawal']=date('2019-01-01');
   $data['tanggalakhir']=date('Y-m-d');
+  $this->form_validation->set_rules('start_date', 'start_date', 'required');
+  $this->form_validation->set_rules('end_date', 'end_date', 'required');
+  if ($this->form_validation->run() == false) {
   $data['get_peminjaman_all'] = $this->Perpustakaan_model->get_loan_all();
   $this->load->view('themes/backend/header', $data);
   $this->load->view('themes/backend/sidebar', $data);
@@ -1788,6 +1791,74 @@ public function sejarahpeminjaman()
   $this->load->view('sejarahpeminjaman', $data);
   $this->load->view('themes/backend/footer');
   $this->load->view('themes/backend/footerajax');
+}else{
+  $member_id = $this->input->post('member_id');
+  $item_kode = $this->input->post('item_kode');
+  $judul = $this->input->post('judul');
+  $start_date = $this->input->post('start_date');
+  $end_date = $this->input->post('end_date');
+  $status_peminjaman = $this->input->post('status_peminjaman');
+  $data['member_id']=$member_id;
+  $data['item_kode']=$item_kode;
+  $data['judul']=$judul;
+  $data['start_date']=$start_date;
+  $data['end_date']=$end_date;
+  $data['status_peminjaman']=$status_peminjaman;
+  $data['get_peminjaman_all'] = $this->Perpustakaan_model->get_loan_input($member_id,$item_kode,$judul,$start_date,$end_date,$status_peminjaman);
+  
+  $this->load->view('themes/backend/header', $data);
+  $this->load->view('themes/backend/sidebar', $data);
+  $this->load->view('themes/backend/topbar', $data);
+  $this->load->view('themes/backend/javascript', $data);
+  $this->load->view('sejarahpeminjaman', $data);
+  $this->load->view('themes/backend/footer');
+  $this->load->view('themes/backend/footerajax');
+  }
+}
+
+//sejarahpeminjamanpdf
+public function sejarahpeminjaman_pdf($start_date,$end_date,$status_peminjaman,$member_id,$item_kode,$judul)
+{
+  $data['title'] = 'Sejarah Peminjaman';
+  //load content html
+  $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+  if(!$start_date){
+  $data['get_peminjaman_all'] = $this->Perpustakaan_model->get_loan_all();
+  }else{    
+  $data['get_peminjaman_all'] = $this->Perpustakaan_model->get_loan_input($member_id,$item_kode,$judul,$start_date,$end_date,$status_peminjaman);
+  }
+  $data['member_id']=$member_id;
+  $data['item_kode']=$item_kode;
+  $data['judul']=$judul;
+  $data['start_date']=$start_date;
+  $data['end_date']=$end_date;
+  $data['status_peminjaman']=$status_peminjaman;
+  $html = $this->load->view('sejarahpeminjaman_pdf', $data, true);
+  // create pdf using dompdf
+  $filename = 'sejarahpeminjaman_pdf' . date('dmY') . '_' . date('His');
+  $paper = 'A4';
+  $orientation = 'potrait';
+  pdf_create($html, $filename, $paper, $orientation);
+}
+//sejarahpeminjamanexcel
+public function sejarahpeminjaman_excel($start_date,$end_date,$status_peminjaman,$member_id,$item_kode,$judul)
+{
+  $data['title'] = 'Sejarah Peminjaman';
+  //load content html
+  $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+  if(!$start_date){
+  $data['get_peminjaman_all'] = $this->Perpustakaan_model->get_loan_all();
+  }else{    
+  $data['get_peminjaman_all'] = $this->Perpustakaan_model->get_loan_input($member_id,$item_kode,$judul,$start_date,$end_date,$status_peminjaman);
+  }
+  $data['member_id']=$member_id;
+  $data['item_kode']=$item_kode;
+  $data['judul']=$judul;
+  $data['start_date']=$start_date;
+  $data['end_date']=$end_date;
+  $data['status_peminjaman']=$status_peminjaman;
+  $this->load->view('themes/backend/headerprint', $data);
+  $this->load->view('sejarahpeminjaman_excel', $data);
 }
 
 

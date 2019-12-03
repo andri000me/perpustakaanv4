@@ -47,12 +47,12 @@
                 <label for="name">Tanggal Pinjam Hingga</label>
                 <input class="form-control" type="text" id="tanggalakhir" name="end_date" value="<?= set_value('end_date', isset($end_date) ? $end_date : $tanggalakhir); ?>" />
               </div>
-              <div class="form-group <?php echo form_error('status_peminjaman') ? 'has-error' : '' ?>">
+              <div class="form-group">
                 <label for="name">Status Peminjaman</label>
-<select class="form-control">
-<option value="">Semua</option>
-<option value="0">Sedang dipinjam</option>
-<option value="1">Telah Kembali</option>
+<select class="form-control"name="status_peminjaman">
+<option value="all"<?= set_select('status_peminjaman', 'all'); ?>>Semua</option>
+<option value="0"<?= set_select('status_peminjaman', '0'); ?>>Sedang dipinjam</option>
+<option value="1"<?= set_select('status_peminjaman', '1'); ?>>Telah Kembali</option>
 </select>
               </div>
               <button type="submit" class="btn btn-primary">Terapkan</button>
@@ -60,8 +60,11 @@
             </form>
           </div>
           <!-- /Filter Laporan -->
+          <div class="col-md-12">
 <?php if($get_peminjaman_all){?>
-<table  class="table">
+  <br>
+<table  class="table" id="example1">
+<thead>
 <tr>
 <td>ID Anggota</td>
 <td>Nama Anggota</td>
@@ -71,7 +74,17 @@
 <td>Tanggal Harus Kembali</td>
 <td>Status Peminjaman</td>
 </tr>
+</thead>
+<tbody>
   <?php foreach ($get_peminjaman_all as $dt) : ?>
+<?php 
+
+if($dt['is_return']=='0'){
+$statuspinjam='Sedang dipinjam';
+}else{
+$statuspinjam='Telah Kembali';
+}
+?>
 <tr>
 <td><?= $dt['member_id']; ?></td>
 <td><?= $dt['nama']; ?></td>
@@ -79,12 +92,16 @@
 <td><?= $dt['judul']; ?></td>
 <td><?= $dt['loan_date']; ?></td>
 <td><?= $dt['due_date']; ?></td>
-<td><?= $dt['is_return']; ?></td>
+<td><?= $statuspinjam; ?></td>
 </tr>
 <?php $i++; ?>
 <?php endforeach; ?>
+</tbody>
 </table>
+<a href="<?php echo site_url('perpustakaan/sejarahpeminjaman_pdf/'.$start_date.'/'.$end_date.'/'.$status_peminjaman.'/'.$member_id.'/'.$item_kode.'/'.$judul); ?>" target='blank' class='btn btn-default'><img src="<?= base_url('assets/images/'); ?>pdf.png"> Export ke PDF</a>
+<a href="<?php echo site_url('perpustakaan/sejarahpeminjaman_excel/'.$start_date.'/'.$end_date.'/'.$status_peminjaman.'/'.$member_id.'/'.$item_kode.'/'.$judul); ?>" target='blank' class='btn btn-default'><img src="<?= base_url('assets/images/'); ?>xls.png"> Export ke Excel</a>
 <?php }?>
+</div>
         </div>
       </div>
       <!-- /.box-body -->
