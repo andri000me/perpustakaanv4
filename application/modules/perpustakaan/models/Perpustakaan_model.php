@@ -445,5 +445,13 @@ public function get_fines_input($tanggalawal,$tanggalakhir,$member_id){
         $this->db->like('pp_loan.member_id',$member_id);
       return $this->db->get()->result_array();
 }
+public function get_anggotacsv()
+{
+
+  $this->db->select('pp_member.*');
+  $this->db->from('pp_member');
+  $this->db->order_by('pp_member.member_id', 'asc');
+  return $this->db->get()->result_array();
+}
   //end
 }

@@ -59,9 +59,23 @@
                 </tbody>
               </table>
               <input type="submit" value="Hapus Data Terpilih" name="submit"class="btn btn-success"onclick="return confirm('Anda yakin ? data tidak dapat dikembalikan lagi...');" >&nbsp;<a href="#" onclick="chunchall(this);return false"class="btn btn-warning">Check all</a>
-            </form>
+              &nbsp;&nbsp;
               
+              <a href="<?= base_url('perpustakaan/exportanggota_csv'); ?> " class="btn btn-primary">Export CSV</a>
+            </form>
           </div>
+          <div class="col-md-4">
+          <h3 class="box-title">Import Data</h3>
+<form method="post" action="<?= base_url('perpustakaan/importanggotacsv'); ?>" enctype ="multipart/form-data"class="form-inline">
+<div class="form-group">
+<label for="name">Demileter*</label>
+<input class="form-control" type="text" name="demileter" value="<?= set_value('demileter', isset($demileter) ? $demileter : ';'); ?>" />
+<?= form_error('demileter', '<span class="help-block">', '</small>'); ?>
+<input type="file" name="anggotacsv" accept="text/csv" class="form-control"><br>
+<input type="submit" name="import" class="btn btn-success" value="Import from CSV" />
+</form>
+
+        </div>
         </div>
 
       </div>

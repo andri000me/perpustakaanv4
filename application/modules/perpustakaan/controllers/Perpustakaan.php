@@ -1942,6 +1942,98 @@ public function daftarketerlambatan_excel($start_date,$end_date,$member_id)
   $this->load->view('themes/backend/headerprint', $data);
   $this->load->view('daftarketerlambatan_excel', $data);
 }
+// Export anggota in CSV format 
+public function exportanggota_csv(){ 
+  // file name 
+  $tanggalskrg=date('Ymd');
+  $this->load->dbutil();
+  $this->load->helper('download');
+  $this->db->select('*');
+  $this->db->from('pp_member');
+  $member_data = $this->db->get();
+  $delimiter = ";";
+  $newline = "\r\n";
+  $enclosure = '"';
+  $data = $this->dbutil->csv_from_result($member_data, $delimiter, $newline, $enclosure);
+  $namefile = 'Data_Member' . $tanggalskrg . '.csv';
 
+  force_download($namefile, $data);
+  $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Exported !</div>');
+  redirect('perpustakaan/anggota');
+ }
+ public function importanggotacsv()
+ {
+   $data['user'] = $this->db->get_where('user', ['email' =>
+   $this->session->userdata('email')])->row_array();
+
+
+   $file = $_FILES['anggotacsv']['tmp_name'];
+   $demileter = $this->input->post('demileter');
+   // Medapatkan ekstensi file csv yang akan diimport.
+   $ekstensi  = explode('.', $_FILES['anggotacsv']['name']);
+
+   // Tampilkan peringatan jika submit tanpa memilih menambahkan file.
+
+   if (empty($file)) {
+     $this->session->set_flashdata('message', '<div class="alert alert-danger" role"alert">File tidak boleh kosong!</div>');
+     redirect('perpustakaan/anggota');
+   } else {
+     // Validasi apakah file yang diupload benar-benar file csv.
+     if (strtolower(end($ekstensi)) == 'csv' && $_FILES["anggotacsv"]["size"] > 0) {
+
+       $i = 0;
+       $handle = fopen($file, "r");
+       $sukses = '0';
+       while (($row = fgetcsv($handle, 2048))) {
+         $i++;
+         if ($i == 1) continue;
+         // Data yang akan disimpan ke dalam databse
+         //$this->db->where('siswa_id', $siswa_id);
+         //$this->db->delete('siswa_spp');
+         $dataraw =  $row[0];
+         $arr = explode(";", $dataraw);
+         $id =  $arr[0];
+         $member_id =  $arr[1];
+         $nama =  $arr[2];
+         $gender =  $arr[3];
+         $member_type_id   =  $arr[4];
+         $member_address   =  $arr[5];
+         $member_hp   =  $arr[6];
+         $inst_name   =  $arr[7];
+         $mpassword   =  $arr[8];
+         $member_image =  $arr[9];
+         $last_update =  $arr[10];
+         if ($id <> '') {
+
+           $data = [
+             'id' => $id,
+             'member_id' => $member_id,
+             'nama' => $nama,
+             'gender' => $gender,
+             'member_type_id' => $member_type_id,
+             'member_address' => $member_address,
+             'member_hp' => $member_hp,
+             'inst_name' => $inst_name,
+             'mpassword' => $mpassword,
+             'member_image' => $member_image,
+             'last_update' => $last_update,
+           ];
+
+           // Simpan data ke database.
+           $this->db->replace('pp_member', $data);
+
+           $sukses++;
+         }
+       }
+       fclose($handle);
+
+       $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Import Data ' . $sukses . ' Successed !</div>');
+       redirect('perpustakaan/anggota');
+     } else {
+       $this->session->set_flashdata('message', '<div class="alert alert-danger" role"alert">Format file tidak valid!</div>');
+       redirect('perpustakaan/anggota');
+     }
+   }
+ }
   //end
 }
