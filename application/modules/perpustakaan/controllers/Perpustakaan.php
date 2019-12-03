@@ -1861,6 +1861,87 @@ public function sejarahpeminjaman_excel($start_date,$end_date,$status_peminjaman
   $this->load->view('sejarahpeminjaman_excel', $data);
 }
 
+//daftarketerlambatan
+public function daftarketerlambatan()
+{
+  $data['title'] = 'Daftar Keterlambatan';
+  $data['user'] = $this->db->get_where('user', ['email' =>
+  $this->session->userdata('email')])->row_array();
+  $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+  $data['tanggalawal']=date('2019-01-01');
+  $data['tanggalakhir']=date('Y-m-d');
+  $data['tanggalsekarang']=date('Y-m-d');
+  $this->form_validation->set_rules('start_date', 'start_date', 'required');
+  $this->form_validation->set_rules('end_date', 'end_date', 'required');
+  if ($this->form_validation->run() == false) {
+  $data['get_keterlambatan_all'] = $this->Perpustakaan_model->get_fines_all();
+  $this->load->view('themes/backend/header', $data);
+  $this->load->view('themes/backend/sidebar', $data);
+  $this->load->view('themes/backend/topbar', $data);
+  $this->load->view('themes/backend/javascript', $data);
+  $this->load->view('daftarketerlambatan', $data);
+  $this->load->view('themes/backend/footer');
+  $this->load->view('themes/backend/footerajax');
+}else{
+  $member_id = $this->input->post('member_id');
+  $start_date = $this->input->post('start_date');
+  $end_date = $this->input->post('end_date');
+  $data['member_id']=$member_id;
+  $data['start_date']=$start_date;
+  $data['end_date']=$end_date;
+
+  $data['get_keterlambatan_all'] = $this->Perpustakaan_model->get_fines_input($start_date,$end_date,$member_id);
+  
+  $this->load->view('themes/backend/header', $data);
+  $this->load->view('themes/backend/sidebar', $data);
+  $this->load->view('themes/backend/topbar', $data);
+  $this->load->view('themes/backend/javascript', $data);
+  $this->load->view('daftarketerlambatan', $data);
+  $this->load->view('themes/backend/footer');
+  $this->load->view('themes/backend/footerajax');
+  }
+}
+//daftarketerlambatanpdf
+public function daftarketerlambatan_pdf($start_date,$end_date,$member_id)
+{
+  $data['title'] = 'Daftar Keterlambatan';
+  //load content html
+  $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+  $data['member_id']=$member_id;
+  $data['start_date']=$start_date;
+  $data['end_date']=$end_date;  
+  $data['tanggalsekarang']=date('Y-m-d');
+  if(!$start_date){
+  $data['get_keterlambatan_all'] = $this->Perpustakaan_model->get_fines_all();
+  }else{    
+  $data['get_keterlambatan_all'] = $this->Perpustakaan_model->get_fines_input($start_date,$end_date,$member_id);
+  }
+
+  $html = $this->load->view('daftarketerlambatan_pdf', $data, true);
+  // create pdf using dompdf
+  $filename = 'daftarketerlambatan_pdf' . date('dmY') . '_' . date('His');
+  $paper = 'A4';
+  $orientation = 'potrait';
+  pdf_create($html, $filename, $paper, $orientation);
+}
+//daftarketerlambatanexcel
+public function daftarketerlambatan_excel($start_date,$end_date,$member_id)
+{
+  $data['title'] = 'Daftar Keterlambatan';
+  //load content html
+  $this->load->model('Perpustakaan_model', 'Perpustakaan_model');
+  if(!$start_date){
+  $data['get_keterlambatan_all'] = $this->Perpustakaan_model->get_fines_all();
+  }else{    
+  $data['get_keterlambatan_all'] = $this->Perpustakaan_model->get_fines_input($start_date,$end_date,$member_id);
+  }
+  $data['member_id']=$member_id;
+  $data['start_date']=$start_date;
+  $data['end_date']=$end_date;
+  $data['tanggalsekarang']=date('Y-m-d');
+  $this->load->view('themes/backend/headerprint', $data);
+  $this->load->view('daftarketerlambatan_excel', $data);
+}
 
   //end
 }

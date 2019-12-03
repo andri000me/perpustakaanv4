@@ -424,5 +424,26 @@ public function get_loan_input($member_id,$item_kode,$judul,$tanggalawal,$tangga
         }
       return $this->db->get()->result_array();
 }
+public function get_fines_all(){
+        $this->db->select('`pp_loan`.*,pp_buku.judul,pp_member.nama');
+        $this->db->from('pp_loan');
+        $this->db->join('pp_item', 'pp_item.item_kode = pp_loan.item_kode');
+        $this->db->join('pp_buku', 'pp_buku.id = pp_item.buku_id');
+        $this->db->join('pp_member', 'pp_member.member_id = pp_loan.member_id');
+        $this->db->order_by('pp_loan.loan_date', 'desc');
+      return $this->db->get()->result_array();
+}
+public function get_fines_input($tanggalawal,$tanggalakhir,$member_id){
+        $this->db->select('`pp_loan`.*,pp_buku.judul,pp_member.nama');
+        $this->db->from('pp_loan');
+        $this->db->join('pp_item', 'pp_item.item_kode = pp_loan.item_kode');
+        $this->db->join('pp_buku', 'pp_buku.id = pp_item.buku_id');
+        $this->db->join('pp_member', 'pp_member.member_id = pp_loan.member_id');
+        $this->db->order_by('pp_loan.loan_date', 'desc');
+        $this->db->where('pp_loan.loan_date>=',$tanggalawal);
+        $this->db->where('pp_loan.loan_date<=',$tanggalakhir);
+        $this->db->like('pp_loan.member_id',$member_id);
+      return $this->db->get()->result_array();
+}
   //end
 }
