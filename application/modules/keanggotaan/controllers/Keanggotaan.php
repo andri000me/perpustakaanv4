@@ -230,7 +230,7 @@ public function exportanggota_csv(){
   $member_data = $this->db->get();
   $delimiter = ";";
   $newline = "\r\n";
-  $enclosure = '"';
+  $enclosure = '';
   $data = $this->dbutil->csv_from_result($member_data, $delimiter, $newline, $enclosure);
   $namefile = 'Data_Member' . $tanggalskrg . '.csv';
 
@@ -285,15 +285,14 @@ public function exportanggota_csv(){
            $data = [
              'id' => $id,
              'member_id' => $member_id,
-             'nama' => $nama,
-             'gender' => $gender,
-             'member_type_id' => $member_type_id,
-             'member_address' => $member_address,
-             'member_hp' => $member_hp,
-             'inst_name' => $inst_name,
-             'mpassword' => $mpassword,
-             'member_image' => $member_image,
-             'last_update' => $last_update,
+             'nama' => strip_quotes($nama),
+             'gender' => strip_quotes($gender),
+             'member_type_id' => strip_quotes($member_type_id),
+             'member_address' => strip_quotes($member_address),
+             'member_hp' => strip_quotes($member_hp),
+             'inst_name' => strip_quotes($inst_name),
+             'mpassword' => strip_quotes($mpassword),
+             'member_image' => strip_quotes($member_image),
            ];
 
            // Simpan data ke database.
