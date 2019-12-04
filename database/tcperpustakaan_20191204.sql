@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2019 at 04:19 AM
+-- Generation Time: Dec 04, 2019 at 09:15 AM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `icon` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `icon` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
 
 --
 -- Dumping data for table `icon`
@@ -62,37 +62,47 @@ INSERT INTO `icon` (`id`, `icon`) VALUES
 (23, 'fa fa-fw fa-envelope'),
 (24, 'fa fa-fw fa-building'),
 (25, 'fa fa-fw fa-money'),
-(26, 'fa fa-fw fa-graduation-cap');
+(26, 'fa fa-fw fa-graduation-cap'),
+(27, 'fa fa-fw fa-angle-down'),
+(28, 'ion ion-ios-cart-outline'),
+(29, 'fa fa-fw fa-barcode'),
+(30, 'fa fa-fw fa-check'),
+(31, 'fa fa-fw fa-edit'),
+(32, 'fa fa-fw fa-print');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `member`
+-- Table structure for table `options`
 --
 
-DROP TABLE IF EXISTS `member`;
-CREATE TABLE IF NOT EXISTS `member` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `kode` varchar(10) NOT NULL,
-  `nama` varchar(100) NOT NULL,
-  `gender` varchar(100) NOT NULL,
-  `member_type_id` varchar(100) NOT NULL,
-  `member_address` varchar(500) NOT NULL,
-  `member_hp` varchar(100) NOT NULL,
-  `inst_name` varchar(100) NOT NULL,
-  `mpassword` varchar(100) NOT NULL,
-  `member_image` varchar(100) NOT NULL,
-  `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+DROP TABLE IF EXISTS `options`;
+CREATE TABLE IF NOT EXISTS `options` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `value` longtext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 --
--- Dumping data for table `member`
+-- Dumping data for table `options`
 --
 
-INSERT INTO `member` (`id`, `kode`, `nama`, `gender`, `member_type_id`, `member_address`, `member_hp`, `inst_name`, `mpassword`, `member_image`, `last_update`) VALUES
-(1, '001', '001', '1', '1', '001', '001', '001', 'dc5c7986daef50c1e02ab09b442ee34f', '', '2019-11-26 10:52:16'),
-(2, '003', '003', '1', '1', '003', '003', '003', '93dd4de5cddba2c733c65f233097f05a', '', '2019-11-26 11:04:37');
+INSERT INTO `options` (`id`, `name`, `value`) VALUES
+(1, 'site_title', 'TCPerpustakaan'),
+(2, 'site_description', 'TCPerpustakaan'),
+(3, 'site_keyword', 'perpustakaan, indonesia, surabaya'),
+(6, 'protocol', 'smtp'),
+(7, 'smtp_host', 'ssl://smtp.googlemail.com'),
+(8, 'smtp_user', 'rekyefin@gmail.com'),
+(9, 'smtp_pass', ''),
+(10, 'smtp_port', '4655'),
+(11, 'mailtype', 'html'),
+(12, 'charset', 'utf-8'),
+(13, 'newline', '\\r\\n'),
+(14, 'width_label', '9'),
+(15, 'height_label', '3.3'),
+(16, 'item_margin', '0.05');
 
 -- --------------------------------------------------------
 
@@ -160,8 +170,8 @@ CREATE TABLE IF NOT EXISTS `pp_buku` (
 --
 
 INSERT INTO `pp_buku` (`id`, `judul`, `pengarang_id`, `penanggungjawab`, `edisi`, `gmd_id`, `tipeisi_id`, `tipemedia_id`, `kalaterbit_id`, `isbn`, `penerbit_id`, `tahunterbit`, `tempatterbit_id`, `deskripsifisik`, `judulseri`, `klasifikasi`, `nopanggil`, `topik_id`, `abstrak`, `gambarsampul`, `lampiran`, `disableopac`, `promoberanda`, `url`, `urlmultimedia`, `last_update`) VALUES
-(10, 'Ajax', '11', 'asd', 'asd', '33', '2', '1', '1', '111', '3', '55', '6', '55', '88', '66', '77', '10', '99', '1574325417931.jpg', NULL, '1', '1', 'perpustakaan/buku', '55', '2019-11-25 09:38:20'),
-(11, 'PHP 5 for dummies', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '5', '', '1575081061225.jpg', NULL, NULL, NULL, '', '', '2019-11-30 09:31:01');
+(10, 'Ajax', '11', 'asd', 'asd', '33', '2', '1', '1', '111', '3', '55', '6', '55', '88', '000', '005.75/85-22 Kof d', '10', '99', '1574325417931.jpg', NULL, '1', '1', 'perpustakaan/buku', '55', '2019-12-04 12:42:23'),
+(11, 'PHP 5 for dummies', '', '', '', '', '', '', '', '', '', '', '', '', '', '000', '006.7/86-22 Woy a', '5', '', '1575081061225.jpg', NULL, NULL, NULL, '', '', '2019-12-04 12:42:55');
 
 -- --------------------------------------------------------
 
@@ -300,14 +310,14 @@ CREATE TABLE IF NOT EXISTS `pp_item` (
 --
 
 INSERT INTO `pp_item` (`id`, `buku_id`, `nopanggil`, `tipekoleksi_id`, `item_kode`, `lokasi_id`, `lokasi_rak`, `item_status_id`, `supplier_id`, `source_id`, `invoice`, `invoice_tanggal`, `harga`, `last_update`, `user`) VALUES
-(24, '10', '75', '3', 'B00001', '1', '', '0', '', '1', '', '', '0', '2019-11-25 16:00:24', 'admin@admin.com'),
-(25, '10', '77', '3', 'B00002', '1', '', '0', '', '1', '', '', '0', '2019-11-25 16:00:39', 'admin@admin.com'),
-(26, '10', '80', '3', 'B00003', '1', '', '0', '', '1', '', '', '0', '2019-11-25 16:00:17', 'admin@admin.com'),
-(27, '11', '', '3', 'B00004', '1', '', '0', '', '1', '', '', '0', '2019-11-30 09:31:19', 'admin@admin.com'),
-(28, '11', '', '3', 'B00005', '1', '', '0', '', '1', '', '', '0', '2019-11-30 09:31:19', 'admin@admin.com'),
-(29, '11', '', '3', 'B00006', '1', '', '0', '', '1', '', '', '0', '2019-11-30 09:31:19', 'admin@admin.com'),
-(30, '11', '', '3', 'B00007', '1', '', '0', '', '1', '', '', '0', '2019-11-30 09:31:19', 'admin@admin.com'),
-(31, '11', '', '3', 'B00008', '1', '', '0', '', '1', '', '', '0', '2019-11-30 09:31:19', 'admin@admin.com');
+(24, '10', '005.75/85-22 Kof d', '3', 'B00001', '1', '', '0', '', '1', '', '', '0', '2019-12-04 12:57:03', 'admin@admin.com'),
+(25, '10', '005.75/85-22 Kof d', '3', 'B00002', '1', '', '0', '', '1', '', '', '0', '2019-12-04 12:57:03', 'admin@admin.com'),
+(26, '10', '005.75/85-22 Kof d', '3', 'B00003', '1', '', '0', '', '1', '', '', '0', '2019-12-04 12:57:03', 'admin@admin.com'),
+(27, '11', '006.7/86-22 Woy a', '3', 'B00004', '1', '', '0', '', '1', '', '', '0', '2019-12-04 12:57:08', 'admin@admin.com'),
+(28, '11', '006.7/86-22 Woy a', '3', 'B00005', '1', '', '0', '', '1', '', '', '0', '2019-12-04 12:57:08', 'admin@admin.com'),
+(29, '11', '006.7/86-22 Woy a', '3', 'B00006', '1', '', '0', '', '1', '', '', '0', '2019-12-04 12:57:08', 'admin@admin.com'),
+(30, '11', '006.7/86-22 Woy a', '3', 'B00007', '1', '', '0', '', '1', '', '', '0', '2019-12-04 12:57:08', 'admin@admin.com'),
+(31, '11', '006.7/86-22 Woy a', '3', 'B00008', '1', '', '0', '', '1', '', '', '0', '2019-12-04 12:57:08', 'admin@admin.com');
 
 -- --------------------------------------------------------
 
@@ -423,16 +433,17 @@ CREATE TABLE IF NOT EXISTS `pp_member` (
   `member_image` varchar(100) NOT NULL,
   `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `pp_member`
 --
 
 INSERT INTO `pp_member` (`id`, `member_id`, `nama`, `gender`, `member_type_id`, `member_address`, `member_hp`, `inst_name`, `mpassword`, `member_image`, `last_update`) VALUES
-(1, '001', 'Bohemian Rhapsody', '1', '1', '001', '001', '001', 'dc5c7986daef50c1e02ab09b442ee34f', '', '2019-11-29 10:17:08'),
-(2, '003', 'Yesterday', '1', '1', '003', '003', '003', '93dd4de5cddba2c733c65f233097f05a', '', '2019-11-29 10:17:15'),
-(4, '002', 'JOHN CARTER', '1', '1', '', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', '2019-11-30 09:33:33');
+(1, '001', 'Bohemian Rhapsody', '1', '1', '001', '001', '001', 'dc5c7986daef50c1e02ab09b442ee34f', '', '2019-12-04 10:29:43'),
+(2, '003', 'Yesterday', '1', '1', '003', '003', '003', '93dd4de5cddba2c733c65f233097f05a', '', '2019-12-04 10:29:43'),
+(4, '002', 'JOHN CARTER', '1', '1', '002', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', '2019-12-04 10:29:43'),
+(5, '004', 'ALEX', '1', '1', '004', '', '', '', '', '2019-12-04 10:29:43');
 
 -- --------------------------------------------------------
 
@@ -820,7 +831,7 @@ CREATE TABLE IF NOT EXISTS `user_access_menu` (
   `role_id` int(11) NOT NULL,
   `menu_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `user_access_menu`
@@ -838,7 +849,8 @@ INSERT INTO `user_access_menu` (`id`, `role_id`, `menu_id`) VALUES
 (10, 1, 18),
 (12, 1, 19),
 (13, 1, 20),
-(14, 1, 21);
+(14, 1, 21),
+(15, 1, 22);
 
 -- --------------------------------------------------------
 
@@ -946,7 +958,7 @@ CREATE TABLE IF NOT EXISTS `user_menu` (
   `menu_id` varchar(50) NOT NULL,
   `menu` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
 --
 -- Dumping data for table `user_menu`
@@ -957,11 +969,12 @@ INSERT INTO `user_menu` (`id`, `icon`, `menu_id`, `menu`) VALUES
 (2, 'fa fa-fw fa-users', 'user', 'User'),
 (3, 'fa fa-fw fa-navicon', 'menu', 'Menu'),
 (16, 'fa fa-fw fa-graduation-cap', 'testing-icon', 'Testing Icon'),
-(17, 'fa fa-fw fa-plus', 'master', 'Master'),
+(17, 'fa fa-fw fa-edit', 'master', 'Master'),
 (18, 'fa fa-fw fa-building', 'bibliography', 'Bibliography'),
-(19, 'fa fa-fw fa-users', 'keanggotaan', 'Keanggotaan'),
+(19, 'fa fa-fw fa-user', 'keanggotaan', 'Keanggotaan'),
 (20, 'fa fa-fw fa-dollar', 'transaksi', 'Transaksi'),
-(21, 'fa fa-fw fa-book', 'laporan', 'Laporan');
+(21, 'fa fa-fw fa-book', 'laporan', 'Laporan'),
+(22, 'fa fa-fw fa-barcode', 'labeling', 'Labeling');
 
 -- --------------------------------------------------------
 
@@ -1000,7 +1013,7 @@ CREATE TABLE IF NOT EXISTS `user_sub_menu` (
   `sort` int(11) NOT NULL DEFAULT '1',
   `is_active` int(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
 
 --
 -- Dumping data for table `user_sub_menu`
@@ -1036,10 +1049,12 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `sort`, `i
 (28, 18, 'Eksemplar', 'bibliography/eksemplar', '', 2, 1),
 (29, 19, 'Tipe Anggota', 'keanggotaan/tipeanggota', '', 1, 1),
 (30, 19, 'Anggota', 'keanggotaan/anggota', '', 2, 1),
-(31, 20, 'Transaksi', 'transaksi/transaksi', '', 1, 1),
+(31, 20, 'Transaksi', 'transaksi/transaksi1', '', 1, 1),
 (32, 20, 'Pengembalian', 'transaksi/pengembalian', '', 2, 1),
 (33, 21, 'Sejarah Peminjaman', 'laporan/sejarahpeminjaman', '', 1, 1),
-(34, 21, 'Daftar Keterlambatan', 'laporan/daftarketerlambatan', '', 2, 1);
+(34, 21, 'Daftar Keterlambatan', 'laporan/daftarketerlambatan', '', 2, 1),
+(35, 22, 'Pencetakan Label', 'labeling/pencetakanlabel', '', 1, 1),
+(36, 22, 'Pencetakan Barcode', 'labeling/pencetakanbarcode', '', 2, 1);
 
 -- --------------------------------------------------------
 

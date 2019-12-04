@@ -27,18 +27,18 @@
       <div class="box-header with-border">
         <h3 class="box-title"><?= $title; ?></h3>
         <div class="box-tools">
-        <a href="<?= base_url('labeling/batalkan_antrian') ?>" class="btn btn-danger"onclick="return confirm('Anda yakin ?');"><i class="fa fa-fw fa-trash"></i>BATALKAN ANTRIAN PENCETAKAN</a>&nbsp;&nbsp;<a href="<?= base_url('labeling/cetak_label') ?>" class="btn btn-info"target="new"><i class="fa fa-fw fa-print"></i>CETAK</a></div>
+        <a href="<?= base_url('labeling/batalkan_antrianbarcode') ?>" class="btn btn-danger"onclick="return confirm('Anda yakin ?');"><i class="fa fa-fw fa-trash"></i>BATALKAN ANTRIAN PENCETAKAN</a>&nbsp;&nbsp;<a href="<?= base_url('labeling/cetak_barcode') ?>" class="btn btn-info"target="new"><i class="fa fa-fw fa-print"></i>CETAK</a></div>
       </div>
       <div class="box-body">
         <div class="row">
           <div class="col-md-12">
-            <form action="<?= base_url('labeling/tambah_eksemplar') ?>" method="post">
+            <form action="<?= base_url('labeling/tambah_eksemplarbarcode') ?>" method="post">
               <table  class="table table-bordered table-striped" id="example1">
                 <thead>
                   <tr>
                       <th>Tambah</th>
+                      <th>Kode</th>
                       <th>Judul</th>
-                      <th>No.Panggil</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -46,8 +46,8 @@
                   <?php foreach ($listeksemplar as $dt) : ?>
                     <tr>
                         <td><input name="check[]" type="checkbox" value="<?= $dt['id'] ?>"></td>
+                      <td><?= $dt['item_kode']; ?></td>
                       <td><?= $dt['judul']; ?></td>
-                      <td><?= $dt['nopanggil']; ?></td>
                     </tr>
                     <?php $i++; ?>
                   <?php endforeach; ?>

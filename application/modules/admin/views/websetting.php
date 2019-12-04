@@ -47,6 +47,29 @@
                 <?= form_error('site_keyword', '<span class="help-block">', '</span>') ?>
               </div>
             </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Width Label (cm)</label>
+              <div class="col-sm-10">
+                <input type="text" name="option[width_label]" value="<?= options('width_label') == '' ? set_value('width_label') : options('width_label'); ?>" class="form-control" placeholder="width_label">
+                <?= form_error('width_label', '<span class="help-block">', '</span>') ?>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Height Label (cm)</label>
+              <div class="col-sm-10">
+                <input type="text" name="option[height_label]" value="<?= options('height_label') == '' ? set_value('height_label') : options('height_label'); ?>" class="form-control" placeholder="height_label">
+                <?= form_error('height_label', '<span class="help-block">', '</span>') ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Item Margin Label (cm)</label>
+              <div class="col-sm-10">
+                <input type="text" name="option[item_margin]" value="<?= options('item_margin') == '' ? set_value('item_margin') : options('item_margin'); ?>" class="form-control" placeholder="item_margin">
+                <?= form_error('item_margin', '<span class="help-block">', '</span>') ?>
+              </div>
+            </div>
           <!-- /.box-body -->
           <div class="box-footer">
             <input type="submit" name="submit" value="Save Changes" class="btn btn-primary">
