@@ -149,5 +149,7 @@ public function batalkan_antrianbarcode()
   $this->load->view('cetak_barcode', $data);
  }
 
-  //end
+
+
+   //end
 }

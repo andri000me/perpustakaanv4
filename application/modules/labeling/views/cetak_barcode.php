@@ -16,9 +16,7 @@
  <?php foreach ($this->cart->product_options($items['rowid']) as $option_name => $option_value): ?>
 <?php
 $data = explode(" " , $option_value);?>
-<?= $data[0] ?><br>
-<?= $data[1] ?><br>
-<?= $data[2] ?><br>
+<?= bar128(stripslashes($data[0])); ?>
 <?php endforeach; ?>
  </td></tr></table>
  </div>

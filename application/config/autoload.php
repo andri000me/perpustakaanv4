@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'file', 'security', 'wpu', 'string', 'text','dompdf','download');
+$autoload['helper'] = array('url', 'file', 'security', 'wpu', 'string', 'text','dompdf','download','bar128');
 
 /*
 | -------------------------------------------------------------------
