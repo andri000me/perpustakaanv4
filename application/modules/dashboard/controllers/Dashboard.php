@@ -13,12 +13,7 @@ class Dashboard extends CI_Controller
     public function index()
     {
         $data['title'] = 'Dashboard';
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-<<<<<<< HEAD
-
-=======
->>>>>>> b1ad8ad98f3afa75fff23ccdca982a4fc1c0c7c4
-        $data['bulansekarang']=date('m');
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array(); $data['bulansekarang']=date('m');
         $data['bulansekarangshort']=date('n');
         $data['row']='0';
 

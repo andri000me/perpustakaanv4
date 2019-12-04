@@ -19,11 +19,11 @@
     <div class="row">
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
-          <span class="info-box-icon bg-aqua"><i class="fa fa-fw fa-users"></i></span>
+          <span class="info-box-icon bg-aqua"><i class="fa fa-fw fa-book"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text">Pegawai</span>
-            <span class="info-box-number">90</span>
+            <span class="info-box-text">Koleksi</span>
+            <span class="info-box-number">~</span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -32,11 +32,11 @@
       <!-- /.col -->
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
-          <span class="info-box-icon bg-red"><i class="fa fa-fw fa-users"></i></span>
+          <span class="info-box-icon bg-red"><i class="fa fa-fw fa-barcode"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text">Siswa</span>
-            <span class="info-box-number">410</span>
+            <span class="info-box-text">Item</span>
+            <span class="info-box-number">~</span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -52,8 +52,8 @@
           <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text">Sales</span>
-            <span class="info-box-number">760</span>
+            <span class="info-box-text">Dipinjam</span>
+            <span class="info-box-number">~</span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -62,11 +62,11 @@
       <!-- /.col -->
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
-          <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+          <span class="info-box-icon bg-yellow"><i class="fa fa-fw fa-check"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text">New Members</span>
-            <span class="info-box-number">2,000</span>
+            <span class="info-box-text">Tersedia</span>
+            <span class="info-box-number">~</span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -75,13 +75,7 @@
       <!-- /.col -->
     </div>
     <!-- /.row -->
-
-<<<<<<< HEAD
-
-=======
-    </div>
->>>>>>> b1ad8ad98f3afa75fff23ccdca982a4fc1c0c7c4
-    <!-- /.box -->
+ <!-- /.box -->
   </section>
   <!-- /.content -->
 </div>

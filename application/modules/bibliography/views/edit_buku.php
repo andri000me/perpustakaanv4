@@ -197,7 +197,7 @@ $urlmultimedia = $get_buku['urlmultimedia'];
 <div class="form-group row">
 <label for="judul" class="col-sm-2 control-label">Klasifikasi</label>
 <div class="col-sm-8">
-<input type="text" class="form-control" id="klasifikasi" name="klasifikasi" value="<?= set_value('klasifikasi', isset($klasifikasi) ? $klasifikasi : ''); ?>">
+<input type="text" class="form-control" id="klasifikasi" name="klasifikasi" value="<?= set_value('klasifikasi', isset($klasifikasi) ? $klasifikasi : '000'); ?>">
 <?= form_error('klasifikasi', '<span class="help-block">', '</small>'); ?>
 </div>
 </div>

@@ -199,6 +199,10 @@ class Bibliography extends CI_Controller
       ];
       $this->db->where('id', $id);
       $this->db->update('pp_buku', $data);
+      //update nopanggil
+      $this->db->set('nopanggil',$this->input->post('nopanggil'));
+      $this->db->where('buku_id', $id);
+      $this->db->update('pp_item');
       // Jika Ada Gambar
       $upload_image = $_FILES['image']['name'];
 
