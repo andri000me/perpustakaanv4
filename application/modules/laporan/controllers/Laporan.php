@@ -263,5 +263,58 @@ public function daftardenda_excel($start_date,$end_date,$member_id)
   $this->load->view('themes/backend/headerprint', $data);
   $this->load->view('daftardenda_excel', $data);
 }
+//rekapitulasi
+public function rekapitulasi()
+{
+  $data['title'] = 'Rekapitulasi';
+  $data['user'] = $this->db->get_where('user', ['email' =>
+  $this->session->userdata('email')])->row_array();
+  $this->load->model('Laporan_model', 'Laporan_model');
+  $groupby = $this->input->post('groupby');
+  if($groupby==''or$groupby=='klasifikasi'){
+  $data['groupby']='klasifikasi';  
+  $data['get_rekapitulasi'] = $this->Laporan_model->get_klasifikasi();
+  }elseif($groupby=='gmd_id'){
+  $data['get_rekapitulasi'] = $this->Laporan_model->get_klagmd();
+  }elseif($groupby=='tipekoleksi_id'){
+  $data['get_rekapitulasi'] = $this->Laporan_model->get_klatipekoleksi();
+  }elseif($groupby=='bahasa_id'){
+    $data['get_rekapitulasi'] = $this->Laporan_model->get_klabahasa();
+    }
+  
+  $data['groupby']=$groupby;  
+  $this->load->view('themes/backend/header', $data);
+  $this->load->view('themes/backend/sidebar', $data);
+  $this->load->view('themes/backend/topbar', $data);
+  $this->load->view('themes/backend/javascript', $data);
+  $this->load->view('rekapitulasi', $data);
+  $this->load->view('themes/backend/footer');
+  $this->load->view('themes/backend/footerajax');
+   
+}
+
+//Rekapitulasi
+public function rekapitulasi_pdf($groupby)
+{
+  $data['title'] = 'Laporan Rekapitulasi';
+  //load content html
+  $this->load->model('Laporan_model', 'Laporan_model');
+
+  if($groupby==''or$groupby=='klasifikasi'){
+    $data['groupby']='klasifikasi';  
+    $data['get_rekapitulasi'] = $this->Laporan_model->get_klasifikasi();
+    }elseif($groupby=='gmd'){
+    $data['get_rekapitulasi'] = $this->Laporan_model->get_klagmd();
+    }elseif($groupby=='bahasa'){
+      $data['get_rekapitulasi'] = $this->Laporan_model->get_klabahasa();
+      }
+
+  $html = $this->load->view('rekapitulasi_pdf', $data, true);
+  // create pdf using dompdf
+  $filename = 'rekapitulasi_pdf' . date('dmY') . '_' . date('His');
+  $paper = 'A4';
+  $orientation = 'potrait';
+  pdf_create($html, $filename, $paper, $orientation);
+}
   //end
 }

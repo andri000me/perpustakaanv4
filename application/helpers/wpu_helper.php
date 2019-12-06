@@ -338,7 +338,27 @@ function get_umur($tanggal_lahir)
 }
 function get_eksemplarbuku($buku_id)
 {
-    $ci = get_instance();
+$ci = get_instance();
 $jumbuku = $ci->db->get_where('pp_item',['buku_id' => $buku_id]);
 return $jumbuku->num_rows();
+}
+
+function get_eksemplarbuku_kla($groupby,$kla_id)
+{
+$ci = get_instance();
+$ci->db->select('count(pp_item.item_kode) as value');
+$ci->db->from('pp_item');
+$ci->db->join('pp_buku', 'pp_buku.id = pp_item.buku_id');
+if($groupby=='klasifikasi'){
+$ci->db->where('pp_buku.klasifikasi',$kla_id);
+}elseif($groupby=='gmd_id'){
+$ci->db->where('pp_buku.gmd_id',$kla_id);
+}elseif($groupby=='tipekoleksi_id'){
+$ci->db->where('pp_buku.tipeisi_id',$kla_id);
+}elseif($groupby=='bahasa_id'){
+$ci->db->where('pp_buku.bahasa_id',$kla_id);
+}
+
+return $ci->db->get()->row()->value;
+
 }

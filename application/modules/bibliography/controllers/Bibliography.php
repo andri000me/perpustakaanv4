@@ -42,6 +42,7 @@ class Bibliography extends CI_Controller
    $data['listtempatterbit'] = $this->Bibliography_model->get_tempatterbit();
    $data['listtopik'] = $this->Bibliography_model->get_topik();
    $data['listkalaterbit'] = $this->Bibliography_model->get_kalaterbit();
+   $data['listbahasa'] = $this->Bibliography_model->get_bahasa();
 
    $this->form_validation->set_rules('judul', 'judul', 'required');
    $this->form_validation->set_rules('pengarang_id', 'pengarang_id');
@@ -51,6 +52,7 @@ class Bibliography extends CI_Controller
    $this->form_validation->set_rules('tipeisi_id', 'tipeisi_id');
    $this->form_validation->set_rules('tipemedia_id', 'tipemedia_id');
    $this->form_validation->set_rules('kalaterbit_id', 'kalaterbit_id');
+   $this->form_validation->set_rules('bahasa_id', 'bahasa_id');
    $this->form_validation->set_rules('isbn', 'isbn');
    $this->form_validation->set_rules('penerbit_id', 'penerbit_id');
    $this->form_validation->set_rules('tahunterbit', 'tahunterbit');
@@ -81,7 +83,7 @@ class Bibliography extends CI_Controller
                $config['allowed_types'] = 'gif|jpg|png';
                $config['max_size']     = '200';
                $config['upload_path'] = './assets/images/buku/';
-               $config['file_name'] = round(microtime(true) * 1000);
+               $config['file_name'] = date('dmyHis');
                $this->load->library('upload', $config);
                if ($this->upload->do_upload('image')) {
                    $new_image = $this->upload->data('file_name');
@@ -99,6 +101,7 @@ class Bibliography extends CI_Controller
          'tipeisi_id' => $this->input->post('tipeisi_id'),
          'tipemedia_id' => $this->input->post('tipemedia_id'),
          'kalaterbit_id' => $this->input->post('kalaterbit_id'),
+         'bahasa_id' => $this->input->post('bahasa_id'),
          'isbn' => $this->input->post('isbn'),
          'penerbit_id' => $this->input->post('penerbit_id'),
          'tahunterbit' => $this->input->post('tahunterbit'),
@@ -137,6 +140,7 @@ class Bibliography extends CI_Controller
    $data['listtempatterbit'] = $this->Bibliography_model->get_tempatterbit();
    $data['listtopik'] = $this->Bibliography_model->get_topik();
    $data['listkalaterbit'] = $this->Bibliography_model->get_kalaterbit();
+   $data['listbahasa'] = $this->Bibliography_model->get_bahasa();
    $data['get_buku'] = $this->Bibliography_model->get_buku_ById($id);
 
    $this->form_validation->set_rules('judul', 'judul', 'required');
@@ -147,6 +151,7 @@ class Bibliography extends CI_Controller
    $this->form_validation->set_rules('tipeisi_id', 'tipeisi_id');
    $this->form_validation->set_rules('tipemedia_id', 'tipemedia_id');
    $this->form_validation->set_rules('kalaterbit_id', 'kalaterbit_id');
+   $this->form_validation->set_rules('bahasa_id', 'bahasa_id');
    $this->form_validation->set_rules('isbn', 'isbn');
    $this->form_validation->set_rules('penerbit_id', 'penerbit_id');
    $this->form_validation->set_rules('tahunterbit', 'tahunterbit');
@@ -181,6 +186,7 @@ class Bibliography extends CI_Controller
          'tipeisi_id' => $this->input->post('tipeisi_id'),
          'tipemedia_id' => $this->input->post('tipemedia_id'),
          'kalaterbit_id' => $this->input->post('kalaterbit_id'),
+         'bahasa_id' => $this->input->post('bahasa_id'),
          'isbn' => $this->input->post('isbn'),
          'penerbit_id' => $this->input->post('penerbit_id'),
          'tahunterbit' => $this->input->post('tahunterbit'),
@@ -215,7 +221,7 @@ class Bibliography extends CI_Controller
           $config['allowed_types'] = 'gif|jpg|png';
           $config['max_size']     = '200';
           $config['upload_path'] = './assets/images/buku/';
-          $config['file_name'] = round(microtime(true) * 1000);
+          $config['file_name'] = date('dmyHis');
           $this->load->library('upload', $config);
           if ($this->upload->do_upload('image')) {
               $new_image = $this->upload->data('file_name');
@@ -397,6 +403,19 @@ foreach($pcheck as $id) {
          $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
          redirect('bibliography/eksemplar');
    }
+ }
+ public function hapus_sampul($id)
+ {
+  $databuku = $this->db->get_where('pp_buku', ['id' =>
+		$id ])->row_array();
+    $gambarsampul = $databuku['gambarsampul'];
+    unlink(FCPATH . 'assets/images/buku/' . $gambarsampul);
+  
+    $this->db->set('gambarsampul', '');
+    $this->db->where('id', $id);
+    $this->db->update('pp_buku');
+     $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data deleted !</div>');
+   redirect('bibliography/edit_buku/'.$id);
  }
   //end
 }

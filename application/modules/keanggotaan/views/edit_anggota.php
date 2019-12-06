@@ -24,6 +24,7 @@ $member_type_id=$get_anggota['member_type_id'];
 $member_address=$get_anggota['member_address'];
 $member_hp=$get_anggota['member_hp'];
 $inst_name=$get_anggota['inst_name'];
+$member_image=$get_anggota['member_image'];
 ?>
     <!-- Default box -->
     <div class="box">
@@ -107,6 +108,19 @@ $inst_name=$get_anggota['inst_name'];
 <div class="col-sm-8">
 <input type="text" class="form-control" id="mpassword" name="mpassword" value="<?= set_value('mpassword', isset($mpassword) ? $mpassword : ''); ?>">
 <?= form_error('mpassword', '<span class="help-block">', '</small>'); ?>
+</div>
+</div>
+<div class="form-group row">
+<label for="abstrak" class="col-sm-2 control-label">Foto Anggota</label>
+<div class="col-sm-8">
+<?php if($member_image){?>
+<a href="<?= base_url('assets/images/member/').$member_image?>"target="new"><?= $member_image?></a>
+&nbsp;
+<a href="<?= base_url('keanggotaan/hapus_gambarmember/' . $get_anggota['id']); ?>" onclick="return confirm('Anda yakin ? data tidak dapat dikembalikan lagi...');">[ 
+<i class="fa fa-trash" aria-hidden="true"></i>
+Hapus ]</a>
+<?php } ?>
+<input type="file" class="custom-file-input" id="image" name="image">
 </div>
 </div>
 

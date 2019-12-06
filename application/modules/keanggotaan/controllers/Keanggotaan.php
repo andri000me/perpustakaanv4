@@ -143,6 +143,22 @@ class Keanggotaan extends CI_Controller
     $this->load->view('themes/backend/footer');
     $this->load->view('themes/backend/footerajax');
     }else{
+      // Jika Ada Gambar
+      $upload_image = $_FILES['image']['name'];
+
+      if ($upload_image) {
+          $config['allowed_types'] = 'gif|jpg|png';
+          $config['max_size']     = '200';
+          $config['upload_path'] = './assets/images/member/';
+          $config['file_name'] = date('dmyHis');
+          $this->load->library('upload', $config);
+          if ($this->upload->do_upload('image')) {
+              $new_image = $this->upload->data('file_name');
+          } else {
+              echo  $this->upload->display_errors();
+          }
+      }
+
         $data = [
           'member_id' => $this->input->post('member_id'),
           'nama' => $this->input->post('nama'),
@@ -152,6 +168,7 @@ class Keanggotaan extends CI_Controller
           'member_hp' => $this->input->post('member_hp'),
           'inst_name' => $this->input->post('inst_name'),
           'mpassword' => md5($this->input->post('mpassword')),
+          'member_image' => $new_image,
            ];
            $this->db->insert('pp_member', $data);
            $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
@@ -183,6 +200,7 @@ class Keanggotaan extends CI_Controller
     $this->load->view('themes/backend/footer');
     $this->load->view('themes/backend/footerajax');
     }else{
+
         $dataitem = [
           'member_id' => $this->input->post('member_id'),
           'nama' => $this->input->post('nama'),
@@ -200,6 +218,30 @@ class Keanggotaan extends CI_Controller
             $this->db->where('id', $id);
             $this->db->update('pp_member');
           }
+          // Jika Ada Gambar
+      $upload_image = $_FILES['image']['name'];
+
+      if ($upload_image) {
+       $datamember = $this->db->get_where('pp_member', ['id' =>
+       $id ])->row_array();
+       $member_image = $datamember['member_image'];
+       unlink(FCPATH . 'assets/images/member/' . $member_image);
+
+          $config['allowed_types'] = 'gif|jpg|png';
+          $config['max_size']     = '200';
+          $config['upload_path'] = './assets/images/member/';
+          $config['file_name'] = date('dmyHis');
+          $this->load->library('upload', $config);
+          if ($this->upload->do_upload('image')) {
+              $new_image = $this->upload->data('file_name');
+              $this->db->set('member_image', $new_image);
+              $this->db->where('id', $id);
+              $this->db->update('pp_member');
+          } else {
+              echo  $this->upload->display_errors();
+          }
+      }
+
            $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
            redirect('keanggotaan/anggota');
     }
@@ -310,6 +352,19 @@ public function exportanggota_csv(){
        redirect('keanggotaan/anggota');
      }
    }
+ }
+ public function hapus_gambarmember($id)
+ {
+  $databuku = $this->db->get_where('pp_member', ['id' =>
+		$id ])->row_array();
+    $member_image = $databuku['member_image'];
+    unlink(FCPATH . 'assets/images/member/' . $member_image);
+  
+    $this->db->set('member_image', '');
+    $this->db->where('id', $id);
+    $this->db->update('pp_member');
+     $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data deleted !</div>');
+   redirect('keanggotaan/edit_anggota/'.$id);
  }
   //end
 }

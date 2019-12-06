@@ -121,6 +121,19 @@
 </div>
 
 <div class="form-group row">
+<label for="bahasa_id" class="col-sm-2 control-label">Bahasa</label>
+<div class="col-sm-8">
+<select class="js-example-basic-single" name="bahasa_id" style="width:80%;">
+<option value="2"> Indonesia </option>
+<?php foreach ($listbahasa as $dt) : ?>
+<option value="<?= $dt['id']; ?>" <?= set_select('bahasa_id', $dt['id'], FALSE); ?> <?= $dt['id'] == $bahasa_id ? ' selected="selected"' : ''; ?>><?= $dt['nama']; ?></option>
+<?php endforeach; ?>
+</select>
+<?= form_error('bahasa_id', '<span class="help-block">', '</small>'); ?>
+</div>
+</div>
+
+<div class="form-group row">
 <label for="judul" class="col-sm-2 control-label">ISBN/ISSN</label>
 <div class="col-sm-8">
 <input type="text" class="form-control" id="isbn" name="isbn" value="<?= set_value('isbn', isset($isbn) ? $isbn : ''); ?>">

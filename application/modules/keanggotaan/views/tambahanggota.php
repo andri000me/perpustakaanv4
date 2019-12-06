@@ -103,6 +103,12 @@
 </div>
 
 <div class="form-group row">
+<label for="abstrak" class="col-sm-2 control-label">Foto Anggota</label>
+<div class="col-sm-8">
+<input type="file" class="custom-file-input" id="image" name="image">
+</div>
+</div>
+<div class="form-group row">
 <label for="pengarang_id" class="col-sm-2 control-label"> </label>
 <div class="col-sm-10">
 <button type="submit" class="btn btn-primary">Simpan</button>

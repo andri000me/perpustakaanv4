@@ -469,7 +469,35 @@ public function get_denda_input($tanggalawal,$tanggalakhir,$member_id){
         $this->db->where('pp_fines.fines_date<=',$tanggalakhir);
         $this->db->like('pp_fines.member_id',$member_id);
         $this->db->order_by('pp_fines.fines_date', 'desc');
-      return $this->db->get()->result_array();
+        return $this->db->get()->result_array();
 }
+
+public function get_klasifikasi(){
+        $this->db->select('pp_buku.klasifikasi as nama,count(pp_buku.id)as jumlahjudul,pp_buku.klasifikasi as kla_id');
+        $this->db->from('pp_buku');
+        $this->db->group_by('nama', 'asc');
+        return $this->db->get()->result_array();
+}
+public function get_klagmd(){
+        $this->db->select('pp_gmd.nama as nama,count(pp_buku.id)as jumlahjudul,pp_gmd.id as kla_id');
+        $this->db->from('pp_buku');
+        $this->db->join('pp_gmd', 'pp_gmd.id = pp_buku.gmd_id');
+        $this->db->group_by('nama', 'asc');
+        return $this->db->get()->result_array();
+}
+public function get_klatipekoleksi(){
+        $this->db->select('pp_tipekoleksi.nama as nama,count(pp_buku.id)as jumlahjudul,pp_tipekoleksi.id as kla_id');
+        $this->db->from('pp_buku');
+        $this->db->join('pp_tipekoleksi', 'pp_tipekoleksi.id = pp_buku.gmd_id');
+        $this->db->group_by('nama', 'asc');
+        return $this->db->get()->result_array();
+}
+public function get_klabahasa(){
+        $this->db->select('pp_bahasa.nama as nama,count(pp_buku.id)as jumlahjudul,pp_bahasa.id as kla_id');
+        $this->db->from('pp_buku');
+        $this->db->join('pp_bahasa', 'pp_bahasa.id = pp_buku.bahasa_id');
+        $this->db->group_by('nama', 'asc');
+        return $this->db->get()->result_array();
+} 
   //end
 }

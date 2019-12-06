@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2019 at 04:35 AM
+-- Generation Time: Dec 06, 2019 at 09:48 AM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -146,6 +146,7 @@ CREATE TABLE IF NOT EXISTS `pp_buku` (
   `tipeisi_id` varchar(100) NOT NULL,
   `tipemedia_id` varchar(100) NOT NULL,
   `kalaterbit_id` varchar(100) NOT NULL,
+  `bahasa_id` varchar(50) NOT NULL,
   `isbn` varchar(100) NOT NULL,
   `penerbit_id` varchar(100) NOT NULL,
   `tahunterbit` varchar(100) NOT NULL,
@@ -164,15 +165,16 @@ CREATE TABLE IF NOT EXISTS `pp_buku` (
   `urlmultimedia` varchar(100) DEFAULT NULL,
   `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `pp_buku`
 --
 
-INSERT INTO `pp_buku` (`id`, `judul`, `pengarang_id`, `penanggungjawab`, `edisi`, `gmd_id`, `tipeisi_id`, `tipemedia_id`, `kalaterbit_id`, `isbn`, `penerbit_id`, `tahunterbit`, `tempatterbit_id`, `deskripsifisik`, `judulseri`, `klasifikasi`, `nopanggil`, `topik_id`, `abstrak`, `gambarsampul`, `lampiran`, `disableopac`, `promoberanda`, `url`, `urlmultimedia`, `last_update`) VALUES
-(10, 'Ajax', '11', 'asd', 'asd', '33', '2', '1', '1', '111', '3', '55', '6', '55', '88', '000', '005.75/85-22 Kof d', '10', '99', '1574325417931.jpg', NULL, '1', '1', 'perpustakaan/buku', '55', '2019-12-04 12:42:23'),
-(11, 'PHP 5 for dummies', '', '', '', '', '', '', '', '', '', '', '', '', '', '000', '006.7/86-22 Woy a', '5', '', '1575081061225.jpg', NULL, NULL, NULL, '', '', '2019-12-04 12:42:55');
+INSERT INTO `pp_buku` (`id`, `judul`, `pengarang_id`, `penanggungjawab`, `edisi`, `gmd_id`, `tipeisi_id`, `tipemedia_id`, `kalaterbit_id`, `bahasa_id`, `isbn`, `penerbit_id`, `tahunterbit`, `tempatterbit_id`, `deskripsifisik`, `judulseri`, `klasifikasi`, `nopanggil`, `topik_id`, `abstrak`, `gambarsampul`, `lampiran`, `disableopac`, `promoberanda`, `url`, `urlmultimedia`, `last_update`) VALUES
+(10, 'The Definitive Guide to MySQL 5', '11', '', '', '20', '2', '1', '1', '2', '111', '3', '55', '6', '55', '88', '000', '005.75/85-22 Kof d', '10', '99', '061219063004.jpg', NULL, '1', '1', 'perpustakaan/buku', '55', '2019-12-06 15:05:16'),
+(11, 'PHP 5 for dummies', '', '', '', '1', '', '', '', '2', '', '', '', '', '', '', '000', '006.7/86-22 Woy a', '5', '', '1575081061225.jpg', NULL, NULL, NULL, '', '', '2019-12-06 15:05:15'),
+(12, 'Linux In a Nutshell', '5', '', '', '1', '', '', '3', '2', '', '', '', '', '', '', '010', '', '', '', '061219074849.jpg', NULL, NULL, NULL, '', '', '2019-12-06 15:05:29');
 
 -- --------------------------------------------------------
 
@@ -277,8 +279,7 @@ INSERT INTO `pp_gmd` (`id`, `kode`, `nama`, `last_update`) VALUES
 (28, 'CD', 'CD-ROM', '2019-11-04 00:00:00'),
 (29, 'MV', 'Multimedia', '2019-11-04 00:00:00'),
 (30, 'ER', 'Electronic Resource', '2019-11-04 00:00:00'),
-(31, 'DVD', 'Digital Versatile Disc', '2019-11-04 00:00:00'),
-(33, 'asd', 'asdad', '2019-11-05 08:53:24');
+(31, 'DVD', 'Digital Versatile Disc', '2019-11-04 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -304,7 +305,7 @@ CREATE TABLE IF NOT EXISTS `pp_item` (
   `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `user` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=32 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
 
 --
 -- Dumping data for table `pp_item`
@@ -318,7 +319,10 @@ INSERT INTO `pp_item` (`id`, `buku_id`, `nopanggil`, `tipekoleksi_id`, `item_kod
 (28, '11', '006.7/86-22 Woy a', '3', 'B00005', '1', '', '0', '', '1', '', '', '0', '2019-12-04 12:57:08', 'admin@admin.com'),
 (29, '11', '006.7/86-22 Woy a', '3', 'B00006', '1', '', '0', '', '1', '', '', '0', '2019-12-04 12:57:08', 'admin@admin.com'),
 (30, '11', '006.7/86-22 Woy a', '3', 'B00007', '1', '', '0', '', '1', '', '', '0', '2019-12-04 12:57:08', 'admin@admin.com'),
-(31, '11', '006.7/86-22 Woy a', '3', 'B00008', '1', '', '0', '', '1', '', '', '0', '2019-12-04 12:57:08', 'admin@admin.com');
+(31, '11', '006.7/86-22 Woy a', '3', 'B00008', '1', '', '0', '', '1', '', '', '0', '2019-12-04 12:57:08', 'admin@admin.com'),
+(32, '12', '', '3', 'B00009', '1', '', '0', '', '1', '', '', '0', '2019-12-06 13:49:13', 'admin@admin.com'),
+(33, '12', '', '3', 'B00010', '1', '', '0', '', '1', '', '', '0', '2019-12-06 13:49:14', 'admin@admin.com'),
+(34, '12', '', '3', 'B00011', '1', '', '0', '', '1', '', '', '0', '2019-12-06 13:49:14', 'admin@admin.com');
 
 -- --------------------------------------------------------
 
@@ -441,10 +445,10 @@ CREATE TABLE IF NOT EXISTS `pp_member` (
 --
 
 INSERT INTO `pp_member` (`id`, `member_id`, `nama`, `gender`, `member_type_id`, `member_address`, `member_hp`, `inst_name`, `mpassword`, `member_image`, `last_update`) VALUES
-(1, '001', 'Bohemian Rhapsody', '1', '1', '001', '001', '001', 'dc5c7986daef50c1e02ab09b442ee34f', '', '2019-12-04 10:29:43'),
-(2, '003', 'Yesterday', '1', '1', '003', '003', '003', '93dd4de5cddba2c733c65f233097f05a', '', '2019-12-04 10:29:43'),
-(4, '002', 'JOHN CARTER', '1', '1', '002', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', '2019-12-04 10:29:43'),
-(5, '004', 'ALEX', '1', '1', '004', '', '', '', '', '2019-12-04 10:29:43');
+(1, '001', 'TONY STARK', '1', '1', '001', '001', '001', 'dc5c7986daef50c1e02ab09b442ee34f', '061219064716.jpg', '2019-12-06 12:47:16'),
+(2, '003', 'CLARK', '1', '1', '003', '003', '003', '93dd4de5cddba2c733c65f233097f05a', '061219064342.jpg', '2019-12-06 12:43:42'),
+(4, '002', 'SCARLET', '1', '1', '002', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '061219064309.jpg', '2019-12-06 12:43:09'),
+(5, '004', 'FLASH', '1', '1', '004', '', '', '', '061219064649.jpg', '2019-12-06 12:46:49');
 
 -- --------------------------------------------------------
 
@@ -1014,7 +1018,7 @@ CREATE TABLE IF NOT EXISTS `user_sub_menu` (
   `sort` int(11) NOT NULL DEFAULT '1',
   `is_active` int(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
 
 --
 -- Dumping data for table `user_sub_menu`
@@ -1057,7 +1061,8 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `sort`, `i
 (35, 22, 'Pencetakan Label', 'labeling/pencetakanlabel', '', 1, 1),
 (36, 22, 'Pencetakan Barcode', 'labeling/pencetakanbarcode', '', 2, 1),
 (37, 21, 'Daftar Denda', 'laporan/daftardenda', '', 3, 1),
-(38, 22, 'Pencetakan Qrcode', 'labeling/pencetakanqrcode', '', 3, 1);
+(38, 22, 'Pencetakan Qrcode', 'labeling/pencetakanqrcode', '', 3, 1),
+(39, 21, 'Rekapitulasi', 'laporan/rekapitulasi', '', 4, 1);
 
 -- --------------------------------------------------------
 
