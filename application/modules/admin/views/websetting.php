@@ -70,6 +70,14 @@
                 <?= form_error('item_margin', '<span class="help-block">', '</span>') ?>
               </div>
             </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Tanggal Awal</label>
+              <div class="col-sm-10">
+                <input type="text" id="tanggalsaja" name="option[tanggal_awal]" value="<?= options('tanggal_awal') == '' ? set_value('tanggal_awal') : options('tanggal_awal'); ?>" class="form-control" placeholder="tanggal_awal">
+                <?= form_error('tanggal_awal', '<span class="help-block">', '</span>') ?>
+              </div>
+            </div>
           <!-- /.box-body -->
           <div class="box-footer">
             <input type="submit" name="submit" value="Save Changes" class="btn btn-primary">

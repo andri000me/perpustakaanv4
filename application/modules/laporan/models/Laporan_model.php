@@ -453,5 +453,23 @@ public function get_anggotacsv()
   $this->db->order_by('pp_member.member_id', 'asc');
   return $this->db->get()->result_array();
 }
+
+public function get_denda_all(){
+        $this->db->select('`pp_fines`.*,pp_member.nama');
+        $this->db->from('pp_fines');
+        $this->db->join('pp_member', 'pp_member.member_id = pp_fines.member_id');
+        $this->db->order_by('pp_fines.fines_date', 'desc');
+      return $this->db->get()->result_array();
+}
+public function get_denda_input($tanggalawal,$tanggalakhir,$member_id){
+        $this->db->select('`pp_fines`.*,pp_member.nama');
+        $this->db->from('pp_fines');
+        $this->db->join('pp_member', 'pp_member.member_id = pp_fines.member_id');
+        $this->db->where('pp_fines.fines_date>=',$tanggalawal);
+        $this->db->where('pp_fines.fines_date<=',$tanggalakhir);
+        $this->db->like('pp_fines.member_id',$member_id);
+        $this->db->order_by('pp_fines.fines_date', 'desc');
+      return $this->db->get()->result_array();
+}
   //end
 }
