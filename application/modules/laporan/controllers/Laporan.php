@@ -316,5 +316,26 @@ public function rekapitulasi_pdf($groupby)
   $orientation = 'potrait';
   pdf_create($html, $filename, $paper, $orientation);
 }
+//daftarjudul
+public function daftarjudul()
+{
+  $data['title'] = 'Daftar Judul';
+  $data['user'] = $this->db->get_where('user', ['email' =>
+  $this->session->userdata('email')])->row_array();
+  $this->load->model('Laporan_model', 'Laporan_model');
+  $data['get_daftarjudul'] = $this->Laporan_model->get_daftarjudul();
+  
+  
+  
+  $this->load->view('themes/backend/header', $data);
+  $this->load->view('themes/backend/sidebar', $data);
+  $this->load->view('themes/backend/topbar', $data);
+  $this->load->view('themes/backend/javascript', $data);
+  $this->load->view('daftarjudul', $data);
+  $this->load->view('themes/backend/footer');
+  $this->load->view('themes/backend/footerajax');
+  
+   
+}
   //end
 }

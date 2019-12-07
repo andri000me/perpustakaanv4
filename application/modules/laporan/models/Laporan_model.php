@@ -499,5 +499,15 @@ public function get_klabahasa(){
         $this->db->group_by('nama', 'asc');
         return $this->db->get()->result_array();
 } 
+public function get_daftarjudul()
+{
+
+  $this->db->select('`pp_buku`.*,pp_tempatterbit.nama as tempatterbit,pp_penerbit.nama as penerbit');
+  $this->db->from('pp_buku');
+  $this->db->join('pp_tempatterbit', 'pp_tempatterbit.id = pp_buku.tempatterbit_id','left');
+  $this->db->join('pp_penerbit', 'pp_penerbit.id = pp_buku.penerbit_id','left');
+  $this->db->order_by('pp_buku.last_update', 'desc');
+  return $this->db->get()->result_array();
+}
   //end
 }
