@@ -274,11 +274,11 @@ public function rekapitulasi()
   if($groupby==''or$groupby=='klasifikasi'){
   $data['groupby']='klasifikasi';  
   $data['get_rekapitulasi'] = $this->Laporan_model->get_klasifikasi();
-  }elseif($groupby=='gmd_id'){
+  }elseif($groupby=='gmd'){
   $data['get_rekapitulasi'] = $this->Laporan_model->get_klagmd();
   }elseif($groupby=='tipekoleksi_id'){
   $data['get_rekapitulasi'] = $this->Laporan_model->get_klatipekoleksi();
-  }elseif($groupby=='bahasa_id'){
+  }elseif($groupby=='bahasa'){
     $data['get_rekapitulasi'] = $this->Laporan_model->get_klabahasa();
     }
   
