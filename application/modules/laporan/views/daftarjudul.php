@@ -27,11 +27,28 @@
         <!-- /Filter Laporan -->
           <div class="col-md-4">
             <form action="" method="post">
-
               <div class="form-group <?php echo form_error('judul') ? 'has-error' : '' ?>">
                 <label for="judul">Judul</label>
                 <input class="form-control" type="text" name="judul" value="<?= set_value('judul', isset($judul) ? $judul : ''); ?>" />
               </div>
+              <div class="form-group <?php echo form_error('pengarang') ? 'has-error' : '' ?>">
+                <label for="pengarang">Pengarang</label>
+                <input class="form-control" type="text" name="pengarang" value="<?= set_value('pengarang', isset($pengarang) ? $pengarang : ''); ?>" />
+              </div>
+              <div class="form-group <?php echo form_error('klasifikasi') ? 'has-error' : '' ?>">
+                <label for="klasifikasi">Klasifikasi</label>
+                <input class="form-control" type="text" name="klasifikasi" value="<?= set_value('klasifikasi', isset($klasifikasi) ? $klasifikasi : ''); ?>" />
+              </div>
+              <div class="form-group <?php echo form_error('gmd_id') ? 'has-error' : '' ?>">
+              <label for="pengarang">Format Fisik Dokumen / GMD</label><br>
+<select class="js-example-basic-single form-control" name="gmd_id">
+<option value=""> Belum ditentukan </option>
+<?php foreach ($listgmd as $dt) : ?>
+<option value="<?= $dt['id']; ?>" <?= set_select('gmd_id', $dt['id'], FALSE); ?> <?= $dt['id'] == $gmd_id ? ' selected="selected"' : ''; ?>><?= $dt['nama']; ?></option>
+<?php endforeach; ?>
+</select>
+<?= form_error('gmd_id', '<span class="help-block">', '</small>'); ?>
+</div>
               <button type="submit" class="btn btn-primary">Terapkan</button>
               <a href="<?= base_url('laporan/daftarjudul'); ?> " class="btn btn-default">Cancel</a>
             </form>
