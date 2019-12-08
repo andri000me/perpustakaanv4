@@ -51,6 +51,15 @@
       'info': true,
       'autoWidth': false
     })
+    $('#examplenosort').DataTable({
+      'pageLength': '30',
+      'paging': true,
+      'lengthChange': false,
+      'searching': false,
+      'ordering': false,
+      'info': false,
+      'autoWidth': false
+    })
   })
 </script>
 <script>

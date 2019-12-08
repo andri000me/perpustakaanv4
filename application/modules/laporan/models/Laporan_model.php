@@ -433,7 +433,7 @@ public function get_fines_all(){
         $this->db->order_by('pp_loan.loan_date', 'desc');
       return $this->db->get()->result_array();
 }
-public function get_fines_input($tanggalawal,$tanggalakhir,$member_id){
+public function get_fines_input($tanggalawal,$tanggalakhir,$member_id=''){
         $this->db->select('`pp_loan`.*,pp_buku.judul,pp_member.nama');
         $this->db->from('pp_loan');
         $this->db->join('pp_item', 'pp_item.item_kode = pp_loan.item_kode');
@@ -442,7 +442,10 @@ public function get_fines_input($tanggalawal,$tanggalakhir,$member_id){
         $this->db->order_by('pp_loan.loan_date', 'desc');
         $this->db->where('pp_loan.loan_date>=',$tanggalawal);
         $this->db->where('pp_loan.loan_date<=',$tanggalakhir);
+        if($member_id<>''){
         $this->db->like('pp_loan.member_id',$member_id);
+        $this->db->or_like('pp_member.nama',$member_id);        
+        }
       return $this->db->get()->result_array();
 }
 public function get_anggotacsv()
@@ -499,15 +502,73 @@ public function get_klabahasa(){
         $this->db->group_by('nama', 'asc');
         return $this->db->get()->result_array();
 } 
-public function get_daftarjudul()
+public function get_daftarjudul($judul='',$pengarang='',$klasifikasi='',$gmd_id='')
 {
-
-  $this->db->select('`pp_buku`.*,pp_tempatterbit.nama as tempatterbit,pp_penerbit.nama as penerbit');
+  $this->db->select('`pp_buku`.*,pp_tempatterbit.nama as tempatterbit,pp_penerbit.nama as penerbit,pp_pengarang.nama as pengarang');
   $this->db->from('pp_buku');
   $this->db->join('pp_tempatterbit', 'pp_tempatterbit.id = pp_buku.tempatterbit_id','left');
   $this->db->join('pp_penerbit', 'pp_penerbit.id = pp_buku.penerbit_id','left');
+  $this->db->join('pp_pengarang', 'pp_pengarang.id = pp_buku.pengarang_id','left');
+  $this->db->join('pp_gmd', 'pp_gmd.id = pp_buku.gmd_id','left');
+if($judul<>''){
+$this->db->like('pp_buku.judul',$judul);
+$this->db->or_like('pp_buku.isbn',$judul);
+}
+if($pengarang<>''){
+$this->db->like('pp_pengarang.nama',$pengarang);
+}
+if($klasifikasi<>''){
+$this->db->where('pp_buku.klasifikasi',$klasifikasi);
+}
+if($gmd_id<>''){
+$this->db->where('pp_buku.gmd_id',$gmd_id);
+}
   $this->db->order_by('pp_buku.last_update', 'desc');
   return $this->db->get()->result_array();
+}
+
+public function get_penggunaankoleksi($judul='',$item_kode='')
+{
+
+  $this->db->select('`pp_item`.*,pp_buku.judul,pp_tipekoleksi.nama as tipe_koleksi,,pp_lokasi.nama as lokasi');
+  $this->db->from('pp_item');
+  $this->db->order_by('pp_item.item_kode', 'asc');
+  $this->db->join('pp_buku', 'pp_buku.id = pp_item.buku_id');
+  $this->db->join('pp_lokasi', 'pp_lokasi.id = pp_item.lokasi_id');
+  $this->db->join('pp_tipekoleksi', 'pp_tipekoleksi.id = pp_item.tipekoleksi_id');
+  if($judul<>''){
+        $this->db->like('pp_buku.judul',$judul);
+        $this->db->or_like('pp_buku.isbn',$judul);
+  }
+  if($item_kode<>''){
+        $this->db->where('pp_item.item_kode',$item_kode);
+  }
+  
+  return $this->db->get()->result_array();
+}
+public function get_peminjamananggota_all(){
+        $this->db->select('`pp_loan`.*,pp_buku.judul,pp_member.nama');
+        $this->db->from('pp_loan');
+        $this->db->join('pp_item', 'pp_item.item_kode = pp_loan.item_kode');
+        $this->db->join('pp_buku', 'pp_buku.id = pp_item.buku_id');
+        $this->db->join('pp_member', 'pp_member.member_id = pp_loan.member_id');
+        $this->db->order_by('pp_loan.loan_date', 'desc');
+      return $this->db->get()->result_array();
+}
+public function get_peminjamananggota_input($tanggalawal,$tanggalakhir,$member_id=''){
+        $this->db->select('`pp_loan`.*,pp_buku.judul,pp_member.nama');
+        $this->db->from('pp_loan');
+        $this->db->join('pp_item', 'pp_item.item_kode = pp_loan.item_kode');
+        $this->db->join('pp_buku', 'pp_buku.id = pp_item.buku_id');
+        $this->db->join('pp_member', 'pp_member.member_id = pp_loan.member_id');
+        $this->db->order_by('pp_loan.loan_date', 'desc');
+        $this->db->where('pp_loan.loan_date>=',$tanggalawal);
+        $this->db->where('pp_loan.loan_date<=',$tanggalakhir);
+        if($member_id<>''){
+        $this->db->like('pp_loan.member_id',$member_id);
+        $this->db->or_like('pp_member.nama',$member_id);        
+        }
+      return $this->db->get()->result_array();
 }
   //end
 }

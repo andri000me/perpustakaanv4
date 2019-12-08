@@ -103,7 +103,7 @@
                 <th>Email</th>
                 <th>Role</th>
                 <th>Is Active</th>
-                <th>Image</th>
+                <th>Image</th> 
                 <th>Action</th>
               </tr>
             </thead>

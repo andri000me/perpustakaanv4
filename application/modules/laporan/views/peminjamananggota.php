@@ -41,12 +41,12 @@
               </div>
             
               <button type="submit" class="btn btn-primary">Terapkan</button>
-              <a href="<?= base_url('laporan/daftarketerlambatan'); ?> " class="btn btn-default">Cancel</a>
+              <a href="<?= base_url('laporan/peminjamananggota'); ?> " class="btn btn-default">Cancel</a>
             </form>
           </div>
           <!-- /Filter Laporan -->
           <div class="col-md-12">
-<?php if($get_keterlambatan_all){?>
+<?php if($get_peminjamananggota_all){?>
   <br>
 <table  class="table" id="example1">
 <thead>
@@ -55,44 +55,27 @@
 <td width="15%">Nama Anggota</td>
 <td width="15%">Kode Eksemplar</td>
 <td>Judul</td>
-<td width="15%">Terlambat Hari</td>
 <td width="15%">Tanggal Pinjam</td>
 <td width="15%">Tanggal Harus Kembali</td>
 </tr>
 </thead>
 <tbody>
-  <?php foreach ($get_keterlambatan_all as $dt) : ?>
-<?php 
-if($dt['is_return']=='0'){
-if($dt['due_date']<$tanggalsekarang){
-/**************************** */
-$due_date    =new DateTime($dt['due_date']);
-$today        =new DateTime();
-if($today>$due_date){
-$interval = $due_date->diff($today);
-$terlambathari=$interval->days;
-}else{
-  $terlambathari='';
-}
-/****************************** */
-?>
+  <?php foreach ($get_peminjamananggota_all as $dt) : ?>
+
 <tr>
 <td><?= $dt['member_id']; ?></td>
 <td><?= $dt['nama']; ?></td>
 <td><?= $dt['item_kode']; ?></td>
 <td><?= $dt['judul']; ?></td>
-<td><?= $terlambathari ?></td>
 <td><?= $dt['loan_date']; ?></td>
 <td><?= $dt['due_date']; ?></td>
 </tr>
-<?php } ?>
-<?php } ?>
 <?php $i++; ?>
 <?php endforeach; ?>
 </tbody>
 </table>
-<a href="<?php echo site_url('laporan/daftarketerlambatan_pdf/'.$start_date.'/'.$end_date.'/'.$member_id); ?>" target='blank' class='btn btn-default'><img src="<?= base_url('assets/images/'); ?>pdf.png"> Export ke PDF</a>
-<a href="<?php echo site_url('laporan/daftarketerlambatan_excel/'.$start_date.'/'.$end_date.'/'.$member_id); ?>" target='blank' class='btn btn-default'><img src="<?= base_url('assets/images/'); ?>xls.png"> Export ke Excel</a>
+<a href="<?php echo site_url('laporan/peminjamananggota_pdf/'.$start_date.'/'.$end_date.'/'.$member_id); ?>" target='blank' class='btn btn-default'><img src="<?= base_url('assets/images/'); ?>pdf.png"> Export ke PDF</a>
+<a href="<?php echo site_url('laporan/peminjamananggota_excel/'.$start_date.'/'.$end_date.'/'.$member_id); ?>" target='blank' class='btn btn-default'><img src="<?= base_url('assets/images/'); ?>xls.png"> Export ke Excel</a>
 <?php }?>
 </div>
         </div>

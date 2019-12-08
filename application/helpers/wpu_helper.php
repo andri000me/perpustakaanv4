@@ -362,3 +362,16 @@ $ci->db->where('pp_buku.bahasa_id',$kla_id);
 return $ci->db->get()->row()->value;
 
 }
+
+function get_penggunaankoleksi($item_kode,$tahun,$bulan)
+{
+$ci = get_instance();
+$ci->db->select('count(pp_loan.item_kode) as value');
+$ci->db->from('pp_loan');
+$ci->db->where('pp_loan.item_kode',$item_kode);
+$ci->db->where("DATE_FORMAT(pp_loan.loan_date,'%Y')", $tahun);
+$ci->db->where("DATE_FORMAT(pp_loan.loan_date,'%m')", $bulan);
+return $ci->db->get()->row()->value;
+}
+
+

@@ -28,7 +28,7 @@
           <div class="col-md-4">
             <form action="" method="post">
               <div class="form-group <?php echo form_error('judul') ? 'has-error' : '' ?>">
-                <label for="judul">Judul</label>
+                <label for="judul">Judul/ISBN</label>
                 <input class="form-control" type="text" name="judul" value="<?= set_value('judul', isset($judul) ? $judul : ''); ?>" />
               </div>
               <div class="form-group <?php echo form_error('pengarang') ? 'has-error' : '' ?>">
@@ -71,7 +71,11 @@
 <tbody>
   <?php foreach ($get_daftarjudul as $dt) : ?>
 <tr>
-<td><?= $dt['judul']; ?></td>
+<td><?= $dt['judul']; ?><br>
+<i><?= $dt['pengarang']; ?>|<?= $dt['klasifikasi']; ?>|<?= $dt['gmd']; ?>
+
+</i>
+</td>
 <td><?= get_eksemplarbuku($dt['id']); ?></td>
 <td><?= $dt['tempatterbit']; ?></td>
 <td><?= $dt['penerbit']; ?></td>
