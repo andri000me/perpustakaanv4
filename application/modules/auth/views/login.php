@@ -25,7 +25,7 @@
       <div class="row">
         <div class="col-xs-8">
              
-       
+       <a href=<?= base_url(); ?> class="btn btn-success">Kembali</a>
         </div>
         <!-- /.col -->
         <div class="col-xs-4">

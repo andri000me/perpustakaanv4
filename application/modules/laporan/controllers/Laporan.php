@@ -503,5 +503,90 @@ public function peminjamananggota_excel($start_date,$end_date,$member_id)
   $this->load->view('themes/backend/headerprint', $data);
   $this->load->view('peminjamananggota_excel', $data);
 }
+//statistikpengunjung
+public function statistikpengunjung()
+{
+  $data['title'] = 'Statistik Pengunjung';
+  $data['user'] = $this->db->get_where('user', ['email' =>
+  $this->session->userdata('email')])->row_array();
+
+  $this->load->model('Laporan_model', 'Laporan_model');
+
+  $this->form_validation->set_rules('tahun', 'tahun', 'required');
+  if ($this->form_validation->run() == false) {  
+    // $data['ses_daftarjudul']=$this->session->userdata('daftar_judul');
+    $data['tahun']=date('Y');
+    $data['get_tipeanggota'] = $this->Laporan_model->get_tipeanggota();
+    $this->load->view('themes/backend/header', $data);
+    $this->load->view('themes/backend/sidebar', $data);
+    $this->load->view('themes/backend/topbar', $data);
+    $this->load->view('themes/backend/javascript', $data);
+    $this->load->view('statistikpengunjung', $data);
+    $this->load->view('themes/backend/footer');
+    $this->load->view('themes/backend/footerajax'); 
+  }else{
+    $data['tahun'] = $this->input->post('tahun');
+    $data['get_tipeanggota'] = $this->Laporan_model->get_tipeanggota();
+    $this->load->view('themes/backend/header', $data);
+    $this->load->view('themes/backend/sidebar', $data);
+    $this->load->view('themes/backend/topbar', $data);
+    $this->load->view('themes/backend/javascript', $data);
+    $this->load->view('statistikpengunjung', $data);
+    $this->load->view('themes/backend/footer');
+    $this->load->view('themes/backend/footerajax'); 
+}
+}
+//statistikpengunjungpdf
+public function statistikpengunjung_pdf($tahun)
+{
+  $data['title'] = 'Statistik Pengunjung';
+  //load content html
+  $this->load->model('Laporan_model', 'Laporan_model');
+  $data['tahun']=$tahun;
+  $data['get_tipeanggota'] = $this->Laporan_model->get_tipeanggota();
+
+  $html = $this->load->view('statistikpengunjung_pdf', $data, true);
+  // create pdf using dompdf
+  $filename = 'statistikpengunjung_pdf' . date('dmY') . '_' . date('His');
+  $paper = 'A4';
+  $orientation = 'potrait';
+  pdf_create($html, $filename, $paper, $orientation);
+}
+//statistikbulanan
+public function statistikbulanan()
+{
+  $data['title'] = 'Statistik Bulanan';
+  $data['user'] = $this->db->get_where('user', ['email' =>
+  $this->session->userdata('email')])->row_array();
+
+  $this->load->model('Laporan_model', 'Laporan_model');
+  $data['listbulan'] = $this->db->get('pp_bulan')->result_array();
+
+  $this->form_validation->set_rules('tahun', 'tahun', 'required');
+  $this->form_validation->set_rules('bulan', 'bulan', 'required');
+  if ($this->form_validation->run() == false) {  
+    $data['tahun']=date('Y');
+    $data['bulan']=date('m');
+    $this->load->view('themes/backend/header', $data);
+    $this->load->view('themes/backend/sidebar', $data);
+    $this->load->view('themes/backend/topbar', $data);
+    $this->load->view('themes/backend/javascript', $data);
+    $this->load->view('themes/backend/calendar', $data);
+    $this->load->view('statistikbulanan', $data);
+    $this->load->view('themes/backend/footer');
+    $this->load->view('themes/backend/footerajax'); 
+  }else{
+    $data['tahun'] = $this->input->post('tahun');
+    $data['bulan'] = $this->input->post('bulan');
+    $this->load->view('themes/backend/header', $data);
+    $this->load->view('themes/backend/sidebar', $data);
+    $this->load->view('themes/backend/topbar', $data);
+    $this->load->view('themes/backend/javascript', $data);
+    $this->load->view('themes/backend/calendar', $data);
+    $this->load->view('statistikbulanan', $data);
+    $this->load->view('themes/backend/footer');
+    $this->load->view('themes/backend/footerajax'); 
+}
+}
   //end
 }

@@ -374,4 +374,115 @@ $ci->db->where("DATE_FORMAT(pp_loan.loan_date,'%m')", $bulan);
 return $ci->db->get()->row()->value;
 }
 
+function get_statistikpengunjung($member_type_id,$tahun,$bulan)
+{
+$ci = get_instance();
+$ci->db->select('count(visitor_count.member_id) as value');
+$ci->db->from('visitor_count');
+$ci->db->join('pp_member', 'pp_member.member_id = visitor_count.member_id');
+$ci->db->where('pp_member.member_type_id',$member_type_id);
+$ci->db->where("DATE_FORMAT(visitor_count.checkin_date,'%Y')", $tahun);
+$ci->db->where("DATE_FORMAT(visitor_count.checkin_date,'%m')", $bulan);
+return $ci->db->get()->row()->value;
+}
+
+function getnamabulanshort($urut)
+{
+$ci = get_instance();
+$ci->db->select('(pp_bulan.namashort) as value');
+$ci->db->from('pp_bulan');
+$ci->db->where('pp_bulan.urut',$urut);
+return $ci->db->get()->row()->value;
+}
+
+function getpengunjungharian($tahun,$bulan,$tanggal)
+{
+$ci = get_instance();
+$ci->db->select('count(visitor_count.id) as value');
+$ci->db->from('visitor_count');
+$ci->db->where("DATE_FORMAT(visitor_count.checkin_date,'%Y')", $tahun);
+$ci->db->where("DATE_FORMAT(visitor_count.checkin_date,'%m')", $bulan);
+$ci->db->where("DATE_FORMAT(visitor_count.checkin_date,'%d')", $tanggal);
+return $ci->db->get()->row()->value;
+}
+
+function draw_calendar_pengunjung($month,$year){
+
+	// Draw table for Calendar 
+	$calendar = '<table cellpadding="0" cellspacing="0" class="calendar">';
+
+	// Draw Calendar table headings 
+	$headings = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
+	$calendar.= '<tr class="calendar-row"><td class="calendar-day-head">'.implode('</td><td class="calendar-day-head">',$headings).'</td></tr>';
+
+	//days and weeks variable for now ... 
+	$running_day = date('w',mktime(0,0,0,$month,1,$year));
+	$days_in_month = date('t',mktime(0,0,0,$month,1,$year));
+	$days_in_this_week = 1;
+	$day_counter = 0;
+	$dates_array = array();
+
+	// row for week one 
+	$calendar.= '<tr class="calendar-row">';
+
+	// Display "blank" days until the first of the current week 
+	for($x = 0; $x < $running_day; $x++):
+		$calendar.= '<td class="calendar-day-np">&nbsp;</td>';
+		$days_in_this_week++;
+	endfor;
+
+	// Show days.... 
+	for($list_day = 1; $list_day <= $days_in_month; $list_day++):
+		if($list_day==date('d') && $month==date('n'))
+		{
+			$currentday='';
+		}else
+		{
+			$currentday='';
+		}
+		$calendar.= '<td class="calendar-day '.$currentday.'">';
+		
+			// Add in the day number
+			if($list_day<date('d') && $month==date('n'))
+			{
+				$showtoday=$list_day;
+			}else
+			{
+				$showtoday=$list_day;
+            }
+            $jumlahpengunjung = getpengunjungharian($tahun,$bulan,$showtoday);
+            if($jumlahpengunjung<'1'){
+                $jumlahpengunjung='-';
+            }
+			$calendar.= '<div class="day-number">#'.$showtoday.'<br>'.$jumlahpengunjung.'</div>';
+
+		// Draw table end
+		$calendar.= '</td>';
+		if($running_day == 6):
+			$calendar.= '</tr>';
+			if(($day_counter+1) != $days_in_month):
+				$calendar.= '<tr class="calendar-row">';
+			endif;
+			$running_day = -1;
+			$days_in_this_week = 0;
+		endif;
+		$days_in_this_week++; $running_day++; $day_counter++;
+	endfor;
+
+	// Finish the rest of the days in the week
+	if($days_in_this_week < 8):
+		for($x = 1; $x <= (8 - $days_in_this_week); $x++):
+			$calendar.= '<td class="calendar-day-np">&nbsp;</td>';
+		endfor;
+	endif;
+
+	// Draw table final row
+	$calendar.= '</tr>';
+
+	// Draw table end the table 
+	$calendar.= '</table>';
+	
+	// Finally all done, return result 
+	return $calendar;
+}
 

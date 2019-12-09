@@ -5,8 +5,8 @@ class Home extends CI_Controller
 {
 	public function index()
 	{
-		$data['infosekolah'] = $this->db->get_where('m_sekolah', ['id' => '1'])->row_array();
-		$data['title'] = 'SIAKAD ' . $data['infosekolah']['sekolah'];
+		$data['infoperpustakaan'] = $this->db->get_where('options', ['id' => '1'])->row_array();
+		$data['title'] = $data['infoperpustakaan']['value'];
 
 		$this->load->view('themes/frontend/head', $data);
 		$this->load->view('themes/frontend/header');

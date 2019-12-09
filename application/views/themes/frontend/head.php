@@ -23,6 +23,16 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+              /* The image used */
+  background-image: url("assets/images/background01.jpg");
+
+/* Full height */
+height: 100%;
+
+/* Center and scale the image nicely */
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
         }
 
         @media (min-width: 768px) {
@@ -35,5 +45,5 @@
     <link href="<?= base_url('assets/themes/frontend/css/cover.css') ?>" rel="stylesheet">
 </head>
 
-<body class="text-center">
+<body class="bd-placeholder-img">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
