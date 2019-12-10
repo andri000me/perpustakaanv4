@@ -16,6 +16,7 @@ class Pengunjung extends CI_Controller
 		}else{
 			$member_id = $this->input->post('member_id');
 			$data['infomember'] = $this->db->get_where('pp_member', ['member_id' => $member_id])->row_array();
+			$member_image = $data['infomember']['member_image'];
 			if($data['infomember']){
 				$query = $this->db->query("SELECT member_id,DATE_FORMAT(visitor_count.checkin_date, '%Y-%m-%d')
 				FROM visitor_count where member_id=$member_id and DATE(checkin_date) = CURDATE()");
@@ -32,9 +33,12 @@ class Pengunjung extends CI_Controller
          'checkin_date' => $checkin_date,
           ];
           $this->db->insert('visitor_count', $data);
-				$this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success" role"alert"><img src="'.base_url('assets/images/member/'.$member_image).'"class="rounded-circle">
+				Data Saved !</div>');
 		}else{
-			$this->session->set_flashdata('message', '<div class="alert alert-danger" role"alert">Member ID telah login pada hari yang sama !</div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role"alert">
+			<img src="'.base_url('assets/images/member/'.$member_image).'"class="rounded-circle">
+			Member ID telah login pada hari yang sama !</div>');
 		}
 				
 			}else{

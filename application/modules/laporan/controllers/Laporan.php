@@ -588,5 +588,22 @@ public function statistikbulanan()
     $this->load->view('themes/backend/footerajax'); 
 }
 }
+//statistikbulananpdf
+public function statistikbulanan_pdf($bulan,$tahun)
+{
+  $data['title'] = 'Statistik Pengunjung';
+  //load content html
+  $this->load->model('Laporan_model', 'Laporan_model');
+  $data['tahun'] = $tahun;
+  $data['bulan'] = $bulan;
+  $data['get_tipeanggota'] = $this->Laporan_model->get_tipeanggota();
+
+  $html = $this->load->view('statistikbulanan_pdf', $data, true);
+  // create pdf using dompdf
+  $filename = 'statistikbulanan_pdf' . date('dmY') . '_' . date('His');
+  $paper = 'A4';
+  $orientation = 'potrait';
+  pdf_create($html, $filename, $paper, $orientation);
+}
   //end
 }

@@ -395,17 +395,6 @@ $ci->db->where('pp_bulan.urut',$urut);
 return $ci->db->get()->row()->value;
 }
 
-function getpengunjungharian($tahun,$bulan,$tanggal)
-{
-$ci = get_instance();
-$ci->db->select('count(visitor_count.id) as value');
-$ci->db->from('visitor_count');
-$ci->db->where("DATE_FORMAT(visitor_count.checkin_date,'%Y')", $tahun);
-$ci->db->where("DATE_FORMAT(visitor_count.checkin_date,'%m')", $bulan);
-$ci->db->where("DATE_FORMAT(visitor_count.checkin_date,'%d')", $tanggal);
-return $ci->db->get()->row()->value;
-}
-
 function draw_calendar_pengunjung($month,$year){
 
 	// Draw table for Calendar 
@@ -450,11 +439,21 @@ function draw_calendar_pengunjung($month,$year){
 			{
 				$showtoday=$list_day;
             }
-            $jumlahpengunjung = getpengunjungharian($tahun,$bulan,$showtoday);
+
+$ci = get_instance();
+$ci->db->select('count(visitor_count.id) as value');
+$ci->db->from('visitor_count');
+$ci->db->where("DATE_FORMAT(visitor_count.checkin_date,'%Y')", $year);
+$ci->db->where("DATE_FORMAT(visitor_count.checkin_date,'%m')", $month);
+$ci->db->where("DATE_FORMAT(visitor_count.checkin_date,'%d')", $showtoday);
+$jumlahpengunjung = $ci->db->get()->row()->value;
+
             if($jumlahpengunjung<'1'){
-                $jumlahpengunjung='-';
+                $jumlahpengunjung='&nbsp;';
+            }else{
+                $jumlahpengunjung = "<i>$jumlahpengunjung</i>";
             }
-			$calendar.= '<div class="day-number">#'.$showtoday.'<br>'.$jumlahpengunjung.'</div>';
+			$calendar.= '<div class="day-number">'.$showtoday.'<br>'.$jumlahpengunjung.'</div>';
 
 		// Draw table end
 		$calendar.= '</td>';

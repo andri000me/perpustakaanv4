@@ -49,7 +49,7 @@
   <h4>Statistik pengunjung Bulan <?= getnamabulanshort($bulan) ?>,Tahun <?= $tahun ?></h4>
 
 <?= draw_calendar_pengunjung($bulan,$tahun); ?> 
-<a href="<?php echo site_url('laporan/statistikbulanan_pdf/'.$tahun); ?>" target='blank' class='btn btn-default'><img src="<?= base_url('assets/images/'); ?>pdf.png"> Export ke PDF</a>
+<a href="<?php echo site_url('laporan/statistikbulanan_pdf/'.$bulan.'/'.$tahun); ?>" target='blank' class='btn btn-default'><img src="<?= base_url('assets/images/'); ?>pdf.png"> Export ke PDF</a>
 
 </div>
         </div>
