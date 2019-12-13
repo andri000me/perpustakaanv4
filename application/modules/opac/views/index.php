@@ -14,7 +14,7 @@
 <form method="POST" action="<?= base_url('opac/carijudul/')?>">
         <div class="inner-form">
           <div class="input-field second-wrap">
-            <input name="cari" id="cari" type="text" placeholder="Judul / ISBN / Pengarang / Penerbit"/>
+            <input name="cariall" id="cariall" type="text" placeholder="Judul / ISBN / Pengarang / Penerbit"/>
             <i><a href="<?= base_url('opac/cariadv/')?>">Advanced Search</a></i>
           </div>
           <div class="input-field third-wrap">

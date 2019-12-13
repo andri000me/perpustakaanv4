@@ -59,6 +59,47 @@
 .select-items div:hover, .same-as-selected {
   background-color: rgba(0, 0, 0, 0.1);
 }
+/* form */
+.home-form-w3ls .form-control {
+    font-size: 15px;
+    border: none;
+    -webkit-box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.28);
+    -moz-box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.28);
+    box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.28);
+    outline: none;
+    letter-spacing: 1px;
+    color: #000;
+    box-sizing: border-box;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -o-border-radius: 0px;
+    -ms-border-radius: 0px;
+    -moz-border-radius: 0px;
+    padding: 12px;
+}
+
+.home-form-w3ls textarea.form-control {
+    height: 46px;
+}
+
+.home-form-w3ls button {
+    background: #ff7f62;
+    color: #fff;
+    padding: 13px 40px;
+    margin-top: 2em;
+    border: none;
+    outline: none;
+    letter-spacing: 1px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -o-border-radius: 0;
+    -ms-border-radius: 0;
+    -moz-border-radius: 0;
+}
+
+/* //form */
 </style>
 
 <body id="page">
@@ -73,31 +114,34 @@
             <header>
                 <h1><?= $title ?></h1>
                 <div class="s003">
-
-<form method="POST" action="<?= base_url('opac/carijudul/')?>">
-        <div class="inner-form">
-          <div class="input-field second-wrap">
-            <input name="judul" id="judul" type="text" placeholder="Judul"/>
-            <i><a href="<?= base_url('opac/')?>">Simple Search</a></i>
-          </div>
-          <div class="input-field second-wrap">
-            <input name="pengarang" id="pengarang" type="text" placeholder="Pengarang"/>
-          </div>
-          <div class="input-field second-wrap">
-            <input name="isbn" id="isbn" type="text" placeholder="ISBN"/>
-          </div>
-          <div class="input-field second-wrap">
-            <input name="penerbit" id="penerbit" type="text" placeholder="Penerbit"/>
-          </div>
-          <div class="input-field third-wrap">
-            <button class="btn-search" type="submit">
-              <svg class="svg-inline--fa fa-search fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="search" role="img" viewBox="0 0 512 512">
-                <path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </form>
+                <div class="home-form-w3ls mt-5">
+                    <form action="<?= base_url('opac/carijudul/')?>" method="post">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input class="form-control" type="text" name="judul" placeholder="judul"
+                                  >
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" type="text" name="pengarang" placeholder="pengarang"
+                                    >
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input class="form-control" type="text" name="penerbit" placeholder="penerbit"
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" type="text" name="isbn" placeholder="isbn"
+                                    >
+                                </div>                              
+                            </div>
+                        </div>
+                        <button type="submit" class="btn_apt btn">Pencarian</button><br>
+                        <i><a href="<?= base_url('opac')?>">Simple Search</a></i>
+                    </form>
+                </div>
     </div>
 </header>
         </div>
