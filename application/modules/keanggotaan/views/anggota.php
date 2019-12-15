@@ -38,6 +38,7 @@
                     <th>Tipe Keanggotaan</th>
                     <th>HP</th>
                     <th>Last Update</th>
+                    <th>Active?</th>
                 <th>Image</th>
                     <th>Edit</th>
                     <th>Hapus</th>
@@ -52,6 +53,7 @@
                       <td><?= $dt['tipeanggota']; ?></td>
                       <td><?= $dt['member_hp']; ?></td>
                       <td><?= $dt['last_update']; ?></td>
+                      <td><?= $dt['is_active'] == '1' ? 'YA' : 'TDK'; ?></td>
                   <td><img width="40" src="<?= base_url('assets/images/member/') . $dt['member_image']; ?>"></td>
                       <td><a href="<?= base_url('keanggotaan/edit_anggota/' . $dt['id']); ?>" class="btn btn-info btn-xs">Edit</a></td>
                       <td><input name="check[]" type="checkbox" value="<?= $dt['id'] ?>"></td>

@@ -168,6 +168,7 @@ class Keanggotaan extends CI_Controller
           'member_hp' => $this->input->post('member_hp'),
           'inst_name' => $this->input->post('inst_name'),
           'mpassword' => md5($this->input->post('mpassword')),
+          'is_active' => $this->input->post('is_active'),
           'member_image' => $new_image,
            ];
            $this->db->insert('pp_member', $data);
@@ -209,6 +210,7 @@ class Keanggotaan extends CI_Controller
           'member_address' => $this->input->post('member_address'),
           'member_hp' => $this->input->post('member_hp'),
           'inst_name' => $this->input->post('inst_name'),
+          'is_active' => $this->input->post('is_active'),
            ];
            $this->db->where('id', $id);
            $this->db->update('pp_member', $dataitem);

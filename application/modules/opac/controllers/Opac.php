@@ -25,11 +25,10 @@ class Opac extends CI_Controller
           $data['infoperpustakaan'] = $this->db->get_where('options', ['id' => '1'])->row_array();
           $data['title'] = $data['infoperpustakaan']['value'];
 
-      $this->load->view('themes/opacmain/header', $data);
-      $this->load->view('themes/opacmain/blokkiri', $data);
-      $this->load->view('themes/opacmain/blokkanan', $data);
+      $this->load->view('themes/jango/header', $data);
       $this->load->view('result', $data);
-      $this->load->view('themes/opacmain/footer', $data);
+      $this->load->view('themes/jango/sidebar', $data);
+      $this->load->view('themes/jango/footer', $data);
       }
     //end
 }   

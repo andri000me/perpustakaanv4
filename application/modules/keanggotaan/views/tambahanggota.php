@@ -101,6 +101,12 @@
 <?= form_error('mpassword', '<span class="help-block">', '</small>'); ?>
 </div>
 </div>
+<div class="form-group row">
+<label for="member_type_id" class="col-sm-2 control-label"></label>
+<div class="col-sm-8">
+<input class="form-check-input" type="checkbox" value="1" name="is_active" id="is_active" checked> Active?    
+            </div>
+          </div>
 
 <div class="form-group row">
 <label for="abstrak" class="col-sm-2 control-label">Foto Anggota</label>
