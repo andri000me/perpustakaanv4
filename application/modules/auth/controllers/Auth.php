@@ -56,15 +56,15 @@ class Auth extends CI_Controller
 					}
 				} else {
 					$this->session->set_flashdata('message', '<div class="alert alert-danger" role"alert">Wrong password!</div>');
-					redirect('auth');
+					redirect('loginperpustakaan');
 				}
 			} else {
 				$this->session->set_flashdata('message', '<div class="alert alert-warning" role"alert">Email is not activated!</div>');
-				redirect('auth');
+				redirect('loginperpustakaan');
 			}
 		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role"alert">Email is not Registered!</div>');
-			redirect('auth');
+			redirect('loginperpustakaan');
 		}
 	}
 
@@ -217,7 +217,7 @@ class Auth extends CI_Controller
 		$this->session->unset_userdata('gelombang_id');
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">
 		You have been logout!</div>');
-		redirect('login');
+		redirect('loginperpustakaan');
 	}
 
 	public function blocked()
@@ -276,19 +276,19 @@ class Auth extends CI_Controller
 			} else {
 				$this->session->set_flashdata('message', '<div class="alert alert-danger" role"alert">
 				Reset password failed, wrong Token  or token Expired</div>');
-				redirect('auth');
+				redirect('loginperpustakaan');
 			}
 		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role"alert">
 			Reset password failed, wrong Email !</div>');
-			redirect('auth');
+			redirect('loginperpustakaan');
 		}
 	}
 
 	public function changePassword()
 	{
 		if (!$this->session->userdata('reset_email')) {
-			redirect('auth');
+			redirect('loginperpustakaan');
 		} else {
 			$this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[4]|matches[password2]');
 			$this->form_validation->set_rules('password2', 'Repeat Password', 'required|trim|min_length[4]|matches[password1]');
@@ -310,7 +310,7 @@ class Auth extends CI_Controller
 				$this->session->unset_userdata('reset_email');
 				$this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">
 			Reset password success, please Login with New password !</div>');
-				redirect('auth');
+				redirect('loginperpustakaan');
 			}
 		}
 	}
