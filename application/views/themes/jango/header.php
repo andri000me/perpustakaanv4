@@ -35,7 +35,7 @@
 <!-- BEGIN: PAGE CONTAINER -->
 <div class="c-layout-page">
 <!-- BEGIN: LAYOUT/BREADCRUMBS/BREADCRUMBS-3 -->
-<div class="c-layout-breadcrumbs-1 c-bgimage c-subtitle c-fonts-uppercase c-fonts-bold c-bg-img-center" style="background-image: url(<?= base_url('assets/themes/jango/assets/base/img/content/backgrounds/bg-28.jpg')?>)">
+<div class="c-layout-breadcrumbs-1 c-bgimage c-subtitle c-fonts-uppercase c-fonts-bold c-bg-img-center" style="background-image: url(<?= base_url('assets/themes/jango/assets/base/img/background/bg-8.jpg')?>)">
 		<div class="container">
 			<div class="c-page-title c-pull-left">
 				<h3 class="c-font-uppercase c-font-bold c-font-white c-font-20 c-font-slim"><?= $title ?></h3>

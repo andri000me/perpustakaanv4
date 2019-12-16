@@ -229,7 +229,10 @@
 </div>
 
 <div class="form-group row">
-<label for="abstrak" class="col-sm-2 control-label">Gambar Sampul</label>
+<label for="abstrak" class="col-sm-2 control-label">Gambar Sampul<br>
+<i>*Ukuran akan dikompres 400x300 px</i>
+</label>
+
 <div class="col-sm-8">
 <input type="file" class="custom-file-input" id="image" name="image">
 </div>

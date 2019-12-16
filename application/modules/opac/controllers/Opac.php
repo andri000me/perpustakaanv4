@@ -24,11 +24,42 @@ class Opac extends CI_Controller
     {
           $data['infoperpustakaan'] = $this->db->get_where('options', ['id' => '1'])->row_array();
           $data['title'] = $data['infoperpustakaan']['value'];
+          $limit_search_item = $this->db->get_where('options', ['name' => 'limit_search_item'])->row_array();
+          $limit = $limit_search_item['value'];
 
-      $this->load->view('themes/jango/header', $data);
-      $this->load->view('result', $data);
-      $this->load->view('themes/jango/sidebar', $data);
-      $this->load->view('themes/jango/footer', $data);
+            $cariall = $this->input->post('cariall');
+            $judul = $this->input->post('judul');
+            $pengarang = $this->input->post('pengarang');
+            $penerbit = $this->input->post('penerbit');
+            $isbn = $this->input->post('isbn');
+            $this->load->model('Opac_model', 'Opac_model');
+            if($cariall){
+            $data['get_bukuall'] = $this->Opac_model->get_bukuall($cariall,$limit);
+            $data['get_numbukuall'] = $this->Opac_model->get_numbukuall($cariall,$limit);
+            $data['katakunci'] = $cariall;
+            }else{
+            $data['get_bukuall'] = $this->Opac_model->get_bukuall($cariall,$limit);
+            $data['get_numbukuall'] = $this->Opac_model->get_numbukuall($cariall,$limit);
+              $data['katakunci']='';
+            }
+            $this->load->view('themes/jango/header', $data);
+            $this->load->view('result', $data);
+            $this->load->view('themes/jango/sidebar', $data);
+            $this->load->view('themes/jango/footer', $data);
+          
       }
+      public function detailjudul($id)
+      {
+            $data['infoperpustakaan'] = $this->db->get_where('options', ['id' => '1'])->row_array();
+            $data['title'] = $data['infoperpustakaan']['value'];
+            $this->load->model('Opac_model', 'Opac_model');
+            $data['get_detailbuku'] = $this->Opac_model->get_detailbuku($id);
+             
+              $this->load->view('themes/jango/header', $data);
+              $this->load->view('detailjudul', $data);
+              $this->load->view('themes/jango/sidebardetail', $data);
+              $this->load->view('themes/jango/footer', $data);
+            
+        }
     //end
 }   

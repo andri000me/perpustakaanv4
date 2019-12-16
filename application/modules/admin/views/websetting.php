@@ -78,6 +78,13 @@
                 <?= form_error('tanggal_awal', '<span class="help-block">', '</span>') ?>
               </div>
             </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Limit Item Search</label>
+              <div class="col-sm-10">
+                <input type="number" name="option[limit_search_item]" value="<?= options('limit_search_item') == '' ? set_value('limit_search_item') : options('limit_search_item'); ?>" class="form-control" placeholder="limit_search_item">
+                <?= form_error('limit_search_item', '<span class="help-block">', '</span>') ?>
+              </div>
+            </div>
           <!-- /.box-body -->
           <div class="box-footer">
             <input type="submit" name="submit" value="Save Changes" class="btn btn-primary">

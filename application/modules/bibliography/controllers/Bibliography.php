@@ -85,8 +85,23 @@ class Bibliography extends CI_Controller
                $config['upload_path'] = './assets/images/buku/';
                $config['file_name'] = date('dmyHis');
                $this->load->library('upload', $config);
+
                if ($this->upload->do_upload('image')) {
                    $new_image = $this->upload->data('file_name');
+                    //Compress Image
+                $config['image_library']='gd2';
+                $config['source_image']='./assets/images/buku/'.$new_image;
+                $config['create_thumb']= FALSE;
+                $config['maintain_ratio']= FALSE;
+                $config['quality']= '50%';
+                $config['width']= 300;
+                $config['height']= 400;
+                $config['new_image']= './assets/images/buku/'.$new_image;
+                $this->load->library('image_lib', $config);
+                $this->image_lib->resize();
+
+
+                   
                } else {
                    echo  $this->upload->display_errors();
                }
@@ -228,6 +243,17 @@ class Bibliography extends CI_Controller
               $this->db->set('gambarsampul', $new_image);
               $this->db->where('id', $id);
               $this->db->update('pp_buku');
+          //Compress Image
+          $config['image_library']='gd2';
+          $config['source_image']='./assets/images/buku/'.$new_image;
+          $config['create_thumb']= FALSE;
+          $config['maintain_ratio']= FALSE;
+          $config['quality']= '50%';
+          $config['width']= 300;
+          $config['height']= 400;
+          $config['new_image']= './assets/images/buku/'.$new_image;
+          $this->load->library('image_lib', $config);
+          $this->image_lib->resize();
           } else {
               echo  $this->upload->display_errors();
           }

@@ -12,7 +12,7 @@
 <div class="c-postfooter">
 	<div class="container">
 		<p class="c-font-oswald c-font-14">
-			Copyright &copy; JANGO Inc.
+			Copyright &copy; <?=$title?>
 		</p>
 	</div>
 </div>

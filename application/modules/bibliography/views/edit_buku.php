@@ -254,7 +254,8 @@ $urlmultimedia = $get_buku['urlmultimedia'];
 </div>
 
 <div class="form-group row">
-<label for="abstrak" class="col-sm-2 control-label">Gambar Sampul</label>
+<label for="abstrak" class="col-sm-2 control-label">Gambar Sampul
+<br><i>*Ukuran akan dikompres 400x300 px</i></label>
 <div class="col-sm-8">
 <?php if($gambarsampul){?>
 <a href="<?= base_url('assets/images/buku/').$gambarsampul?>"target="new"><?= $gambarsampul?></a>
