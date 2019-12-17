@@ -3,12 +3,15 @@
 <div class="col-md-4">
 <div class="c-content-blog-post-card-1 c-option-2 c-bordered">
 <div class="c-media c-content-overlay">
-
+<?php if($dt['gambarsampul']){ ?>
 <img class="c-overlay-object img-responsive" src="<?= base_url('assets/images/buku/'.$dt['gambarsampul'])?>" alt="">
+<?php }else{ ?>
+<img class="c-overlay-object img-responsive" src="<?= base_url('assets/images/buku/tanpasampul.jpg')?>"alt=""> 
+<?php } ?>
 </div>
 <div class="c-body">
 <div class="c-title c-font-bold c-font-uppercase">
-<a href="#"><?= $dt['judul']?></a>
+<a href="#"><?= substr($dt['judul'],0,20)?></a>
 </div>
 <div class="c-author">By <span class="c-font-uppercase"><?= $dt['pengarang']?></span>									
 </div>

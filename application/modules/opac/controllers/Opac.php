@@ -54,6 +54,8 @@ class Opac extends CI_Controller
             $data['title'] = $data['infoperpustakaan']['value'];
             $this->load->model('Opac_model', 'Opac_model');
             $data['get_detailbuku'] = $this->Opac_model->get_detailbuku($id);
+            $data['get_eksemplar'] = $this->Opac_model->get_eksemplar($id);
+            $data['get_peminjamaneksemplar'] = $this->Opac_model->get_peminjamaneksemplar($id);
              
               $this->load->view('themes/jango/header', $data);
               $this->load->view('detailjudul', $data);

@@ -15,8 +15,13 @@
 					</form>
 					<div class="c-content-ver-nav">
 						<div class="c-content-title-1 c-theme c-title-md c-margin-t-40">
-							<h3 class="c-font-bold c-font-uppercase">INFORMASI</h3>
+							<h3 class="c-font-bold c-font-uppercase">HISTORY PEMINJAMAN</h3>
 							<div class="c-line-left c-theme-bg">
+<?php if($get_peminjamaneksemplar) {?>
+<?php foreach ($get_peminjamaneksemplar as $dt) : ?>
+<?= $dt['member_id'] ?>
+<?php endforeach; ?>
+<?php } ?>
 							</div>
 							
 						</div>
