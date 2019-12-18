@@ -43,6 +43,7 @@ background-size: cover;
     </style>
     <!-- Custom styles for this template -->
     <link href="<?= base_url('assets/themes/frontend/css/cover.css') ?>" rel="stylesheet">
+    <link rel="shortcut icon" href="<?= base_url('assets/favicon.ico')?>"/>
 </head>
 
 <body class="bd-placeholder-img">

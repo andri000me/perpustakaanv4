@@ -13,6 +13,7 @@
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/themes/opac/css/main.css') ?>" />
     <!-- Custom-Files -->
     <link href="<?= base_url('assets/themes/opac/css/bootstrap.css')?>" rel='stylesheet' type='text/css' />
+    <link rel="shortcut icon" href="<?= base_url('assets/favicon.ico')?>"/>
 
     </head>
 

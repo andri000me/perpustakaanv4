@@ -485,3 +485,19 @@ $jumlahpengunjung = $ci->db->get()->row()->value;
 	return $calendar;
 }
 
+function cek_statuseksemplar($item_kode)
+{
+$ci = get_instance();
+$ci->db->select('(pp_loan.is_return) as value');
+$ci->db->from('pp_loan');
+$ci->db->where('pp_loan.item_kode',$item_kode);
+return $ci->db->get()->row()->value;
+}
+function cek_tglkembalieksemplar($item_kode)
+{
+$ci = get_instance();
+$ci->db->select('(pp_loan.due_date) as value');
+$ci->db->from('pp_loan');
+$ci->db->where('pp_loan.item_kode',$item_kode);
+return $ci->db->get()->row()->value;
+}

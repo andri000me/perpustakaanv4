@@ -34,7 +34,23 @@
 <?php foreach ($get_eksemplar as $dt) : ?>
 <div class="c-panel c-margin-b-30">
     <div class="c-author">
-    <div class="col-md-5"><?= $dt['item_kode'] ?></div><div class="col-md-4">TERSEDIA</div>
+    <div class="col-md-5"><?= $dt['item_kode'] ?></div><div class="col-md-4">
+    <?php 
+    $statuseksemplar = cek_statuseksemplar($dt['item_kode']); 
+    if($statuseksemplar=='0'){
+        $status_eksemplar="<font color='red'>DIPINJAM</font>";
+    }else{
+        $status_eksemplar="<font color='green'>TERSEDIA</font>";
+    }    
+    $cek_tglkembalieksemplar = cek_tglkembalieksemplar($dt['item_kode']);
+    if($cek_tglkembalieksemplar){
+    $tanggalindo = gettanggalindo(cek_tglkembalieksemplar($dt['item_kode']));
+    }else{
+    $tanggalindo ='';   
+    }
+    ?>
+    <?= $status_eksemplar ?>        <?= $tanggalindo ?>
+    </div>
     </div>
     </div>
 <?php endforeach; ?>
