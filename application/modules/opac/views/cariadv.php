@@ -115,7 +115,7 @@
                 <h1><?= $title ?></h1>
                 <div class="s003">
                 <div class="home-form-w3ls mt-5">
-                    <form action="<?= base_url('opac/carijuduladv/')?>" method="post">
+                    <form action="<?= base_url('opac/carijuduladv')?>" method="post">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">

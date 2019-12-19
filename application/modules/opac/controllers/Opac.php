@@ -76,7 +76,7 @@ class Opac extends CI_Controller
                 $katakunci .="Isbn:$isbn ";
               }
 
-              $data['get_bukuall'] = $this->Opac_model->get_bukuaadv($judul,$pengarang,$penerbit,$isbn,$limit);
+              $data['get_bukuall'] = $this->Opac_model->get_bukuadv($judul,$pengarang,$penerbit,$isbn,$limit);
               $data['get_numbukuall'] = $this->Opac_model->get_numbukuadv($judul,$pengarang,$penerbit,$isbn,$limit);
               $data['katakunci'] = $katakunci;
               $this->load->view('themes/jango/header', $data);

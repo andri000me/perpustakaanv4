@@ -47,16 +47,16 @@ class Opac_model extends CI_Model
     $this->db->join('pp_pengarang', 'pp_pengarang.id = pp_buku.pengarang_id','left');
     $this->db->join('pp_penerbit', 'pp_penerbit.id = pp_buku.penerbit_id','left');
     if($judul){
-    $this->db->or_like('pp_buku.judul', $judul);
+    $this->db->like('pp_buku.judul', $judul);
     }
     if($isbn){
-    $this->db->or_like('pp_buku.isbn', $isbn);
+    $this->db->like('pp_buku.isbn', $isbn);
     }
     if($pengarang){
-    $this->db->or_like('pp_pengarang.nama', $pengarang);
+    $this->db->like('pp_pengarang.nama', $pengarang);
     }
     if($penerbit){
-    $this->db->or_like('pp_penerbit.nama', $penerbit);
+    $this->db->like('pp_penerbit.nama', $penerbit);
     }
     $this->db->limit($limit);
     return $this->db->get()->result_array();
@@ -70,16 +70,16 @@ class Opac_model extends CI_Model
     $this->db->join('pp_pengarang', 'pp_pengarang.id = pp_buku.pengarang_id','left');
     $this->db->join('pp_penerbit', 'pp_penerbit.id = pp_buku.penerbit_id','left');
     if($judul){
-      $this->db->or_like('pp_buku.judul', $judul);
+      $this->db->like('pp_buku.judul', $judul);
       }
       if($isbn){
-      $this->db->or_like('pp_buku.isbn', $isbn);
+      $this->db->like('pp_buku.isbn', $isbn);
       }
       if($pengarang){
-      $this->db->or_like('pp_pengarang.nama', $pengarang);
+      $this->db->like('pp_pengarang.nama', $pengarang);
       }
       if($penerbit){
-      $this->db->or_like('pp_penerbit.nama', $penerbit);
+      $this->db->like('pp_penerbit.nama', $penerbit);
       }
       $this->db->limit($limit);
     return $this->db->get()->num_rows();
