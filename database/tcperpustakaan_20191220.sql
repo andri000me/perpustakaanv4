@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 20, 2019 at 08:18 AM
+-- Generation Time: Dec 20, 2019 at 08:30 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -123,7 +123,7 @@ INSERT INTO `options` (`id`, `name`, `value`) VALUES
 (7, 'smtp_host', 'ssl://smtp.googlemail.com'),
 (8, 'smtp_user', 'rekysmtp@gmail.com'),
 (9, 'smtp_pass', 'reky2019'),
-(10, 'smtp_port', '4655'),
+(10, 'smtp_port', '465'),
 (11, 'mailtype', 'html'),
 (12, 'charset', 'utf-8'),
 (13, 'newline', '\\r\\n'),
