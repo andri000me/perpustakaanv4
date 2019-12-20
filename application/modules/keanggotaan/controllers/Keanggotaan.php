@@ -131,6 +131,7 @@ class Keanggotaan extends CI_Controller
     $this->form_validation->set_rules('nama', 'nama', 'required');
     $this->form_validation->set_rules('gender', 'gender','required');
     $this->form_validation->set_rules('member_type_id', 'member_type_id');
+    $this->form_validation->set_rules('member_email', 'member_email');
     $this->form_validation->set_rules('member_address', 'member_address');
     $this->form_validation->set_rules('member_hp', 'member_hp');
     $this->form_validation->set_rules('inst_name', 'inst_name');
@@ -164,6 +165,7 @@ class Keanggotaan extends CI_Controller
           'nama' => $this->input->post('nama'),
           'gender' => $this->input->post('gender'),
           'member_type_id' => $this->input->post('member_type_id'),
+          'member_email' => $this->input->post('member_email'),
           'member_address' => $this->input->post('member_address'),
           'member_hp' => $this->input->post('member_hp'),
           'inst_name' => $this->input->post('inst_name'),
@@ -207,6 +209,7 @@ class Keanggotaan extends CI_Controller
           'nama' => $this->input->post('nama'),
           'gender' => $this->input->post('gender'),
           'member_type_id' => $this->input->post('member_type_id'),
+          'member_email' => $this->input->post('member_email'),
           'member_address' => $this->input->post('member_address'),
           'member_hp' => $this->input->post('member_hp'),
           'inst_name' => $this->input->post('inst_name'),
@@ -318,12 +321,13 @@ public function exportanggota_csv(){
          $nama =  $arr[2];
          $gender =  $arr[3];
          $member_type_id   =  $arr[4];
-         $member_address   =  $arr[5];
-         $member_hp   =  $arr[6];
-         $inst_name   =  $arr[7];
-         $mpassword   =  $arr[8];
-         $member_image =  $arr[9];
-         $last_update =  $arr[10];
+         $member_email   =  $arr[5];
+         $member_address   =  $arr[6];
+         $member_hp   =  $arr[7];
+         $inst_name   =  $arr[8];
+         $mpassword   =  $arr[9];
+         $member_image =  $arr[10];
+         $last_update =  $arr[11];
          if ($id <> '') {
 
            $data = [
@@ -332,6 +336,7 @@ public function exportanggota_csv(){
              'nama' => strip_quotes($nama),
              'gender' => strip_quotes($gender),
              'member_type_id' => strip_quotes($member_type_id),
+             'member_email' => strip_quotes($member_email),
              'member_address' => strip_quotes($member_address),
              'member_hp' => strip_quotes($member_hp),
              'inst_name' => strip_quotes($inst_name),

@@ -40,12 +40,14 @@ class Transaksi extends CI_Controller
     }else{
     $datamembertype = $this->db->get_where('pp_member_type', ['id' =>
     $dataanggota['member_type_id'] ])->row_array();
+    $member_email = $dataanggota['member_type_id']['member_email'];
       $data = [
         'member_id' => $member_id,
         'loan_limit'=>$datamembertype['loan_limit'],
         'loan_periode'=>$datamembertype['loan_periode'],
         'fine_each_day'=>$datamembertype['fine_each_day'],
         'reborrow_limit'=>$datamembertype['reborrow_limit'],
+        'member_email'=>$member_email,
       ];
       $this->session->set_userdata($data);
       redirect('transaksi/transaksi2');
@@ -113,6 +115,7 @@ $this->db->insert('pp_loan', $data);
     $this->session->unset_userdata('loan_periode');
     $this->session->unset_userdata('fine_each_day');
     $this->session->unset_userdata('reborrow_limit');
+    $this->session->unset_userdata('member_email');
     $this->cart->destroy();
     redirect('transaksi/transaksi1');
   }
@@ -336,6 +339,44 @@ $this->session->set_flashdata('message3','
 redirect('transaksi/pengembalian');
 }
 } 
+}
+
+public function kirim_email($member_id,$denda)
+{
+////////////
+$smtp_user = $this->db->get_where('options', ['name' =>
+'smtp_user'])->row_array();
+$smtp_user = $smtp_user['value'];
+$smtp_pass = $this->db->get_where('options', ['name' =>
+'smtp_pass'])->row_array();
+$smtp_pass = $smtp_pass['value'];
+$smtp_port = $this->db->get_where('options', ['name' =>
+'smtp_port'])->row_array();
+$smtp_port = $smtp_port['value'];
+
+$member = $this->db->get_where('pp_member', ['member_id' =>
+$member_id])->row_array();
+$member_email = $member['member_email'];
+///////////
+
+$config = [
+  'protocol'  => 'smtp',
+  'smtp_host' => 'ssl://smtp.googlemail.com',
+  'smtp_user' => $smtp_user,
+  'smtp_pass' => $smtp_pass,
+  'smtp_port' => $smtp_port,
+  'mailtype'  => 'html',
+  'charset'   => 'utf-8',
+  'newline'   => "\r\n"
+];
+$this->load->library('email');
+$this->email->initialize($config);
+$this->email->from('admin@admin.com', 'TCPerpustakaan Administrator');
+$this->email->to($member_email);
+$this->email->subject('Pemberitahuan Denda Keterlambatan!');
+$this->email->message('Peminjaman anda mengalami keterlambatan dan memiliki biaya denda sebesar : <b>'.$denda.'</b>');
+$this->session->set_flashdata('message2', '<div class="alert alert-warning" role"alert">Email pemberitahuan keterlembatan dan denda telah terkirim!</div>');
+redirect('transaksi/transaksi1');
 }
  
 

@@ -273,7 +273,7 @@ Hapus ]</a>
 <div class="col-sm-8">
 <div class="checkbox">
 <label>
-<input class="form-check-input" type="checkbox" value="1" name="disableopac" id="disableopac" <?= $disableopac == '1' ? 'checked' : ''; ?>> Tampilkan ?
+<input class="form-check-input" type="checkbox" value="1" name="disableopac" id="disableopac" <?= $disableopac == '1' ? 'checked' : ''; ?>> Disembunyikan ?
 </label>
 </div>
 </div>
@@ -284,7 +284,7 @@ Hapus ]</a>
 <div class="col-sm-8">
 <div class="checkbox">
 <label>
-<input class="form-check-input" type="checkbox" value="1" name="promoberanda" id="promoberanda" <?= $promoberanda == '1' ? 'checked' : ''; ?>> Tampilkan ?
+<input class="form-check-input" type="checkbox" value="1" name="promoberanda" id="promoberanda" <?= $promoberanda == '1' ? 'checked' : ''; ?>> Disembunyikan ?
 </label>
 </div>
 </div>

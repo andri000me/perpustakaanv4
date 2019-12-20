@@ -21,6 +21,7 @@ $member_id=$get_anggota['member_id'];
 $nama=$get_anggota['nama'];
 $gender=$get_anggota['gender'];
 $member_type_id=$get_anggota['member_type_id'];
+$member_email=$get_anggota['member_email'];
 $member_address=$get_anggota['member_address'];
 $member_hp=$get_anggota['member_hp'];
 $inst_name=$get_anggota['inst_name'];
@@ -66,6 +67,14 @@ $is_active=$get_anggota['is_active'];
 <?php endforeach; ?>
 </select>
 <?= form_error('member_type_id', '<span class="help-block">', '</small>'); ?>
+</div>
+</div>
+
+<div class="form-group row">
+<label for="member_type_id" class="col-sm-2 control-label">Email</label>
+<div class="col-sm-8">
+<input type="text" class="form-control" id="member_email" name="member_email" value="<?= set_value('member_email', isset($member_email) ? $member_email : ''); ?>">
+<?= form_error('member_email', '<span class="help-block">', '</small>'); ?>
 </div>
 </div>
 

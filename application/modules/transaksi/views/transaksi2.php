@@ -47,12 +47,12 @@ Keanggotaan<br>
 <?= $getanggota['tipeanggota'] ?>
 </div>
 <div class="col-sm-3">
-Maksimal Peminjaman<br>
-<?= $loan_limit ?>
+Maksimal Peminjaman | Lama Peminjaman<br>
+<?= $loan_limit ?> | <?= $loan_periode ?>
 </div>
 <div class="col-sm-3">
-Lama Peminjaman<br>
-<?= $loan_periode ?>
+Email<br>
+<?= $getanggota['member_email'] ?>
 </div>
 <div class="col-sm-3">
 Denda per Hari<br>
@@ -201,7 +201,7 @@ $dendaperitem= $terlambathari*$fine_each_day;
 <?php if($totaldenda>'0'){ ?>                  
 <tr><td colspan="6">
 Kirim Pesan mengenai Informasi Keterlambatan dan Denda | 
-<font color="red"><b>Total denda <?= $totaldenda ?></b></font> </td></tr>                   
+<font color="red"><b>Total denda <?= $totaldenda ?></b></font> | <a href="<?= base_url('transaksi/kirim_email/'.$getanggota['member_id'].'/'.$totaldenda) ?>"class="btn btn-success"onclick="return confirm('Anda akan mengirim Info via email ke: <?= $getanggota['member_email'] ?>');">Kirim Email</a> </td></tr>                   
 <?php }?>  
                 </tbody>
               </table>

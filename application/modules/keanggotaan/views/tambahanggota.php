@@ -60,6 +60,14 @@
 </div>
 
 <div class="form-group row">
+<label for="member_type_id" class="col-sm-2 control-label">Email</label>
+<div class="col-sm-8">
+<input type="text" class="form-control" id="member_email" name="member_email" value="<?= set_value('member_email', isset($member_email) ? $member_email : ''); ?>">
+<?= form_error('member_email', '<span class="help-block">', '</small>'); ?>
+</div>
+</div>
+
+<div class="form-group row">
 <label for="lokasirak" class="col-sm-2 control-label">Jenis Kelamin</label>
 <div class="col-sm-8">
 <input type="radio" name="gender" value="1" <?= set_value('gender', $gender == 1 ? "checked" : ""); 
