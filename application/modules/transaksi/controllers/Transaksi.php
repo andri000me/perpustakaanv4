@@ -375,12 +375,7 @@ $this->email->from('admin@admin.com', 'TCPerpustakaan Administrator');
 $this->email->to($member_email);
 $this->email->subject('Pemberitahuan Denda Keterlambatan!');
 $this->email->message('Peminjaman anda mengalami keterlambatan dan memiliki biaya denda sebesar : <b>'.$denda.'</b>');
-if ($this->email->send()) {
-  return true;
-} else {
-  echo $this->email->print_debugger();
-  die;
-}
+$this->email->send();
 $this->session->set_flashdata('message', '<div class="alert alert-warning" role"alert">Email pemberitahuan keterlembatan dan denda telah terkirim!</div>');
 redirect('transaksi/transaksi2');
 }
