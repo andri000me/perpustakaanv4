@@ -16,7 +16,11 @@
  <?php foreach ($this->cart->product_options($items['rowid']) as $option_name => $option_value): ?>
 <?php
 $data = explode(" " , $option_value);?>
-<?= bar128(stripslashes($data[0])); ?>
+<img src="<?= base_url('assets/images/barcode/'.$data[0].'.png') ?>"><br>
+<?= $data[0] ?><br>
+<?= $data[1] ?><br>
+<?= $data[2] ?><br>
+
 <?php endforeach; ?>
  </td></tr></table>
  </div>

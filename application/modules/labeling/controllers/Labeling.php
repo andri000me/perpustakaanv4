@@ -12,7 +12,7 @@ class Labeling extends CI_Controller
   }
   // pencetakanlabel
  public function pencetakanlabel()
- {
+ { 
    $data['title'] = 'Pencetakan Label';
    $data['user'] = $this->db->get_where('user', ['email' =>
    $this->session->userdata('email')])->row_array();
@@ -145,9 +145,22 @@ public function batalkan_antrianbarcode()
   $data['height_label']=$height_label['value'];
   $data['item_margin']=$item_margin['value'];
   $data['site_title']= $datasite['value'];
+  //load yang ada di folder Zend
+  $this->zend->load('Zend/Barcode');
+  $imagedir     = './assets/images/barcode/'; //direktori penyimpanan barcode
+  foreach ($this->cart->contents() as $items):
+    foreach ($this->cart->product_options($items['rowid']) as $option_name => $option_value):
+      $data2 = explode(" " , $option_value);
+      $item_code=stripslashes($data2[0]);
 
-  $this->load->view('cetak_barcode', $data);
+  // we can save it with image
+  $file = Zend_Barcode::draw('code128', 'image', array('text' => $item_code), array());
+imagepng($file, "$imagedir/$item_code.png");
+endforeach;
+endforeach;
+$this->load->view('cetak_barcode', $data);
  }
+
  // pencetakanqrcode
  public function pencetakanqrcode()
  {
