@@ -154,7 +154,7 @@ public function batalkan_antrianbarcode()
       $item_code=stripslashes($data2[0]);
 
   // we can save it with image
-  $file = Zend_Barcode::draw('code128', 'image', array('text' => $item_code,'barHeight'=> 70), array());
+  $file = Zend_Barcode::draw('code128', 'image', array('text' => $item_code,'barHeight'=> 70,'factor'=>1,), array());
 imagepng($file, "$imagedir/$item_code.png");
 endforeach;
 endforeach;
