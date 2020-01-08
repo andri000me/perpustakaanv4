@@ -501,3 +501,9 @@ $ci->db->from('pp_loan');
 $ci->db->where('pp_loan.item_kode',$item_kode);
 return $ci->db->get()->row()->value;
 }
+function get_pdfbuku($buku_id)
+{
+$ci = get_instance();
+$jumpdf = $ci->db->get_where('pp_pdf',['buku_id' => $buku_id]);
+return $jumpdf->num_rows();
+}

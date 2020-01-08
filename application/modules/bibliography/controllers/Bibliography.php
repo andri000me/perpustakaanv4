@@ -443,5 +443,71 @@ foreach($pcheck as $id) {
      $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data deleted !</div>');
    redirect('bibliography/edit_buku/'.$id);
  }
+  //tambahpdf
+  public function tambahpdf($id)
+  {
+    $data['title'] = 'Buku';
+    $data['user'] = $this->db->get_where('user', ['email' =>
+    $this->session->userdata('email')])->row_array();
+    $this->load->model('Bibliography_model', 'Bibliography_model');
+    $data['get_buku'] = $this->Bibliography_model->get_buku_ById($id);
+    $this->form_validation->set_rules('buku_id', 'buku_id', 'required');
+    if ($this->form_validation->run() == false) {
+    $this->load->view('themes/backend/header', $data);
+    $this->load->view('themes/backend/sidebar', $data);
+    $this->load->view('themes/backend/topbar', $data);
+    $this->load->view('tambahpdf', $data);
+    $this->load->view('themes/backend/footer');
+    $this->load->view('themes/backend/footerajax');
+    }else{
+      $buku_id = $this->input->post('buku_id');
+      // Jika Ada Gambar
+$config['file_name'] = $buku_id;      
+$new_pdf = "$buku_id.pdf";
+$config['upload_path'] = './assets/images/pdf/';
+// set allowed file types
+$config['allowed_types'] = 'pdf';
+// set upload limit, set 0 for no limit
+$config['max_size']    = 0;
+// load upload library with custom config settings
+$this->load->library('upload', $config);
+
+ // if upload failed , display errors
+ unlink(FCPATH . 'assets/images/pdf/' . $new_pdf);
+ $this->db->where('buku_id', $buku_id);
+ $this->db->delete('pp_pdf');
+
+
+if (!$this->upload->do_upload())
+{
+    $this->data['error'] = $this->upload->display_errors();
+ }
+else
+{
+      print_r($this->upload->data());
+     // print uploaded file data
+}
+
+    $data = [
+      'buku_id' => $buku_id,
+      'file_pdf' => $new_pdf
+  ];
+
+         $this->db->insert('pp_pdf', $data);    
+
+          $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">Data Saved !</div>');
+          redirect('bibliography/tambahpdf/'.$id);
+    }
+  }
+
+  public function hapus_pdf($buku_id)
+  {
+     unlink(FCPATH . './assets/images/pdf/' . $buku_id.".pdf");
+     $this->db->where('buku_id', $buku_id);
+   $this->db->delete('pp_pdf');
+   $this->session->set_flashdata('message', '<div class="alert alert-success" role"alert">PDF Deleted !</div>');
+
+   redirect('bibliography/tambahpdf/'.$buku_id);
+ }
   //end
 }

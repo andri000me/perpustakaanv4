@@ -36,6 +36,7 @@
                     <th>Judul</th>
                     <th>ISBN/ISSN</th>
                     <th>JumlahEksemplar</th>
+                    <th>PDF</th>
                     <th>Last Update</th>
                     <th>Edit</th>
                     <th>Hapus</th>
@@ -49,6 +50,8 @@
                       <td><?= $dt['isbn']; ?></td>
                       <td align="center"><b>
                       <?= get_eksemplarbuku($dt['id']) ?></b> <a href="<?= base_url('bibliography/tambaheksemplar/' . $dt['id']); ?>" class="btn btn-success btn-xs"><i class="fa fa-fw fa-plus"></i></a></td>
+                      <td align="center"><b>
+                      <?= get_pdfbuku($dt['id']) ?></b> <a href="<?= base_url('bibliography/tambahpdf/' . $dt['id']); ?>" class="btn btn-success btn-xs"><i class="fa fa-fw fa-plus"></i></a></td>
                       <td><?= $dt['last_update']; ?></td>
                       <td><a href="<?= base_url('bibliography/edit_buku/' . $dt['id']); ?>" class="btn btn-info btn-xs">Edit</a></td>
                       <td><input name="check[]" type="checkbox" value="<?= $dt['id'] ?>"></td>

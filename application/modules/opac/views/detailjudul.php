@@ -97,6 +97,11 @@
 <tr>
 <td>TIPE ISI</td><td><?= $get_detailbuku['tipeisi']?></td>
 </tr>
+<tr>
+<td>PDF</td><td><?php if(get_pdfbuku($get_detailbuku['id'])=='1'){?>
+<a href="<?= base_url('assets/images/pdf/'.$get_detailbuku['id'].".pdf"); ?> " class="btn btn-success"target="new">Lihat</a>
+<?php } ?></td>
+</tr>
 </table>
 </div>
 </div>
