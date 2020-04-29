@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2020 at 03:43 AM
+-- Generation Time: Apr 29, 2020 at 10:08 AM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -17,10 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `tcperpustakaan`
+-- Database: `perpustakaanv4`
 --
-CREATE DATABASE IF NOT EXISTS `tcperpustakaan` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `tcperpustakaan`;
+CREATE DATABASE IF NOT EXISTS `perpustakaanv4` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `perpustakaanv4`;
 
 -- --------------------------------------------------------
 
@@ -148,8 +148,8 @@ CREATE TABLE IF NOT EXISTS `options` (
 --
 
 INSERT INTO `options` (`id`, `name`, `value`) VALUES
-(1, 'site_title', 'TCPerpustakaan'),
-(2, 'site_description', 'TCPerpustakaan'),
+(1, 'site_title', 'PerpustakaanV4'),
+(2, 'site_description', 'PerpustakaanV4'),
 (3, 'site_keyword', 'perpustakaan, indonesia, surabaya'),
 (6, 'protocol', 'smtp'),
 (7, 'smtp_host', 'ssl://smtp.googlemail.com'),
